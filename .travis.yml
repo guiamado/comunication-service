@@ -6,6 +6,6 @@ branches:
     - dev
 cache:
     directories:
-    - node_modules
+    - webapp/node_modules
 script:
 - npm run lint
