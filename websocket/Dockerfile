@@ -1,10 +1,14 @@
-FROM mhart/alpine-node:9 AS build
-WORKDIR /srv
-ADD package.json .
-RUN npm install
-ADD . .
+FROM alpine:3.1
 
-FROM mhart/alpine-node:base-9
-COPY --from=build /srv .
-EXPOSE 8001
+# Update
+RUN apk add --update nodejs
+
+# Install app dependencies
+COPY package.json /src/package.json
+RUN cd /src; npm install
+
+# Bundle app source
+COPY . /src
+
+EXPOSE  8001
 CMD ["node", "index.js"]
