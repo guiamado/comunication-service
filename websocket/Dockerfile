@@ -1,14 +1,8 @@
-FROM alpine:3.1
+FROM mhart/alpine-node:11
 
-# Update
-RUN apk add --update nodejs
-
-# Install app dependencies
-COPY package.json /src/package.json
-RUN cd /src; npm install
-
-# Bundle app source
-COPY . /src
+WORKDIR /src
+COPY . .
+RUN npm install
 
 EXPOSE  8001
 CMD ["node", "index.js"]
