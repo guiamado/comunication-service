@@ -4,6 +4,8 @@ const http = require("http");
 const app = express();
 server = http.createServer(app);
 const io = socketio(server);
+const serverPort = 8001;
+
 
 const clients = [];
 app.use(
@@ -11,36 +13,37 @@ app.use(
         extended: true
     })
 );
-/**
- * Initialize Server
- */
-server.listen(8001, function () {
-    console.log("Servidor Rodando na Porta 8001");
+
+server.listen(serverPort, function (data) {
+    console.log('Listen action')
+    console.log(data)
+    console.log(`Servidor Rodando na Porta ${serverPort}`);
 });
 
-/**
- * Página de Teste
- */
+
 app.get("/", function (req, res) {
-    res.send("Servidor Rodando...");
+    res.send(`Servidor Rodando na Porta ${serverPort}`);
+    res.send(`Clients Ativos: ${clients.length}`);
 });
 
-// Recebe requisição do Laravel
-app.post("/like", function (req, res) {
-    var params = req.body;
+app.post("/notifications", function (request, response) {
+    var params = request.body;
     var clients = io.sockets.clients().sockets;
     if (clients.length > 0) {
         Object.keys(clients).forEach((indice) => {
             if (indice != params.id) clients[indice].emit("like", params);
         });
     }
-    res.send();
+    response.send();
 });
 
-// Recebe conexão dos usuários no servidor
+
 io.on("connection", function (client) {
+    console.log(client)
     // Adicionado clientes
     client.emit("welcome", {
         id: client.id
     });
+
+    client.emit('online_users', clients.length);
 });
