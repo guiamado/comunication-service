@@ -22,8 +22,7 @@ server.listen(serverPort, function (data) {
 
 
 app.get("/", function (req, res) {
-    res.send(`Servidor Rodando na Porta ${serverPort}`);
-    res.send(`Clients Ativos: ${clients.length}`);
+    res.send(`Servidor Rodando na Porta ${serverPort} <br /> Clients Ativos: ${clients.length}`);
 });
 
 app.post("/notifications", function (request, response) {
