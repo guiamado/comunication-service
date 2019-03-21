@@ -4,6 +4,8 @@ const http = require("http");
 const app = express();
 server = http.createServer(app);
 const io = socketio(server);
+const serverPort = 8001;
+
 
 const clients = [];
 const serverPort = 8001;

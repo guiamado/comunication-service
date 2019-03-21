@@ -56,13 +56,15 @@ services:
       - api-service
 
   websocket-service:
-      build: ./websocket
-      image: notification-websocket-nodejs:1.0.0
-      container_name: notification-websocket
-      ports:
-        - "8001:8001"
-      depends_on:
-        - api-service
+    build: ./websocket
+    image: notification-websocket-nodejs:1.0.0
+    container_name: notification-websocket
+    volumes:
+      - ./websocket:/src
+    ports:
+      - "8001:8001"
+    depends_on:
+      - api-service
 
   database-service:
     image: postgres:10
