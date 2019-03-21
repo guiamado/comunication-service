@@ -56,21 +56,13 @@ services:
       - api-service
 
   websocket-service:
-    build: ./websocket
-    image: notification-websocket-nodejs:1.0.0
-    container_name: notification-websocket
-    working_dir: /application
-    command: "supervisord -n"
-    volumes:
-      - ./websocket:/application
-      - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-      - ./docker/php-fpm/supervisor/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
-    ports:
-      - "8001:8001"
-    depends_on:
-      - api-service
-    #environment:
-    #  - UPDATE_COMPOSER_DEPENDENCIES=true
+      build: ./websocket
+      image: notification-websocket-nodejs:1.0.0
+      container_name: notification-websocket
+      ports:
+        - "8001:8001"
+      depends_on:
+        - api-service
 
   database-service:
     image: postgres:10
