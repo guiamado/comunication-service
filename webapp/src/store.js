@@ -9,7 +9,6 @@ import plataforma from '@/modules/plataforma';
 import sistema from '@/modules/sistema';
 import mensagem from '@/modules/mensagem';
 import notificacao from '@/modules/notificacao';
-// import notificacaoBadge from '@/modules/notificacaoBadge';
 
 Vue.use(Vuex);
 
