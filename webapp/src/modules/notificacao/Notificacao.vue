@@ -97,11 +97,12 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
-import NotificacaoFormulario from './NotificacaoFormulario';
+import NotificacaoFormulario from './NotificacaoFormulario.vue';
 import { notificacaoService } from './service';
 
 export default {
     components: { NotificacaoFormulario },
+    mixins: [notificacaoService],
     data: () => ({
         loading: false,
         dialog: false,
@@ -163,7 +164,6 @@ export default {
             connection: null,
         },
     }),
-    mixins: [notificacaoService],
     computed: {
         formTitle() {
             return this.editedItem.notificacao_id === null ? 'Criar' : 'Editar';
@@ -207,7 +207,7 @@ export default {
             const params = {
                 usuarioId: this.accountInfo.user_id,
                 isNotificacaoLida: this.notificacaoLida,
-            }
+            };
             this.obterNotificacoes(params);
         }
         if (this.notificacoes.length > 0) {
