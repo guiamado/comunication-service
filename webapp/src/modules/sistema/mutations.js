@@ -7,7 +7,7 @@ export const mutations = {
     [types.ACRESCENTAR_SISTEMA](state, sistema) {
         state.sistema.push(sistema);
     },
-    [types.DELETE_SISTEMA](state, sistemaId) {
+    [types.REMOVER_SISTEMA](state, sistemaId) {
         const index = state.sistema.findIndex(sistema => sistema.sistema_id === sistemaId);
         state.sistema.splice(index, 1);
     },
