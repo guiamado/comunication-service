@@ -54,12 +54,14 @@
                             <td class="text-xs-center">{{ props.item.sistema }}</td>
                             <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
                             <td class="text-xs-center">
-                                <v-icon
-                                    v-if="props.item.is_notificacao_lida"
-                                    color="blue">thumb_up</v-icon>
-                                <v-icon
-                                    v-if="!props.item.is_notificacao_lida"
-                                    color="red">thumb_down</v-icon>
+                                <v-scroll-y-transition >
+                                    <v-icon v-show="props.item.is_notificacao_lida"
+                                        color="blue">thumb_up</v-icon>
+                                </v-scroll-y-transition>
+                                <v-scroll-y-transition :origin="'bottom center 0'">
+                                    <v-icon v-show="!props.item.is_notificacao_lida"
+                                        color="red">thumb_down</v-icon>
+                                </v-scroll-y-transition>
                             </td>
                             <td
                                 v-if="accountInfo.is_admin"
@@ -82,6 +84,7 @@
         </v-layout>
         <v-scale-transition v-if="accountInfo.is_admin">
             <v-btn
+                v-show="!loading"
                 fab
                 color="success"
                 dark
