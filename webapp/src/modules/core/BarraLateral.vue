@@ -111,8 +111,8 @@ export default {
                 },
                 {
                     icon: 'chat',
-                    title: '(Teste) Chat/WebSocket',
-                    to: '/websocket',
+                    title: 'Chat',
+                    to: '/chat',
                 },
             ];
             if (this.accountInfo.is_admin === true) {

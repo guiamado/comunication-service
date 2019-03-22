@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './modules/conta/Login.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
-import WebSocket from './modules/websocket/WebSocket.vue';
+import Chat from './modules/websocket/Chat.vue';
 import Administracao from './modules/core/Administracao.vue';
 import Home from './modules/core/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
@@ -37,8 +37,8 @@ const routesObject = [
         name: 'home',
     },
     {
-        path: '/websocket',
-        component: WebSocket,
+        path: '/chat',
+        component: Chat,
     },
     {
         path: '/notificacao',

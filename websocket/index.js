@@ -14,11 +14,11 @@ app.use(
 );
 
 server.listen(serverPort, function () {
-    console.log(`Servidor Rodando na Porta ${serverPort}. <br /> Usuários ativos: ${clients.length}`);
+    console.log(`Servidor Rodando na Porta ${serverPort}. \n Usuários ativos: ${clients.length}`);
 });
 
 app.get("/", function (req, res) {
-    res.send(`Servidor Rodando na Porta ${serverPort}`);
+    res.send(`Servidor Rodando na Porta ${serverPort}  <br /> Usuários ativos: ${clients.length}`);
 });
 
 io.on("connection", function (socket) {

@@ -20,22 +20,23 @@
                             color="primary">
                             <v-toolbar-title>Chat (WebSocket)</v-toolbar-title>
                         </v-toolbar>
-                        <v-card-text>
-                            <v-form @submit="sendMessage">
-                                <v-text-field
+                        <v-form @submit="sendMessage">
+                            <v-card-text>
+                                <v-select
                                     v-model="sistema"
-                                    label="Sistema"
-                                    required/>
-                                <v-text-field
-                                    v-model="usuario"
-                                    :counter="15"
-                                    label="Usuario"
-                                    required/>
+                                    :items="sistemas"
+                                    :return-object="true"
+                                    item-text="descricao"
+                                    label="Sistemas"
+                                    light
+                                    solo
+                                />
                                 <v-textarea
                                     ref="mensagem"
                                     v-model="mensagem"
                                     solo
                                     label="mensagem"
+                                    light
                                     required/>
                                 <v-flex xs12>
                                     <div
@@ -52,20 +53,32 @@
                                             style="color:yellowgreen">{{ mensagem }}</span>
                                     </div>
                                 </v-flex>
+
+                            </v-card-text>
+                            <v-card-actions>
                                 <v-btn
-                                    v-if="isEnviando == false"
-                                    light
-                                    color="primary"
-                                    @click="sendMessage">
+                                        v-if="isEnviando == false"
+                                        light
+                                        color="primary"
+                                        @click="sendMessage">
                                     Enviar
                                 </v-btn>
-                                <v-progress-circular
-                                    v-if="isEnviando == true"
-                                    indeterminate
-                                    color="green"/>
-
-                            </v-form>
-                        </v-card-text>
+                                <v-scale-transition>
+                                    <v-alert
+                                            v-show="websocket.isConnected === true"
+                                            :value="true"
+                                            type="success"> Conectado
+                                    </v-alert>
+                                </v-scale-transition>
+                                <v-scale-transition>
+                                    <v-alert
+                                            v-show="websocket.isConnected === false"
+                                            :value="true"
+                                            type="error"> Desconectado
+                                    </v-alert>
+                                </v-scale-transition>
+                            </v-card-actions>
+                        </v-form>
                     </v-card>
                 </v-layout>
             </v-flex>
@@ -77,41 +90,51 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'WebSocket',
     data() {
         return {
             isEnviando: false,
             usuario: '',
-            sistema: '',
+            sistema: {},
             mensagem: '',
-            websocket: {
-                connection: new WebSocket('ws://localhost:8001'),
-            },
+            sistemas: [],
+
+            isConnected: false,
+            socketMessage: '',
         };
     },
-    created() {
-        this.websocket.connection = new WebSocket('ws://localhost:8001');
 
-        this.websocket.connection.onopen = function (e) {
-            console.log(`Conexão estabelecida ${e}`);
-        };
-
-        this.websocket.connection.onmessage = function (e) {
-            console.log(e.data);
-        };
+    computed: {
+        ...mapGetters({
+            websocket: 'websocket/websocket',
+            accountInfo: 'account/accountInfo',
+        }),
+    },
+    watch: {
+        websocket(data) {
+            console.log(data);
+        },
+        accountInfo() {
+            this.sistemas = [];
+            this.sistemas.push(this.accountInfo.sistemas);
+        },
+    },
+    mounted() {
+        this.sistemas = this.accountInfo.sistemas;
+        console.log(this.sistemas);
     },
     methods: {
         sendMessage(e) {
-            // console.log(this.$refs['botaoEnviar'].hide);
-
             const base = this;
             base.isEnviando = true;
 
             setTimeout(() => {
                 base.isEnviando = false;
             }, 1000);
-            this.websocket.connection.send(`${this.sistema}|${this.usuario}:${this.mensagem}`);
+            // this.websocket.connection.send(`${this.sistema}|${this.usuario}:${this.mensagem}`);
             e.preventDefault();
 
             this.$refs.mensagem.reset();

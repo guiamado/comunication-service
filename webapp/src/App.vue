@@ -49,43 +49,6 @@ export default {
             clipped: false,
             drawer: false,
             fixed: false,
-            items: [
-                {
-                    icon: 'home',
-                    title: 'Início',
-                    to: '/',
-                },
-                // {
-                //   icon: 'chat',
-                //   title: 'Chat Interno',
-                //   to: '/websocket',
-                // },
-                {
-                    icon: 'chat',
-                    title: 'Notificacao',
-                    to: '/notificacao',
-                },
-                {
-                    icon: 'edit',
-                    title: 'Administração',
-                    to: '/administracao',
-                },
-                {
-                    icon: 'info',
-                    title: 'Sobre',
-                    to: '/sobre',
-                },
-                {
-                    icon: 'chat',
-                    title: '(Teste) Chat/WebSocket',
-                    to: '/websocket',
-                },
-                {
-                    icon: 'exit_to_app',
-                    title: 'Sair',
-                    to: '/logout',
-                },
-            ],
             miniVariant: false,
             right: true,
             rightDrawer: false,
