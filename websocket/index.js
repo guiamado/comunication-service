@@ -4,8 +4,6 @@ const http = require("http");
 const app = express();
 server = http.createServer(app);
 const io = socketio(server);
-const serverPort = 8001;
-
 
 const clients = [];
 const serverPort = 8001;
@@ -23,25 +21,30 @@ app.get("/", function (req, res) {
     res.send(`Servidor Rodando na Porta ${serverPort}`);
 });
 
-// app.post("/like", function (req, res) {
-//     var params = req.body;
-//     var clients = io.sockets.clients().sockets;
-//     if (clients.length > 0) {
-//         Object.keys(clients).forEach((indice) => {
-//             if (indice != params.id) clients[indice].emit("like", params);
-//         });
-//     }
-//     res.send();
-// });
-
 io.on("connection", function (socket) {
-
-    socket.emit('request', /* */); // emit an event to the socket
-    io.emit('broadcast', /* */); // emit an event to all connected sockets
-    socket.on('reply', function(){ /* */ }); // listen to the event
-
-    // client.emit("welcome", {
-    //     id: client.id
+    
+    console.log('an user connected');
+    
+    clients.push({clientId: socket.client.id})
+    
+    io.emit('connectedUsers', clients.length);
+    io.emit('clientConnected', {clientId: socket.client.id});
+    
+    socket.on('disconnect', () => {
+        const index = clients.findIndex(client => client.clientId === socket.client.id);
+        clients.splice(index, 1);
+        console.log('user disconnected');
+        io.emit('connectedUsers', clients.length);
+        io.emit('clientDisconnected', {clientId: socket.client.id});
+    });
+    
+    // socket.on('chatMessage', (data) => {
+    //     console.log(`[${data.clientId}]: ` + data.message);
+    //
+    //     io.emit('generalChat', data);
     // });
-
+    
+    
 });
+
+
