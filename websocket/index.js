@@ -13,7 +13,7 @@ app.use(
     })
 );
 
-server.listen(8001, function () {
+server.listen(serverPort, function () {
     console.log(`Servidor Rodando na Porta ${serverPort}. <br /> Usuários ativos: ${clients.length}`);
 });
 

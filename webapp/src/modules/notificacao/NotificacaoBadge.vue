@@ -241,9 +241,6 @@ export default {
             menu: false,
             message: false,
             hints: true,
-            websocket: {
-                connection: null,
-            },
         };
     },
     computed: {
@@ -258,11 +255,6 @@ export default {
         },
     },
     mounted() {
-        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
-
-        this.websocket.connection.onopen = () => {
-            console.log('Conexão estabelecida');
-        };
 
         if (this.notificacoesBadge == null || this.notificacoesBadge.length === 0) {
             const params = {
