@@ -38,11 +38,11 @@ io.on("connection", function (socket) {
         io.emit('clientDisconnected', {clientId: socket.client.id});
     });
     
-    // socket.on('chatMessage', (data) => {
-    //     console.log(`[${data.clientId}]: ` + data.message);
-    //
-    //     io.emit('generalChat', data);
-    // });
+    socket.on('chatMessage', (data) => {
+        console.log(`[${data.clientId}]: ` + data.message);
+
+        io.emit('generalChat', data);
+    });
     
     
 });

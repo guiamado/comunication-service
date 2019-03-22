@@ -55,11 +55,13 @@
                             <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
                             <td class="text-xs-center">
                                 <v-scroll-y-transition >
-                                    <v-icon v-show="props.item.is_notificacao_lida"
+                                    <v-icon
+                                        v-show="props.item.is_notificacao_lida"
                                         color="blue">thumb_up</v-icon>
                                 </v-scroll-y-transition>
                                 <v-scroll-y-transition :origin="'bottom center 0'">
-                                    <v-icon v-show="!props.item.is_notificacao_lida"
+                                    <v-icon
+                                        v-show="!props.item.is_notificacao_lida"
                                         color="red">thumb_down</v-icon>
                                 </v-scroll-y-transition>
                             </td>

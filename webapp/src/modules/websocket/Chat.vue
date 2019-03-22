@@ -1,87 +1,99 @@
 <template>
     <v-container
         fluid
-        fill-height>
-        <v-layout
-            align-center
-            justify-center>
-            <v-flex
-                xs12
-                sm8
-                md4>
-                <v-layout
-                    column
-                    justify-center>
-                    <v-card
-                        dark
-                        class="elevation-12">
-                        <v-toolbar
-                            dark
-                            color="primary">
-                            <v-toolbar-title>Chat (WebSocket)</v-toolbar-title>
-                        </v-toolbar>
-                        <v-form @submit="sendMessage">
-                            <v-card-text>
-                                <v-select
-                                    v-model="sistema"
-                                    :items="sistemas"
-                                    :return-object="true"
-                                    item-text="descricao"
-                                    label="Sistemas"
-                                    light
-                                    solo
-                                />
-                                <v-textarea
-                                    ref="mensagem"
-                                    v-model="mensagem"
-                                    solo
-                                    label="mensagem"
-                                    light
-                                    required/>
-                                <v-flex xs12>
-                                    <div
-                                        ref="mensagem-completa"
-                                        style="display: inline">
-                                        <span
-                                            v-if="sistema != ''"
-                                            style="color:dodgerblue">[{{ sistema }}]</span>
-                                        <span
-                                            v-if="usuario != ''"
-                                            style="color:dodgerblue">{{ usuario }}:</span>
-                                        <span
-                                            v-if="mensagem != ''"
-                                            style="color:yellowgreen">{{ mensagem }}</span>
-                                    </div>
-                                </v-flex>
+        >
 
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-btn
-                                        v-if="isEnviando == false"
+        <v-layout column fill-height>
+            <v-card
+
+                flat
+                dark>
+                <v-toolbar
+                    dark
+                    color="primary">
+                    <v-toolbar-title>Chat - Usuários Conectados ({{ websocket.connectedUsers }})</v-toolbar-title>
+                </v-toolbar>
+                <v-form @submit="sendMessage">
+                    <v-card-text>
+
+                        <v-layout row>
+                            <v-flex xs4>
+                                <v-layout column>
+                                    <v-select
+                                        v-model="sistema"
+                                        :items="sistemas"
+                                        :return-object="true"
+                                        item-text="descricao"
+                                        label="Sistemas"
                                         light
-                                        color="primary"
-                                        @click="sendMessage">
-                                    Enviar
-                                </v-btn>
-                                <v-scale-transition>
-                                    <v-alert
-                                            v-show="websocket.isConnected === true"
-                                            :value="true"
-                                            type="success"> Conectado
-                                    </v-alert>
-                                </v-scale-transition>
-                                <v-scale-transition>
-                                    <v-alert
-                                            v-show="websocket.isConnected === false"
-                                            :value="true"
-                                            type="error"> Desconectado
-                                    </v-alert>
-                                </v-scale-transition>
-                            </v-card-actions>
-                        </v-form>
-                    </v-card>
-                </v-layout>
-            </v-flex>
+                                        solo
+                                    />
+                                    <v-textarea
+                                        ref="mensagem"
+                                        v-model="mensagem"
+                                        solo
+                                        label="mensagem"
+                                        light
+                                        required/>
+                                </v-layout>
+                                <v-layout row>
+                                    <v-flex xs5>
+                                        <v-btn
+                                            v-if="isEnviando == false"
+                                            light
+                                            color="primary"
+                                            @click="sendMessage">
+                                            Enviar
+                                        </v-btn>
+                                    </v-flex>
+                                    <v-flex xs7>
+                                        <v-scale-transition>
+                                            <v-alert
+                                                v-show="websocket.isConnected === true"
+                                                :value="true"
+                                                type="success"> Conectado
+                                            </v-alert>
+                                        </v-scale-transition>
+                                        <v-scale-transition>
+                                            <v-alert
+                                                v-show="websocket.isConnected === false"
+                                                :value="true"
+                                                type="error"> Desconectado
+                                            </v-alert>
+                                        </v-scale-transition>
+                                    </v-flex>
+                                </v-layout>
+                            </v-flex>
+                            <v-flex xs8>
+
+                                <v-list>
+                                    <v-list-tile
+                                        v-for="item in items"
+                                        :key="item.title"
+                                        avatar
+                                    >
+                                        <v-list-tile-action>
+                                            <v-icon
+                                                v-if="item.icon"
+                                                color="pink">star
+                                            </v-icon>
+                                        </v-list-tile-action>
+
+                                        <v-list-tile-content>
+                                            <v-list-tile-title v-text="item.title"/>
+                                        </v-list-tile-content>
+
+                                        <v-list-tile-avatar>
+                                            <img :src="item.avatar">
+                                        </v-list-tile-avatar>
+                                    </v-list-tile>
+                                </v-list>
+                            </v-flex>
+                        </v-layout>
+
+                    </v-card-text>
+                </v-form>
+            </v-card>
         </v-layout>
 
     </v-container>
@@ -100,6 +112,7 @@ export default {
             usuario: '',
             sistema: {},
             mensagem: '',
+            mensagens: [],
             sistemas: [],
 
             isConnected: false,
