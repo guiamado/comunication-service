@@ -8,11 +8,7 @@ import store from './store';
 import filters from './filters';
 import './registerServiceWorker';
 
-
-import { configureFakeBackend } from './modules/_helpers';
-
 Vue.use(VeeValidate);
-configureFakeBackend();
 
 filters.create(Vue);
 

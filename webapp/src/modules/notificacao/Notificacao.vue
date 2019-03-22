@@ -217,7 +217,6 @@ export default {
         if (this.plataformas.length == null || this.plataformas.length === 0) {
             this.obterPlataformas();
         }
-
     },
     // editedItem
     methods: {
