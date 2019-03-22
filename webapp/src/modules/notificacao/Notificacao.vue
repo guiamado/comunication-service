@@ -160,9 +160,6 @@ export default {
             is_ativo: true,
             plataformas: [],
         },
-        websocket: {
-            connection: null,
-        },
     }),
     computed: {
         formTitle() {
@@ -221,12 +218,6 @@ export default {
             this.obterPlataformas();
         }
 
-        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
-
-        this.websocket.connection.onopen = function (e) {
-            console.log('Conexão estabelecida - Componente Notificacao.vue');
-            console.log(e);
-        };
     },
     // editedItem
     methods: {
@@ -250,14 +241,14 @@ export default {
 
         deleteItem(item) {
             // eslint-disable-next-line
-            if (confirm('Deseja remover esse item?')) {
-                if (this.accountInfo.is_admin !== true) {
-                    this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
-                }
-                if (this.accountInfo.is_admin === true) {
-                    this.removerNotificacao(item.notificacao_id);
-                }
+            if (!confirm('Deseja remover esse item?')) {
+                return false;
             }
+            if (this.accountInfo.is_admin !== true) {
+                this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                return false;
+            }
+            return this.removerNotificacao(item.notificacao_id);
         },
     },
 };
