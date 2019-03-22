@@ -83,6 +83,7 @@
                 <v-card-text>
                     <mensagem-formulario
                         :item="editedItem"
+                        :dialog.sync="dialog"
                     />
                 </v-card-text>
             </v-card>
