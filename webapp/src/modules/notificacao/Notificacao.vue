@@ -40,6 +40,7 @@
                         :headers="headers"
                         :items="notificacoesRenderizadas"
                         :search="modeloBuscar"
+                        :pagination.sync="pagination"
                         :rows-per-page-items="[ 10, 25, 40 ]"
                         :rows-per-page-text="'Registros por página'"
                         :no-data-text="'Não Há Notificações.'"
@@ -52,7 +53,7 @@
                             <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
                             <td class="text-xs-center">{{ props.item.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.sistema }}</td>
-                            <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
+                            <td class="text-xs-center">{{ props.item.data_envio | formataData }}</td>
                             <td class="text-xs-center">
                                 <v-icon
                                     v-if="props.item.is_notificacao_lida"
@@ -108,6 +109,10 @@ export default {
         notificacaoLida: true,
         exibirBotaoGravar: true,
         modeloBuscar: '',
+        pagination: {
+            sortBy: 'data_envio',
+            descending: true,
+        },
         headers: [
             {
                 text: 'Identificador',
@@ -148,7 +153,6 @@ export default {
             },
         ],
         notificacoesRenderizadas: [],
-
         editedItem: {},
         defaultItem: {
             notificacao_id: null,
