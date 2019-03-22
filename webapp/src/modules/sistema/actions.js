@@ -14,7 +14,7 @@ export const obterSistemas = ({ dispatch, commit }) => {
 
 export const removerSistema = ({ dispatch, commit }, sistemaId) => {
     requisicaoAutorizada.delete(`http://localhost/v1/sistema/${sistemaId}`).then(() => {
-        commit(types.DELETE_SISTEMA, sistemaId);
+        commit(types.REMOVER_SISTEMA, sistemaId);
     }).catch((error) => {
         dispatch('alert/error', error.response.data.error, {
             root: true,
@@ -23,7 +23,7 @@ export const removerSistema = ({ dispatch, commit }, sistemaId) => {
 };
 
 export const cadastrarSistema = ({ dispatch, commit }, sistema) => requisicaoAutorizada.post('http://localhost/v1/sistema', sistema).then((response) => {
-    const { data } = response.data;
+    const { data } = response;
     commit(types.ACRESCENTAR_SISTEMA, data.data);
     dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
 }).catch((error) => {
