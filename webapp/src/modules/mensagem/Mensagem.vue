@@ -25,6 +25,7 @@
                         :headers="headers"
                         :items="mensagensRenderizadas"
                         :search="modeloBuscar"
+                        :pagination.sync="pagination"
                         :rows-per-page-items="[ 10, 25, 40 ]"
                         :rows-per-page-text="'Registros por página'"
                         light
@@ -35,6 +36,7 @@
                             <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
                             <td class="text-xs-center">{{ props.item.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
+                            <td class="text-xs-center">{{ props.item.created_at | formataData }}</td>
                             <td class="text-xs-center">
                                 {{ props.item.is_ativo ? "Ativo" : "Inativo" }}
                             </td>
@@ -116,6 +118,10 @@ export default {
             is_ativo: true,
             plataformas: [],
         },
+        pagination: {
+            sortBy: 'created_at',
+            descending: true,
+        },
         headers: [
             {
                 text: 'Identificador',
@@ -131,6 +137,11 @@ export default {
             {
                 text: 'Descrição',
                 value: 'descricao',
+                align: 'center',
+            },
+            {
+                text: 'Data de Criação',
+                value: 'created_at',
                 align: 'center',
             },
             {
