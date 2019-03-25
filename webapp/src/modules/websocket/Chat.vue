@@ -1,9 +1,10 @@
 <template>
     <v-container
-        fluid
-        >
+        fluid>
 
-        <v-layout column fill-height>
+        <v-layout
+            column
+            fill-height>
             <v-card
 
                 flat
@@ -11,7 +12,7 @@
                 <v-toolbar
                     dark
                     color="primary">
-                    <v-toolbar-title>Chat - Usuários Conectados ({{ websocket.connectedUsers }})</v-toolbar-title>
+                    <v-toolbar-title>Chat</v-toolbar-title>
                 </v-toolbar>
                 <v-form @submit="sendMessage">
                     <v-card-text>

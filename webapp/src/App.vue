@@ -14,6 +14,9 @@
                 v-show="loading"
                 v-if="status.loggedIn"/>
             <v-spacer/>
+            <span>
+                Usuários Conectados ({{ websocket.connectedUsers }})
+            </span>
         </v-toolbar>
 
         <v-content>
@@ -65,6 +68,7 @@ export default {
             status: 'account/status',
             user: 'account/user',
             accountInfo: 'account/accountInfo',
+            websocket: 'websocket/websocket',
         }),
     },
     mounted() {
