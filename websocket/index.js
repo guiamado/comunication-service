@@ -1,11 +1,16 @@
+
 const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const app = express();
-server = http.createServer(app);
+let server = http.createServer(app);
 const io = socketio(server);
+const env = require('env')()
+const jsonwebtoken = require('jsonwebtoken');
 
-const clients = [];
+let clients = [];
+let canaisDeSistemas = [];
+
 const serverPort = 8001;
 app.use(
     express.urlencoded({
@@ -28,7 +33,34 @@ io.on("connection", function (socket) {
     clients.push({clientId: socket.client.id})
     
     io.emit('connectedUsers', clients.length);
-    io.emit('clientConnected', {clientId: socket.client.id});
+    
+    socket.on('serverEntrarEmCanal', (dados) => {
+        // canaisDeSistemas[dados]
+    
+        try {
+            const canal = dados.sistema_id
+            const token = dados.token;
+            const tokenDecodificada = jsonwebtoken.verify(token, env.get('JWT_SECRET'))
+            const sistemas = tokenDecodificada['sistemas'];
+    
+            const indice = sistemas.findIndex(sistema => sistema.sistema_id === canal);
+            if(indice === -1) {
+                throw "Sistema solicitado não faz parte do grupo de permissões do usuário.";
+            }
+            
+            const canalPesquisado = canaisDeSistemas.find(valor => valor == canal);
+            if(canalPesquisado != canal) {
+                canaisDeSistemas.push(canal);
+                socket.join(canal);
+            }
+            
+        } catch(Exception) {
+            console.log(Exception)
+        }
+        
+    });
+    
+    
     
     socket.on('disconnect', () => {
         const index = clients.findIndex(client => client.clientId === socket.client.id);
@@ -38,10 +70,11 @@ io.on("connection", function (socket) {
         io.emit('clientDisconnected', {clientId: socket.client.id});
     });
     
-    socket.on('chatMessage', (data) => {
-        console.log(`[${data.clientId}]: ` + data.message);
+    socket.on('serverGlobalMessage', (dados) => {
+        //clientSystem
+        console.log(`[${dados.clientId}]: ` + dados.message);
 
-        io.emit('generalChat', data);
+        io.emit('clientGlobalMessage', dados);
     });
     
     
