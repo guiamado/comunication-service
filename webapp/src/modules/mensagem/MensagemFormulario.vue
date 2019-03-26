@@ -29,11 +29,12 @@
                     />
 
                     <h3> Plataformas </h3>
+                    {{editedItem}}
                     <div style="overflow: auto; max-height: 300px">
                         <v-list v-if="editedItem.mensagem_id == null">
                             <v-list-tile
                                 v-for="plataforma in plataformas"
-                                :key="plataforma.title"
+                                :key="plataforma.plataforma_id"
                                 avatar>
                                 <v-list-tile-content>
                                     <v-checkbox
@@ -111,13 +112,13 @@ export default {
         sistemasRenderizados: [],
         editedItem: {},
         defaultItem: {
-            mensagem_id: null,
             titulo: null,
             autor_id: null,
             sistema_id: null,
             descricao: '',
             is_ativo: true,
             plataformas: [],
+            mensagem_id: null,
         },
     }),
     computed: {
@@ -129,9 +130,14 @@ export default {
         }),
     },
     watch: {
-        item(val) {
-            this.editedItem = Object.assign({}, val);
+        dialog(val){
+            if(val === true){
+                this.editedItem = Object.assign({}, this.item);
+            }
         },
+        // item(val) {
+        //     this.editedItem = Object.assign({}, val);
+        // },
         sistemas(value) {
             if ('error' in value) {
                 this.sistemasRenderizados = [];
@@ -140,9 +146,23 @@ export default {
             }
         },
         editedItem(value) {
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
-            } 
+            // if (this.editedItem.autor_id == null) {
+            //     this.editedItem.autor_id = this.accountInfo.user_id;
+            // } 
+            // console.log()
+            // const self = this;
+            // value.plataformas = [];
+            // self.plataformasSelecionadas = [];
+            console.log('asdasd')
+            console.log(value)
+            // if (self.editedItem.autor_id == null) {
+            //     self.editedItem.autor_id = self.accountInfo.user_id;
+            // } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')) {
+            //     Object.keys(value.plataformas).forEach((indice) => {
+            //         console.log(this)
+            //         self.plataformasSelecionadas.push(value.plataformas[indice]);
+            //     });
+            // }
         },
     },
 
@@ -162,7 +182,6 @@ export default {
         }
     },
     methods: {
-
         ...mapActions({
             obterSistemas: 'sistema/obterSistemas',
             obterContas: 'conta/obterContas',

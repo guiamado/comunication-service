@@ -110,13 +110,22 @@ export default {
         modeloBuscar: '',
         editedIndex: -1,
         editedItem: {
-            mensagem_id: null,
             titulo: null,
             autor_id: null,
             sistema_id: null,
             descricao: '',
             is_ativo: true,
             plataformas: [],
+            mensagem_id: null,
+        },
+        defaultItem: {
+            titulo: null,
+            autor_id: null,
+            sistema_id: null,
+            descricao: '',
+            is_ativo: true,
+            plataformas: [],
+            mensagem_id: null,
         },
         pagination: {
             sortBy: 'created_at',
@@ -172,7 +181,10 @@ export default {
     },
 
     watch: {
-        dialog() {
+        dialog(value) {
+            if(value == false){
+                this.editedItem = this.defaultItem;
+            }
             if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
             }
@@ -198,15 +210,15 @@ export default {
             }
         },
         editedItem(value) {
-            const self = this;
-            self.plataformasSelecionadas = [];
-            if (self.editedItem.autor_id == null) {
-                self.editedItem.autor_id = self.accountInfo.user_id;
-            } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')) {
-                Object.keys(value.plataformas).forEach((indice) => {
-                    self.plataformasSelecionadas.push(value.plataformas[indice]);
-                });
-            }
+            // const self = this;
+            // self.plataformasSelecionadas = [];
+            // if (self.editedItem.autor_id == null) {
+            //     self.editedItem.autor_id = self.accountInfo.user_id;
+            // } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')) {
+            //     Object.keys(value.plataformas).forEach((indice) => {
+            //         self.plataformasSelecionadas.push(value.plataformas[indice]);
+            //     });
+            // }
         },
 
     },
@@ -243,6 +255,7 @@ export default {
         }),
 
         editItem(item) {
+            console.log('asdasdkik')
             this.editedIndex = this.mensagens.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
@@ -254,7 +267,6 @@ export default {
                 this.removerMensagem(item.mensagem_id);
             }
         },
-
         close() {
             this.dialog = false;
             setTimeout(() => {
