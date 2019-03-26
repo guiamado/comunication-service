@@ -1,12 +1,12 @@
-
 const express = require('express');
-const socketio = require('socketio');
+const socketio = require('socket.io');
 const http = require('http');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-require('dotenv').config();
+
+require('dotenv/config');
 
 const jsonwebtoken = require('jsonwebtoken');
 
@@ -36,17 +36,17 @@ io.on('connection', (socket) => {
     socket.on('serverEntrarEmCanal', (dados) => {
         try {
             const canal = dados.sistema_id;
-            const token = dados.token;
+            const { token } = dados;
             const tokenDecodificada = jsonwebtoken.verify(token, process.env.JWT_SECRET);
-            const sistemas = tokenDecodificada.sistemas;
+            const { sistemas } = tokenDecodificada;
 
             const indice = sistemas.findIndex(sistema => sistema.sistema_id === canal);
             if (indice === -1) {
-                throw 'Sistema solicitado não faz parte do grupo de permissões do usuário.';
+                throw new Error('Sistema solicitado não faz parte do grupo de permissões do usuário.');
             }
 
-            const canalPesquisado = canaisDeSistemas.find(valor => valor == canal);
-            if (canalPesquisado != canal) {
+            const canalPesquisado = canaisDeSistemas.find(valor => valor === canal);
+            if (canalPesquisado !== canal) {
                 canaisDeSistemas.push(canal);
                 socket.join(canal);
                 socket.to(canal).emit('clientEntrarCanal', dados);
