@@ -1,61 +1,58 @@
 
-const express = require("express");
-const socketio = require("socket.io");
-const http = require("http");
+const express = require('express');
+const socketio = require('socketio');
+const http = require('http');
+
 const app = express();
-let server = http.createServer(app);
+const server = http.createServer(app);
 const io = socketio(server);
-require('dotenv').config()
-const env = require('env')()
+require('dotenv').config();
+
 const jsonwebtoken = require('jsonwebtoken');
 
-let clients = [];
-let canaisDeSistemas = [];
+const clients = [];
+const canaisDeSistemas = [];
 
 const serverPort = 8001;
-app.use(
-    express.urlencoded({
-        extended: true
-    })
-);
+app.use(express.urlencoded({
+    extended: true,
+}));
 
-server.listen(serverPort, function () {
+server.listen(serverPort, () => {
     console.log(`Servidor Rodando na Porta ${serverPort}. \n Usuários ativos: ${clients.length}`);
 });
 
-app.get("/", function (req, res) {
+app.get('/', (req, res) => {
     res.send(`Servidor Rodando na Porta ${serverPort}  <br /> Usuários ativos: ${clients.length}`);
 });
 
-io.on("connection", function (socket) {
-
+io.on('connection', (socket) => {
     console.log('an user connected');
 
-    clients.push({clientId: socket.client.id})
+    clients.push({ clientId: socket.client.id });
 
     io.emit('connectedUsers', clients.length);
 
     socket.on('serverEntrarEmCanal', (dados) => {
         try {
-            const canal = dados.sistema_id
+            const canal = dados.sistema_id;
             const token = dados.token;
-            const tokenDecodificada = jsonwebtoken.verify(token, process.env.JWT_SECRET)
-            const sistemas = tokenDecodificada['sistemas'];
+            const tokenDecodificada = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+            const sistemas = tokenDecodificada.sistemas;
 
             const indice = sistemas.findIndex(sistema => sistema.sistema_id === canal);
-            if(indice === -1) {
-                throw "Sistema solicitado não faz parte do grupo de permissões do usuário.";
+            if (indice === -1) {
+                throw 'Sistema solicitado não faz parte do grupo de permissões do usuário.';
             }
 
             const canalPesquisado = canaisDeSistemas.find(valor => valor == canal);
-            if(canalPesquisado != canal) {
+            if (canalPesquisado != canal) {
                 canaisDeSistemas.push(canal);
                 socket.join(canal);
-                socket.to(canal).emit('clientEntrarCanal', dados)
+                socket.to(canal).emit('clientEntrarCanal', dados);
             }
-
-        } catch(Exception) {
-            console.log(Exception)
+        } catch (Exception) {
+            console.log(Exception);
         }
     });
 
@@ -72,14 +69,11 @@ io.on("connection", function (socket) {
     });
 
     socket.on('serverMensagemGlobal', (dados) => {
-        console.log(`[${dados.clientId}]: ` + dados.message);
+        console.log(`[${dados.clientId}]: ${dados.message}`);
 
-        canaisDeSistemas.forEach((value, index) => {
+        canaisDeSistemas.forEach((value) => {
             socket.to(value).emit('clientMensagemGlobal', dados);
         });
     });
-
-
 });
-
 
