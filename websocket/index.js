@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
 
     clientes.push(identificadorUsuario);
 
-    io.emit('connectedUsers', clientes.length);
+    io.emit('clientConnectedUsers', clientes.length);
 
     socket.on('serverEntrarEmCanal', (dados) => {
         try {

@@ -8,7 +8,7 @@ export const SOCKET_disconect = ({ commit }, data) => {
     commit(types.SOCKET_DISCONNECT, data);
 };
 
-export const SOCKET_connectedUsers = ({ commit }, data) => {
+export const SOCKET_clientConnectedUsers = ({ commit }, data) => {
     commit(types.SOCKET_CONNECTEDUSERS, data);
 };
 

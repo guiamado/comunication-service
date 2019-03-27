@@ -9,7 +9,7 @@ export const mutations = {
         state.websocket.isConnected = false;
     },
 
-    [types.SOCKET_CONNECTEDUSERS](state, data) {
+    [types.SOCKET_CLIENT_CONNECTEDUSERS](state, data) {
         state.websocket.connectedUsers = data;
     },
 };
