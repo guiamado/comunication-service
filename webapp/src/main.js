@@ -14,15 +14,22 @@ const socketServer = `http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env
 
 Vue.use(VeeValidate);
 
-Vue.use(new VueSocketIO({
-    debug: true,
-    connection: SocketIO(socketServer),
-    vuex: {
-        store,
-        actionPrefix: 'SOCKET_',
-        mutationPrefix: 'SOCKET_',
-    },
-}));
+const token = localStorage.getItem('token');
+const clientSocketOptions = {
+    query: { token: token },
+};
+// const clientSocketOptions = {};
+if (token != null) {
+    Vue.use(new VueSocketIO({
+        debug: true,
+        connection: SocketIO(socketServer, clientSocketOptions),
+        vuex: {
+            store,
+            actionPrefix: 'SOCKET_',
+            mutationPrefix: 'SOCKET_',
+        },
+    }));
+}
 
 filters.create(Vue);
 
