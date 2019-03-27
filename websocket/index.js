@@ -63,10 +63,10 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('serverMensagem', (dados) => {
-        const canal = dados.sistema_id;
-        socket.to(canal).emit('clientMensagem', dados);
-    });
+    socket.on('serverMensagem', dados => socket.to(dados.sistema_id).emit('clientMensagem', dados));
+
+    socket.on('serverMensagemGlobal', dados => canaisDeSistemas
+        .forEach(value => socket.to(value).emit('clientMensagemGlobal', dados)));
 
     socket.on('disconnect', () => {
         const index = clientes.findIndex(cliente => cliente === identificadorUsuario);
@@ -75,11 +75,6 @@ io.on('connection', (socket) => {
         io.emit('connectedUsers', clientes.length);
     });
 
-    socket.on('serverMensagemGlobal', (dados) => {
-        // console.log(`[${dados.clientId}]: ${dados.message}`);
-
-        canaisDeSistemas.forEach(value => socket.to(value).emit('clientMensagemGlobal', dados));
-    });
     socket.on('error', data => console.log(data));
 });
 
