@@ -1,5 +1,4 @@
 <template>
-
     <v-container grid-list-md>
         <v-form
             ref="form"
@@ -27,11 +26,11 @@
                         required
                         rows="5"
                     />
-
-                    <h3> Plataformas </h3>
-                    {{editedItem}}
-                    <div style="overflow: auto; max-height: 300px">
-                        <v-list v-if="editedItem.mensagem_id == null">
+                    <div
+                        style="overflow: auto; max-height: 300px"
+                         v-if="editedItem.mensagem_id == null">
+                        <h3> Plataformas </h3>
+                        <v-list>
                             <v-list-tile
                                 v-for="plataforma in plataformas"
                                 :key="plataforma.plataforma_id"
@@ -49,7 +48,6 @@
                         </v-list>
                     </div>
                     <br>
-
                     <v-select
                         v-model="editedItem.sistema_id"
                         :disabled="editedItem.mensagem_id != null"
@@ -114,6 +112,7 @@ export default {
         defaultItem: {
             titulo: null,
             autor_id: null,
+            created_at: null,
             sistema_id: null,
             descricao: '',
             is_ativo: true,
@@ -134,6 +133,7 @@ export default {
             if(val === true){
                 this.editedItem = Object.assign({}, this.item);
             }
+            console.log(this.editedItem, 'SAHUASHUHU')
         },
         // item(val) {
         //     this.editedItem = Object.assign({}, val);
@@ -145,27 +145,7 @@ export default {
                 this.sistemasRenderizados = value;
             }
         },
-        editedItem(value) {
-            // if (this.editedItem.autor_id == null) {
-            //     this.editedItem.autor_id = this.accountInfo.user_id;
-            // } 
-            // console.log()
-            // const self = this;
-            // value.plataformas = [];
-            // self.plataformasSelecionadas = [];
-            console.log('asdasd')
-            console.log(value)
-            // if (self.editedItem.autor_id == null) {
-            //     self.editedItem.autor_id = self.accountInfo.user_id;
-            // } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')) {
-            //     Object.keys(value.plataformas).forEach((indice) => {
-            //         console.log(this)
-            //         self.plataformasSelecionadas.push(value.plataformas[indice]);
-            //     });
-            // }
-        },
     },
-
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
         if (this.sistemas.length == null || this.sistemas.length === 0) {

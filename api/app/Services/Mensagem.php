@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Mensagem as ModeloMensagem;
+use Carbon\Carbon;
 use Validator;
 
 class Mensagem implements IService
@@ -35,9 +36,10 @@ class Mensagem implements IService
         }
 
         $dados = array_merge($dados, [
-            'is_ativo' => true
+            'is_ativo' => true,
+            'created_at' => Carbon::now()
         ]);
-
+        
         $mensagem = ModeloMensagem::create($dados);
         $this->vincularPlataforma($mensagem->mensagem_id, $dados['plataformas']);
 

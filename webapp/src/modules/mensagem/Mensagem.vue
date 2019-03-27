@@ -112,6 +112,7 @@ export default {
         editedItem: {
             titulo: null,
             autor_id: null,
+            created_at: null,
             sistema_id: null,
             descricao: '',
             is_ativo: true,
@@ -121,6 +122,7 @@ export default {
         defaultItem: {
             titulo: null,
             autor_id: null,
+            created_at: null,
             sistema_id: null,
             descricao: '',
             is_ativo: true,
@@ -166,7 +168,6 @@ export default {
             },
         ],
     }),
-
     computed: {
         formTitle() {
             return this.editedIndex === -1 ? 'Criar' : '';
@@ -179,7 +180,6 @@ export default {
             accountInfo: 'account/accountInfo',
         }),
     },
-
     watch: {
         dialog(value) {
             if(value == false){
@@ -209,18 +209,6 @@ export default {
                 this.sistemasRenderizados = value;
             }
         },
-        editedItem(value) {
-            // const self = this;
-            // self.plataformasSelecionadas = [];
-            // if (self.editedItem.autor_id == null) {
-            //     self.editedItem.autor_id = self.accountInfo.user_id;
-            // } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')) {
-            //     Object.keys(value.plataformas).forEach((indice) => {
-            //         self.plataformasSelecionadas.push(value.plataformas[indice]);
-            //     });
-            // }
-        },
-
     },
     mounted() {
         if (this.mensagens.length == null || this.mensagens.length === 0) {
@@ -243,7 +231,6 @@ export default {
         }
     },
     methods: {
-
         ...mapActions({
             obterSistemas: 'sistema/obterSistemas',
             obterMensagems: 'mensagem/obterMensagems',
@@ -253,14 +240,11 @@ export default {
             cadastrarMensagem: 'mensagem/cadastrarMensagem',
             atualizarMensagem: 'mensagem/atualizarMensagem',
         }),
-
         editItem(item) {
-            console.log('asdasdkik')
             this.editedIndex = this.mensagens.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
-
         deleteItem(item) {
             // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
