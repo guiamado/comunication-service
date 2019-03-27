@@ -66,27 +66,15 @@
                                 </v-layout>
                             </v-flex>
                             <v-flex xs8>
-
-                                <v-list>
-                                    <v-list-tile
-                                        v-for="item in items"
-                                        :key="item.title"
-                                        avatar
-                                    >
-                                        <v-list-tile-action>
-                                            <v-icon
-                                                v-if="item.icon"
-                                                color="pink">star
-                                            </v-icon>
-                                        </v-list-tile-action>
-
+                                <v-list subheader>
+                                    <v-subheader>Recent Chats</v-subheader>
+                                    <v-list-tile avatar v-for="(chat, index) in chats">
                                         <v-list-tile-content>
-                                            <v-list-tile-title v-text="item.title"/>
+                                            <v-list-tile-title v-html="chat.name"></v-list-tile-title>
                                         </v-list-tile-content>
-
-                                        <v-list-tile-avatar>
-                                            <img :src="item.avatar">
-                                        </v-list-tile-avatar>
+                                        <v-list-tile-action>
+                                            <v-icon>chat_bubble</v-icon>
+                                        </v-list-tile-action>
                                     </v-list-tile>
                                 </v-list>
                             </v-flex>
