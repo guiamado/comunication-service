@@ -190,9 +190,6 @@ export default {
             }
 
             this.exibirBotaoGravar = true;
-            if (this.editedItem.mensagem_id != null) {
-                this.exibirBotaoGravar = false;
-            }
         },
         mensagens(value) {
             if ('error' in value) {

@@ -133,7 +133,6 @@ export default {
             if(val === true){
                 this.editedItem = Object.assign({}, this.item);
             }
-            console.log(this.editedItem, 'SAHUASHUHU')
         },
         // item(val) {
         //     this.editedItem = Object.assign({}, val);
