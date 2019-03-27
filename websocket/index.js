@@ -5,42 +5,49 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
+const jsonwebtoken = require('jsonwebtoken');
+const socketioJWT = require('socketio-jwt');
 require('dotenv/config');
 
-const jsonwebtoken = require('jsonwebtoken');
-
-const clients = [];
+const clientes = [];
 const canaisDeSistemas = [];
-
 const serverPort = 8001;
+
 app.use(express.urlencoded({
     extended: true,
 }));
 
 server.listen(serverPort, () => {
-    console.log(`Servidor Rodando na Porta ${serverPort}. \n Usuários ativos: ${clients.length}`);
+    console.log(`Servidor Rodando na Porta ${serverPort}. \n Usuários ativos: ${clientes.length}`);
 });
 
 app.get('/', (req, res) => {
-    res.send(`Servidor Rodando na Porta ${serverPort}  <br /> Usuários ativos: ${clients.length}`);
+    res.send(`Servidor Rodando na Porta ${serverPort}  <br /> Usuários ativos: ${clientes.length}`);
 });
 
+// middleware - socketioJWT
+io.use(socketioJWT.authorize({
+    secret: process.env.JWT_SECRET,
+    handshake: true,
+}));
+
 io.on('connection', (socket) => {
-    console.log('an user connected');
+    const decodedToken = socket.decoded_token;
+    const dadosUsuario = decodedToken.user;
+    const identificadorUsuario = dadosUsuario.user_id;
+    const sistemasAutorizados = dadosUsuario.sistemas;
+    // const isAdmin = dadosUsuario.is_admin;
 
-    clients.push({ clientId: socket.client.id });
+    console.log(`Usuário ${dadosUsuario.name} conectado.`);
 
-    io.emit('connectedUsers', clients.length);
+    clientes.push(identificadorUsuario);
+
+    io.emit('connectedUsers', clientes.length);
 
     socket.on('serverEntrarEmCanal', (dados) => {
         try {
             const canal = dados.sistema_id;
-            const { token } = dados;
-            const tokenDecodificada = jsonwebtoken.verify(token, process.env.JWT_SECRET);
-            const { sistemas } = tokenDecodificada;
-
-            const indice = sistemas.findIndex(sistema => sistema.sistema_id === canal);
+            const indice = sistemasAutorizados.findIndex(sistema => sistema.sistema_id === canal);
             if (indice === -1) {
                 throw new Error('Sistema solicitado não faz parte do grupo de permissões do usuário.');
             }
@@ -49,8 +56,8 @@ io.on('connection', (socket) => {
             if (canalPesquisado !== canal) {
                 canaisDeSistemas.push(canal);
                 socket.join(canal);
-                socket.to(canal).emit('clientEntrarCanal', dados);
             }
+            socket.to(canal).emit('clientEntrarCanal', dados);
         } catch (Exception) {
             console.log(Exception);
         }
@@ -62,18 +69,18 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        const index = clients.findIndex(client => client.clientId === socket.client.id);
-        clients.splice(index, 1);
+        const index = clientes.findIndex(cliente => cliente === identificadorUsuario);
+        clientes.splice(index, 1);
         console.log('user disconnected');
-        io.emit('connectedUsers', clients.length);
+        io.emit('connectedUsers', clientes.length);
     });
 
     socket.on('serverMensagemGlobal', (dados) => {
-        console.log(`[${dados.clientId}]: ${dados.message}`);
+        // console.log(`[${dados.clientId}]: ${dados.message}`);
 
-        canaisDeSistemas.forEach((value) => {
-            socket.to(value).emit('clientMensagemGlobal', dados);
-        });
+        canaisDeSistemas.forEach(value => socket.to(value).emit('clientMensagemGlobal', dados));
     });
+    socket.on('error', data => console.log(data));
 });
 
+io.on('error', data => console.log(data));
