@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
     const sistemasAutorizados = dadosUsuario.sistemas;
     // const isAdmin = dadosUsuario.is_admin;
 
-    console.log(`Usuário ${dadosUsuario.name} conectado.`);
+    console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
 
     clientes.push(identificadorUsuario);
 

@@ -25,8 +25,8 @@ if (token != null) {
         connection: SocketIO(socketServer, clientSocketOptions),
         vuex: {
             store,
-            actionPrefix: 'SOCKET_',
-            mutationPrefix: 'SOCKET_',
+            actionPrefix: 'Socket_',
+            mutationPrefix: 'Socket_',
         },
     }));
 }
