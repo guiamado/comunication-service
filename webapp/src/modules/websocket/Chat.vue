@@ -14,7 +14,7 @@
                     color="primary">
                     <v-toolbar-title>Chat</v-toolbar-title>
                 </v-toolbar>
-                <v-form @submit="sendMessage">
+                <v-form @submit="enviarMensagem">
                     <v-card-text>
 
                         <v-layout row>
@@ -43,7 +43,7 @@
                                             v-if="isEnviando == false"
                                             light
                                             color="primary"
-                                            @click="sendMessage">
+                                            @click="enviarMensagem">
                                             Enviar
                                         </v-btn>
                                     </v-flex>
@@ -129,7 +129,7 @@ export default {
         console.log(this.sistemas);
     },
     methods: {
-        sendMessage(e) {
+        enviarMensagem(e) {
             const base = this;
             base.isEnviando = true;
 

@@ -205,7 +205,7 @@ export default {
     },
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
-        if (this.notificacoes.length == null || this.notificacoes.length === 0) {
+        if (this.notificacoes == null || this.notificacoes.length === 0) {
             const params = {
                 usuarioId: this.accountInfo.user_id,
                 isNotificacaoLida: this.notificacaoLida,
