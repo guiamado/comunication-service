@@ -36,6 +36,7 @@ class Conta implements IService
                 "nome" => 'required|string|min:3|max:50',
                 "email" => 'required|string|min:3|max:50',
                 "password" => 'required|string|min:3|max:50',
+                "sistemas" => 'required|array|min:1',
             ]);
 
             if ($validator->fails()) {
@@ -91,6 +92,14 @@ class Conta implements IService
 
         $sistemas = $dados['sistemas'];
 
+        if (empty($dados['is_admin'])) {
+            $dados['is_admin'] = false;
+        }
+
+        if (empty($dados['is_ativo'])) {
+            $dados['is_ativo'] = false;
+        }
+
         $this->desvincularSistemaUsuario($id);
         $this->vincularSistema($id, $sistemas);
         unset($dados['sistemas']);
@@ -138,6 +147,9 @@ class Conta implements IService
     public function remover($id)
     {
         $usuario = ModeloUsuario::findOrFail($id);
+        $usuarios = $usuario->sistemas();
+        $usuarios->where('usuario_id', '=', $id)->detach();
+
         return $usuario->delete();
     }
 
