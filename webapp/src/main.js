@@ -21,7 +21,7 @@ const clientSocketOptions = {
 // const clientSocketOptions = {};
 if (token != null) {
     Vue.use(new VueSocketIO({
-        debug: true,
+        debug: false,
         connection: SocketIO(socketServer, clientSocketOptions),
         vuex: {
             store,

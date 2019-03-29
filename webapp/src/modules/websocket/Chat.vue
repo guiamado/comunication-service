@@ -28,6 +28,7 @@
                                         label="Sistemas"
                                         light
                                         solo
+                                        @change="entrarEmCanal"
                                     />
                                     <v-textarea
                                         ref="mensagem"
@@ -66,11 +67,14 @@
                                 </v-layout>
                             </v-flex>
                             <v-flex xs8>
+                                {{ websocket }}
                                 <v-list subheader>
-                                    <v-subheader>Recent Chats</v-subheader>
-                                    <v-list-tile avatar v-for="(chat, index) in chats">
+                                    <v-subheader>Mensagens para o Sistema {{ sistema.descricao }}</v-subheader>
+                                    <v-list-tile
+                                        v-for="(chat, index) in canal"
+                                        avatar>
                                         <v-list-tile-content>
-                                            <v-list-tile-title v-html="chat.name"></v-list-tile-title>
+                                            <v-list-tile-title v-html="chat.name"/>
                                         </v-list-tile-content>
                                         <v-list-tile-action>
                                             <v-icon>chat_bubble</v-icon>
@@ -103,6 +107,7 @@ export default {
             mensagem: '',
             mensagens: [],
             sistemas: [],
+            canal: [],
 
             isConnected: false,
             socketMessage: '',
@@ -118,6 +123,8 @@ export default {
     watch: {
         websocket(data) {
             console.log(data);
+            const canal = this.sistema.sistema_id;
+            this.canal = this.websocket.canais[canal];
         },
         accountInfo() {
             this.sistemas = [];
@@ -126,20 +133,28 @@ export default {
     },
     mounted() {
         this.sistemas = this.accountInfo.sistemas;
-        console.log(this.sistemas);
     },
     methods: {
+        entrarEmCanal() {
+            const self = this;
+            this.$socket.emit('serverEntrarEmCanal', {
+                sistema_id: self.sistema.sistema_id,
+                usuario: self.accountInfo,
+            });
+        },
         enviarMensagem(e) {
-            const base = this;
-            base.isEnviando = true;
+            const self = this;
+            self.isEnviando = true;
 
             setTimeout(() => {
-                base.isEnviando = false;
+                self.isEnviando = false;
             }, 1000);
             // this.websocket.connection.send(`${this.sistema}|${this.usuario}:${this.mensagem}`);
             e.preventDefault();
 
             this.$refs.mensagem.reset();
+
+            this.$socket.emit('emit_method', data);
         },
     },
 };

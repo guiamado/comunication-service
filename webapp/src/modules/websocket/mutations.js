@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as types from './types';
 
 export const mutations = {
@@ -14,8 +15,18 @@ export const mutations = {
     },
 
     [types.SOCKET_CLIENT_ENTRARCANAL](state, data) {
-        // const { canal } = data;
-        // const sistema_id = canal.sistema_id;
-        state.websocket.canal = data;
+        console.log('entrando na mutation SOCKET_CLIENT_ENTRARCANAL')
+        const canal = data.sistema_id;
+        const { usuario } = data;
+        const horarioAtual = moment().format();
+
+        if (state.websocket.canais[canal] == null) {
+            state.websocket.canais[canal] = [];
+        }
+        state.websocket.canais[canal].push({
+            mensagem: `Usuário <b>${usuario.name} entrou no canal.</b>`,
+            horario: horarioAtual,
+            usuario: usuario,
+        });
     },
 };
