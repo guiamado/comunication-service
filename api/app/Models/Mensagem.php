@@ -13,7 +13,8 @@ class Mensagem extends Model
         'descricao',
         'sistema_id',
         'autor_id',
-        'is_ativo'
+        'is_ativo',
+        'created_at'
     ];
     protected $primaryKey = "mensagem_id";
     protected $table = 'notificacao.mensagem';
