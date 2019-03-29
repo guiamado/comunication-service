@@ -220,10 +220,10 @@ export default {
             this.notificacoesRenderizadas = this.notificacoes;
         }
 
-        if (this.contas.length == null || this.contas.length === 0) {
+        if (this.contas == null || this.contas.length === 0) {
             this.obterContas();
         }
-        if (this.plataformas.length == null || this.plataformas.length === 0) {
+        if (this.plataformas == null || this.plataformas.length === 0) {
             this.obterPlataformas();
         }
     },
