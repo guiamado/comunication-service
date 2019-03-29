@@ -98,9 +98,7 @@
                                 slot-scope="props">
                                 <td class="text-xs-center">{{ props.item.titulo }}</td>
                                 <td class="text-xs-center">{{ props.item.descricao }}</td>
-                                <td class="text-xs-center">{{ props.item.data_envio | formatDate
-                                }}
-                                </td>
+                                <td class="text-xs-center">{{ props.item.data_envio | formataData }}</td>
                                 <td class="text-xs-center">
                                     <v-icon v-if="props.item.is_notificacao_lida">thumb_up</v-icon>
                                     <v-icon v-if="!props.item.is_notificacao_lida">thumb_down

@@ -195,20 +195,6 @@ export default {
                 this.removerSistema(item.sistema_id);
             }
         },
-
-
-        save() {
-            const self = this;
-            self.loading = true;
-
-            if (self.editedIndex > -1) {
-                this.atualizarSistema(self.editedItem);
-            } else {
-                this.cadastrarSistema(self.editedItem);
-            }
-            self.loading = false;
-            self.close();
-        },
     },
 };
 

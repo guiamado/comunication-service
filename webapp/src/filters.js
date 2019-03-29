@@ -2,9 +2,9 @@ import moment from 'moment';
 
 export default {
     filters: {
-        formatDate(value) {
+        formataData(value) {
             if (value) {
-                return moment(String(value)).format('MM/DD/YYYY hh:mm');
+                return moment(String(value)).format('DD/MM/YYYY hh:mm');
             }
             return false;
         },
