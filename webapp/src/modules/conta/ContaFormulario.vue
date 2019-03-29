@@ -63,6 +63,7 @@
                                 :label="sistema.descricao"
                                 :value="sistema"
                                 color="success"
+                                :rules="[rules.required, rules.minLengthCheckBox]"
                                 required/>
                         </v-list-tile-content>
 
@@ -110,6 +111,7 @@ export default {
         rules: {
             required: value => !!value || 'Campo Obrigatório.',
             minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',
+            minLengthCheckBox: array => (array != null && array.length != null && array.length > 0) || 'Campo obrigatório.',
             email: (value) => {
                 // eslint-disable-next-line
                 const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -131,7 +133,7 @@ export default {
     },
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
-        if (this.sistemas == null || this.sistemas.length === 0) {
+        if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
     },
