@@ -56,7 +56,6 @@ io.on('connection', (socketClient) => {
             }
 
             const salaPesquisada = salasDeSistemas.find(valor => valor === sala);
-            console.log(`sala pesquisada ${salaPesquisada}`);
             if (typeof salaPesquisada === 'undefined') {
                 console.log(`Criando sala ${sala}`);
                 salasDeSistemas.push(sala);

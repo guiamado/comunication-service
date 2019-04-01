@@ -14,8 +14,6 @@ export const Socket_clientConnectedUsers = ({ commit }, data) => {
 };
 
 export const Socket_serverEntrarEmSala = ({ commit}, data) => {
-    console.log(data)
-    console.log('1111111')
     const { sala } = data;
     $socket.emit('serverEntrarEmSala', {
         sala,
@@ -23,14 +21,14 @@ export const Socket_serverEntrarEmSala = ({ commit}, data) => {
     commit(types.SOCKET_SERVER_ENTRAREMSALA, data);
 };
 
-export const Socket_clientEntrarEmSala = ({ commit, socket }, data) => {
+export const Socket_clientEntrarEmSala = ({ commit }, data) => {
     commit(types.SOCKET_CLIENT_ENTRAREMSALA, data);
 };
 
-export const Socket_clientSairDaSala = ({ commit, socket }, data) => {
+export const Socket_clientSairDaSala = ({ commit }, data) => {
     commit(types.SOCKET_CLIENT_SAIRDASALA, data);
 };
 
-export const Socket_clientMensagemSala = ({ commit, socket }, data) => {
+export const Socket_clientMensagemSala = ({ commit }, data) => {
     commit(types.SOCKET_CLIENT_MENSAGEMSALA, data);
 };

@@ -28,7 +28,7 @@
                                         label="Sistemas"
                                         light
                                         solo
-                                        @change="entrarEmCanal"
+                                        @change="entrarEmSala"
                                     />
                                     <v-textarea
                                         ref="mensagem"
@@ -95,10 +95,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-    name: 'WebSocket',
+    name: 'Chat',
     data() {
         return {
             isEnviando: false,
@@ -123,8 +123,6 @@ export default {
     watch: {
         websocket(data) {
             console.log(data);
-            const canal = this.sistema.sistema_id;
-            this.canal = this.websocket.canais[canal];
         },
         accountInfo() {
             this.sistemas = [];
@@ -135,26 +133,30 @@ export default {
         this.sistemas = this.accountInfo.sistemas;
     },
     methods: {
-        entrarEmCanal() {
+        ...mapActions({
+            websocketEntrarEmSala: 'websocket/Socket_serverEntrarEmSala',
+        }),
+
+        entrarEmSala() {
             const self = this;
-            this.$socket.emit('serverEntrarEmCanal', {
-                sistema_id: self.sistema.sistema_id,
-                usuario: self.accountInfo,
+
+            this.websocketEntrarEmSala({
+                sala: self.sistema.sistema_id,
             });
         },
         enviarMensagem(e) {
             const self = this;
             self.isEnviando = true;
-
-            setTimeout(() => {
-                self.isEnviando = false;
-            }, 1000);
-            // this.websocket.connection.send(`${this.sistema}|${this.usuario}:${this.mensagem}`);
-            e.preventDefault();
-
-            this.$refs.mensagem.reset();
-
-            this.$socket.emit('emit_method', data);
+            //
+            // setTimeout(() => {
+            //     self.isEnviando = false;
+            // }, 1000);
+            //
+            // e.preventDefault();
+            //
+            // this.$refs.mensagem.reset();
+            //
+            // this.$socket.emit('emit_method', data);
         },
     },
 };
