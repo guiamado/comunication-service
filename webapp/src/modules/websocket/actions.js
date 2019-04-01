@@ -12,7 +12,12 @@ export const Socket_clientConnectedUsers = ({ commit }, data) => {
     commit(types.SOCKET_CLIENT_CONNECTEDUSERS, data);
 };
 
-export const Socket_clientEntrarCanal = ({ commit }, data) => {
-    commit(types.SOCKET_CLIENT_ENTRARCANAL, data);
+export const Socket_clientEntrarEmSala = ({ commit, socket }, data) => {
+    commit(types.SOCKET_CLIENT_ENTRAREMSALA, data);
 };
+
+export const Socket_clientSairDaSala = ({ commit, socket }, data) => {
+    commit(types.SOCKET_CLIENT_SAIRDASALA, data);
+};
+
 

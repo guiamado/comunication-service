@@ -14,19 +14,34 @@ export const mutations = {
         state.websocket.connectedUsers = data;
     },
 
-    [types.SOCKET_CLIENT_ENTRARCANAL](state, data) {
-        console.log('entrando na mutation SOCKET_CLIENT_ENTRARCANAL')
-        const canal = data.sistema_id;
+    [types.SOCKET_CLIENT_ENTRAREMSALA](state, data) {
+        console.log('entrando na mutation SOCKET_CLIENT_ENTRAREMSALA');
+        const { sala } = data;
         const { usuario } = data;
-        const horarioAtual = moment().format();
-
-        if (state.websocket.canais[canal] == null) {
-            state.websocket.canais[canal] = [];
+        const horario = moment().format();
+        const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
+        if (indice === -1) {
+            state.websocket.salas.push({
+                sala,
+                mensagens: [
+                    {
+                        mensagem: `Usuário <b>${usuario.name}</b> entrou na sala.`,
+                        horario,
+                        usuario,
+                    },
+                ],
+            });
         }
-        state.websocket.canais[canal].push({
-            mensagem: `Usuário <b>${usuario.name} entrou no canal.</b>`,
-            horario: horarioAtual,
-            usuario: usuario,
-        });
+        state.salaAtual = sala;
+    },
+
+    [types.SOCKET_CLIENT_SAIRDASALA](state, data) {
+        console.log('entrando na mutation SOCKET_CLIENT_SAIRDASALA');
+        const { sala } = data;
+        const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
+
+        if (indice !== -1) {
+            state.websocket.salas.splice(indice, 1);
+        }
     },
 };
