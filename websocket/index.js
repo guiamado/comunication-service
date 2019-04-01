@@ -5,12 +5,12 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-const jsonwebtoken = require('jsonwebtoken');
+
 const socketioJWT = require('socketio-jwt');
 require('dotenv/config');
 
 const clientes = [];
-const canaisDeSistemas = [];
+const salasDeSistemas = [];
 const serverPort = 8001;
 
 app.use(express.urlencoded({
@@ -31,8 +31,8 @@ io.use(socketioJWT.authorize({
     handshake: true,
 }));
 
-io.on('connection', (socket) => {
-    const decodedToken = socket.decoded_token;
+io.on('connection', (socketClient) => {
+    const decodedToken = socketClient.decoded_token;
     const dadosUsuario = decodedToken.user;
     const identificadorUsuario = dadosUsuario.user_id;
     const sistemasAutorizados = dadosUsuario.sistemas;
@@ -44,41 +44,48 @@ io.on('connection', (socket) => {
 
     io.emit('clientConnectedUsers', clientes.length);
 
-    socket.on('serverEntrarEmCanal', (dados) => {
+    socketClient.on('serverEntrarEmSala', (dados) => {
         try {
-            const canal = dados.sistema_id;
-            const indice = sistemasAutorizados.findIndex(sistema => sistema.sistema_id === canal);
+            const { sala } = dados;
+            const indice = sistemasAutorizados.findIndex(sistema => sistema.sala === sala);
             if (indice === -1) {
                 throw new Error('Sistema solicitado não faz parte do grupo de permissões do usuário.');
             }
 
-            const canalPesquisado = canaisDeSistemas.find(valor => valor === canal);
-            if (canalPesquisado !== canal) {
-                canaisDeSistemas.push(canal);
-                socket.join(canal);
+            const salaPesquisada = salasDeSistemas.find(valor => valor === sala);
+            if (salaPesquisada !== sala) {
+                salasDeSistemas.push(sala);
+                socketClient.join(sala);
             }
-            socket.to(canal).emit('clientEntrarCanal', dados);
-            
-            //Envia mensagem para somente o client específico.
-            socket.emit('clientEntrarCanal', dados);
+            socketClient.to(sala).emit('clientEntrarEmSala', dados);
         } catch (Exception) {
             console.log(Exception);
         }
     });
 
-    socket.on('serverMensagem', dados => socket.to(dados.sistema_id).emit('clientMensagem', dados));
+    socketClient.on('serverSairDeSala', (dados) => {
+        try {
+            const { sala } = dados;
+            socketClient.leave(sala);
+            socketClient.to(sala).emit('clientSairDeSala', dados);
+        } catch (Exception) {
+            console.log(Exception);
+        }
+    });
 
-    socket.on('serverMensagemGlobal', dados => canaisDeSistemas
-        .forEach(value => socket.to(value).emit('clientMensagemGlobal', dados)));
+    socketClient.on('serverMensagem', dados => socketClient.to(dados.sala).emit('clientMensagem', dados));
 
-    socket.on('disconnect', () => {
-        const index = clientes.findIndex(cliente => cliente === identificadorUsuario);
-        clientes.splice(index, 1);
+    socketClient.on('serverMensagemGlobal', dados => salasDeSistemas
+        .forEach(value => socketClient.to(value).emit('clientMensagemGlobal', dados)));
+
+    socketClient.on('disconnect', () => {
+        const indice = clientes.findIndex(cliente => cliente === identificadorUsuario);
+        clientes.splice(indice, 1);
         console.log('user disconnected');
         io.emit('connectedUsers', clientes.length);
     });
 
-    socket.on('error', data => console.log(data));
+    socketClient.on('error', data => console.log(data));
 });
 
 io.on('error', data => console.log(data));
