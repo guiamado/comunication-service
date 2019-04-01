@@ -2,27 +2,22 @@ import VeeValidate from 'vee-validate';
 import '@babel/polyfill';
 import Vue from 'vue';
 import VueSocketIO from 'vue-socket.io';
-import SocketIO from 'socket.io-client';
 import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import filters from './filters';
 import './registerServiceWorker';
-
-const socketServer = `http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`;
+import $socket from './modules/websocket/_helpers/socket-client-instance';
 
 Vue.use(VeeValidate);
 
 const token = localStorage.getItem('token');
-const clientSocketOptions = {
-    query: { token: token },
-};
-// const clientSocketOptions = {};
+
 if (token != null) {
     Vue.use(new VueSocketIO({
         debug: false,
-        connection: SocketIO(socketServer, clientSocketOptions),
+        connection: $socket,
         vuex: {
             store,
             actionPrefix: 'Socket_',

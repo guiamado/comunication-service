@@ -1,3 +1,9 @@
-import io from 'socket.io-client';
+import SocketIO from 'socket.io-client';
+
 const socketServer = `http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`;
-export default io(socketServer);
+const token = localStorage.getItem('token');
+const clientSocketOptions = {
+    query: { token },
+};
+
+export default SocketIO(socketServer, clientSocketOptions);
