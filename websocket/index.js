@@ -58,6 +58,9 @@ io.on('connection', (socket) => {
                 socket.join(canal);
             }
             socket.to(canal).emit('clientEntrarCanal', dados);
+            
+            //Envia mensagem para somente o client específico.
+            socket.emit('clientEntrarCanal', dados);
         } catch (Exception) {
             console.log(Exception);
         }
