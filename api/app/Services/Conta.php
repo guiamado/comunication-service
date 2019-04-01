@@ -144,13 +144,16 @@ class Conta implements IService
         }
     }
 
-    public function remover($id)
+    public function remover($id, $dadosUsuarioLogado)
     {
         $usuario = ModeloUsuario::findOrFail($id);
-        $usuarios = $usuario->sistemas();
-        $usuarios->where('usuario_id', '=', $id)->detach();
+        if ($dadosUsuarioLogado['usuario_id'] != $id) {
 
-        return $usuario->delete();
+            $usuarios = $usuario->sistemas();
+            $usuarios->where('usuario_id', '=', $id)->detach();
+
+            return $usuario->delete();
+        }
     }
 
     public function autenticar(\Illuminate\Http\Request $request) : ModeloUsuario

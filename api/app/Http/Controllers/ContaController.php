@@ -44,7 +44,7 @@ class ContaController extends Controller
         return $response->json($conta->alterar($id, $dados));
     }
 
-    public function delete(ServerRequestInterface $request, $id = null)
+    public function delete(\Illuminate\Http\Request $request, $id = null)
     {
         $conta = new \App\Services\Conta();
 
@@ -52,6 +52,7 @@ class ContaController extends Controller
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($conta->remover($id));
+        $dadosUsuarioLogado = $request->user();
+        return $response->json($conta->remover($id, $dadosUsuarioLogado));
     }
 }
