@@ -13,8 +13,10 @@ export const Socket_clientConnectedUsers = ({ commit }, data) => {
     commit(types.SOCKET_CLIENT_CONNECTEDUSERS, data);
 };
 
-export const Socket_serverEntrarEmSala = ({ commit, socket }, data) => {
-    const { sala } = data.sala;
+export const Socket_serverEntrarEmSala = ({ commit}, data) => {
+    console.log(data)
+    console.log('1111111')
+    const { sala } = data;
     $socket.emit('serverEntrarEmSala', {
         sala,
     });

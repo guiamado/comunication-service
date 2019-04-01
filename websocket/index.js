@@ -45,25 +45,32 @@ io.on('connection', (socketClient) => {
     io.emit('clientConnectedUsers', clientes.length);
 
     socketClient.on('serverEntrarEmSala', (dados) => {
+        console.log('Entrando no evento serverEntrarEmSala');
         try {
             const { sala } = dados;
-            const indice = sistemasAutorizados.findIndex(sistema => sistema.sala === sala);
+            console.log(`Trabalhando com a sala ${sala}`);
+            console.log(sistemasAutorizados);
+            const indice = sistemasAutorizados.findIndex(sistemaAutorizado => sistemaAutorizado.sistema_id === sala);
             if (indice === -1) {
-                throw new Error('Sistema solicitado não faz parte do grupo de permissões do usuário.');
+                throw new Error('** Sistema solicitado não faz parte do grupo de permissões do usuário. **');
             }
 
             const salaPesquisada = salasDeSistemas.find(valor => valor === sala);
-            if (salaPesquisada !== sala) {
+            console.log(`sala pesquisada ${salaPesquisada}`);
+            if (typeof salaPesquisada === 'undefined') {
+                console.log(`Criando sala ${sala}`);
                 salasDeSistemas.push(sala);
                 socketClient.join(sala);
             }
             socketClient.to(sala).emit('clientEntrarEmSala', dados);
+            console.log('-------');
         } catch (Exception) {
             console.log(Exception);
         }
     });
 
     socketClient.on('serverSairDeSala', (dados) => {
+        console.log('Entrando no evento serverSairDeSala');
         try {
             const { sala } = dados;
             socketClient.leave(sala);
