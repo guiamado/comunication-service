@@ -50,7 +50,9 @@
                                         @click="editItem(props.item)">edit
                                     </v-icon>
                                 </v-btn>
-                                <v-btn icon>
+                                <v-btn
+                                    icon
+                                    v-if="accountInfo.user_id != props.item.usuario_id">
                                     <v-icon
                                         color="grey darken-1"
                                         @click="deleteItem(props.item)">delete
