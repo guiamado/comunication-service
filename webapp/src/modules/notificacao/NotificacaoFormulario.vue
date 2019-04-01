@@ -62,6 +62,7 @@ export default {
     },
     data: () => ({
         mensagensRenderizadas: [],
+        mensagensComVinculo: [],
         loading: false,
         editedItem: {},
         defaultItem: {
@@ -77,26 +78,31 @@ export default {
             connection: null,
         },
     }),
-
     computed: {
         ...mapGetters({
             mensagens: 'mensagem/mensagens',
+            accountInfo: 'account/accountInfo',
         }),
     },
-
     watch: {
         item(value) {
             this.editedItem = Object.assign({}, value);
         },
         mensagens(value) {
+            const self = this;
+
             if ('error' in value) {
                 this.mensagensRenderizadas = [];
             } else {
-                this.mensagensRenderizadas = value;
+                value.filter((item) => {
+                    if(self.filtrarSistemasUsuario(item.sistema_id) === true) {
+                        self.mensagensComVinculo.push(item);
+                    }
+                });
+                self.mensagensRenderizadas = self.mensagensComVinculo;
             }
         },
     },
-
     mounted() {
         this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
 
@@ -112,7 +118,6 @@ export default {
             this.obterMensagems();
         }
     },
-
     methods: {
 
         ...mapActions({
@@ -166,6 +171,18 @@ export default {
             }, 1000);
 
             this.websocket.connection.send(message);
+        },
+        filtrarSistemasUsuario(sistemaNotificacao) {
+            const self = this;
+            const { sistemas } = self.accountInfo;
+            let possuiVinculo = false;
+            sistemas.forEach((value) => {
+                if (parseInt(value.sistema_id, 10) === parseInt(sistemaNotificacao, 10)) {
+                    possuiVinculo = true;
+                }
+            });
+
+            return possuiVinculo;
         },
     },
 };
