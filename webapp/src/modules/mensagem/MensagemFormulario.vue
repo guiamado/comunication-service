@@ -1,5 +1,4 @@
 <template>
-
     <v-container grid-list-md>
         <v-form
             ref="form"
@@ -27,13 +26,14 @@
                         required
                         rows="5"
                     />
-
-                    <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
-                    <div style="overflow: auto; max-height: 300px">
-                        <v-list v-if="editedItem.mensagem_id == null">
+                    <div
+                        style="overflow: auto; max-height: 300px"
+                         v-if="editedItem.mensagem_id == null">
+                        <h3> Plataformas </h3>
+                        <v-list>
                             <v-list-tile
                                 v-for="plataforma in plataformas"
-                                :key="plataforma.title"
+                                :key="plataforma.plataforma_id"
                                 avatar>
                                 <v-list-tile-content>
                                     <v-checkbox
@@ -45,18 +45,9 @@
                                 </v-list-tile-content>
 
                             </v-list-tile>
-                            <v-list-tile
-                                v-for="plataforma in editedItem.plataformas"
-                                :key="plataforma.title"
-                                avatar>
-                                <v-list-tile-content>
-                                    {{ plataforma.descricao }}
-                                </v-list-tile-content>
-                            </v-list-tile>
                         </v-list>
                     </div>
                     <br>
-
                     <v-select
                         v-model="editedItem.sistema_id"
                         :disabled="editedItem.mensagem_id != null"
@@ -67,14 +58,6 @@
                         item-text="descricao"
                         item-value="sistema_id"
                         required/>
-
-                    <v-text-field
-                        v-if="plataformasSelecionadas.length > 0"
-                        :value="obterNomeAutor(editedItem.autor_id)"
-                        disabled
-                        label="Autor"
-                        box/>
-
                 </v-flex>
                 <v-flex
                     xs12
@@ -92,9 +75,10 @@
                         color="error"
                         @click.native="close">Fechar</v-btn>
                     <v-btn
-                        v-if="!loading && editedItem.autor_id === null"
+                        v-if="!loading"
                         dark
-                        color="blue darken-1">
+                        color="blue darken-1"
+                        @click.native="save">
                         Gravar
                     </v-btn>
                 </v-flex>
@@ -113,29 +97,31 @@ export default {
             default: () => {
             },
         },
+        dialog: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
     },
     data: () => ({
         valid: true,
         loading: false,
         plataformasSelecionadas: [],
-        mensagensRenderizadas: [],
         sistemasRenderizados: [],
-        editedItem: {
+        editedItem: {},
+        defaultItem: {
             titulo: null,
-            mensagem_id: null,
             autor_id: null,
+            created_at: null,
             sistema_id: null,
             descricao: '',
             is_ativo: true,
             plataformas: [],
+            mensagem_id: null,
         },
     }),
     computed: {
-        formTitle() {
-            return this.editedItem.mensagem_id === null ? 'Criar' : 'Visualizar';
-        },
         ...mapGetters({
-            mensagens: 'mensagem/mensagens',
             sistemas: 'sistema/sistema',
             contas: 'conta/conta',
             plataformas: 'plataforma/plataforma',
@@ -143,16 +129,14 @@ export default {
         }),
     },
     watch: {
-        item(val) {
-            this.editedItem = Object.assign({}, val);
-        },
-        mensagens(value) {
-            if ('error' in value) {
-                this.mensagensRenderizadas = [];
-            } else {
-                this.mensagensRenderizadas = value;
+        dialog(val){
+            if(val === true){
+                this.editedItem = Object.assign({}, this.item);
             }
         },
+        // item(val) {
+        //     this.editedItem = Object.assign({}, val);
+        // },
         sistemas(value) {
             if ('error' in value) {
                 this.sistemasRenderizados = [];
@@ -160,26 +144,9 @@ export default {
                 this.sistemasRenderizados = value;
             }
         },
-        editedItem(value) {
-            this.plataformasSelecionadas = [];
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
-            } else {
-                Object.keys(value.plataformas).forEach((indice) => {
-                    this.plataformasSelecionadas.push(value.plataformas[indice]);
-                });
-            }
-        },
     },
-
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
-        if (this.mensagens.length == null || this.mensagens.length === 0) {
-            this.obterMensagems();
-        }
-        if (this.mensagens.length > 0) {
-            this.mensagensRenderizadas = this.mensagens;
-        }
         if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
@@ -194,10 +161,8 @@ export default {
         }
     },
     methods: {
-
         ...mapActions({
             obterSistemas: 'sistema/obterSistemas',
-            obterMensagems: 'mensagem/obterMensagems',
             obterContas: 'conta/obterContas',
             obterPlataformas: 'plataforma/obterPlataformas',
             removerMensagem: 'mensagem/removerMensagem',
@@ -213,25 +178,7 @@ export default {
             } else {
                 this.cadastrarMensagem(self.editedItem);
             }
-            self.close();
-        },
-
-        obterNomeAutor(usuarioId) {
-            if (this.contas.length == null) {
-                this.obterContas();
-            }
-
-            let nomeAutor = '';
-            const self = this;
-
-            this.contas.every((item, indice) => {
-                if (this.contas[indice].usuario_id === usuarioId) {
-                    nomeAutor = self.contas[indice].nome;
-                    return false;
-                }
-                return true;
-            });
-            return nomeAutor;
+            this.$emit('update:dialog', false);
         },
         close() {
             this.editedItem = Object.assign({}, this.defaultItem);

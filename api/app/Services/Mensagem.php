@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Mensagem as ModeloMensagem;
+use Carbon\Carbon;
 use Validator;
 
 class Mensagem implements IService
@@ -35,9 +36,10 @@ class Mensagem implements IService
         }
 
         $dados = array_merge($dados, [
-            'is_ativo' => true
+            'is_ativo' => true,
+            'created_at' => Carbon::now()
         ]);
-
+        
         $mensagem = ModeloMensagem::create($dados);
         $this->vincularPlataforma($mensagem->mensagem_id, $dados['plataformas']);
 
@@ -61,8 +63,23 @@ class Mensagem implements IService
         if (isset($dados['mensagem_id'])) {
             unset($dados['mensagem_id']);
         }
+        if (isset($dados['created_at'])) {
+            unset($dados['created_at']);
+        }
 
-        return ModeloMensagem::where('mensagem_id', $id)->update($dados);
+        if (isset($dados['plataformas'])) {
+            $plataformas = $dados['plataformas'];
+            unset($dados['plataformas']);
+        }
+
+        $dataAtual = Carbon::now();
+        $dados['updated_at'] = $dataAtual->toDateTimeString();
+
+        ModeloMensagem::where('mensagem_id', $id)->update($dados);
+
+        $this->vincularPlataforma($id, $plataformas);
+
+        return $this->obter($id);
     }
 
     public function desabilitar($id)

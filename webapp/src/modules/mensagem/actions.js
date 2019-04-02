@@ -25,16 +25,18 @@ export const removerMensagem = ({ dispatch, commit }, mensagemId) => {
         });
 };
 
-export const cadastrarMensagem = ({ dispatch, commit }, mensagem) => requisicaoAutorizada.post('http://localhost/v1/mensagem', mensagem)
-    .then((response) => {
-        const { data } = response;
-        commit(types.ACRESCENTAR_MENSAGEM, data.data);
-        dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
-    }).catch((error) => {
-        dispatch('alert/error', error.response.data.error, {
-            root: true,
+export const cadastrarMensagem = ({ dispatch, commit }, mensagem) => {
+    requisicaoAutorizada.post('http://localhost/v1/mensagem', mensagem)
+        .then((response) => {
+            const { data } = response;
+            commit(types.ACRESCENTAR_MENSAGEM, data.data);
+            dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
+        }).catch((error) => {
+            dispatch('alert/error', error.response.data.error, {
+                root: true,
+            });
         });
-    });
+};
 
 export const atualizarMensagem = ({ dispatch, commit }, mensagem) => requisicaoAutorizada.patch(`http://localhost/v1/mensagem/${mensagem.mensagem_id}`, mensagem)
     .then(() => {
