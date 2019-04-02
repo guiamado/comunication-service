@@ -46,6 +46,7 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import { notificacaoService } from './service';
 
 export default {
     props: {
@@ -78,6 +79,7 @@ export default {
             connection: null,
         },
     }),
+    mixins: [notificacaoService],
     computed: {
         ...mapGetters({
             mensagens: 'mensagem/mensagens',
@@ -105,7 +107,7 @@ export default {
 
         this.editedItem = Object.assign({}, this.defaultItem);
         if (this.mensagens.length > 0) {
-            this.mensagensRenderizadas = this.mensagens;
+            this.mensagensRenderizadas = this.filtrarMensagensVinculadas(this.mensagens);
         }
         if (this.mensagens.length == null || this.mensagens.length === 0) {
             this.obterMensagems();
@@ -164,28 +166,6 @@ export default {
             }, 1000);
 
             this.websocket.connection.send(message);
-        },
-        filtrarMensagensVinculadas(value) {
-            const self = this;
-            value.filter((item) => {
-                if(self.usuarioPossuiVinculoComSistema(item.sistema_id) === true) {
-                    self.mensagensComVinculo.push(item);
-                }
-            });
-            
-            return self.mensagensComVinculo;
-        },
-        usuarioPossuiVinculoComSistema(sistemaNotificacao) {
-            const self = this;
-            const { sistemas } = self.accountInfo;
-            let possuiVinculo = false;
-            sistemas.forEach((value) => {
-                if (parseInt(value.sistema_id, 10) === parseInt(sistemaNotificacao, 10)) {
-                    possuiVinculo = true;
-                }
-            });
-
-            return possuiVinculo;
         },
     },
 };
