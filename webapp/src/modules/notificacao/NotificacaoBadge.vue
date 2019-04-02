@@ -34,7 +34,7 @@
                     <v-list
                         v-if="notificacoesBadge != null && notificacoesBadge.length > 0"
                         id="scroll-notificacoes"
-                        style="max-height: 200px"
+                        style="max-height: 250px"
                         class="scroll-y">
                         <template
                             v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge">
