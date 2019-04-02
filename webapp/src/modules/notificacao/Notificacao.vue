@@ -197,6 +197,13 @@ export default {
             } else {
                 this.notificacoesRenderizadas = value;
             }
+            if (this.dialog == false) {
+                const params = {
+                    usuarioId: this.accountInfo.user_id,
+                    isNotificacaoLida: this.notificacaoLida,
+                }
+                this.obterNotificacoes(params);
+            }
         },
 
         editedItem() {
