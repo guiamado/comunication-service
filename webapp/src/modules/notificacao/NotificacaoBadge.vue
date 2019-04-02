@@ -32,18 +32,13 @@
                     </v-card-title>
 
                     <v-list
-                        v-if="notificacoesBadge != null && notificacoesBadge.length > 0"
-                        id="scroll-notificacoes"
-                        style="max-height: 250px"
-                        class="scroll-y">
+                        v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
                         <template
                             v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge">
                             <v-list-tile
                                 :key="indexNotificacao"
                                 :to="minhaNotificacao"
-                                v-if="minhaNotificacao.is_notificacao_lida == false"
-                                v-scroll:#scroll-notificacoes="scrollNotificacoes">
-
+                                v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false">
                                 <v-list-tile-content>
                                     <v-list-tile-title>[{{ minhaNotificacao.sistema }}]</v-list-tile-title>
                                     <v-list-tile-sub-title>{{ minhaNotificacao.titulo }}</v-list-tile-sub-title>
@@ -216,7 +211,6 @@ export default {
     name: 'NotificacaoBadge',
     data() {
         return {
-            scrollItens: 0,
             dialog: false,
             dialogNotificacao: false,
             notificacao: {},
@@ -301,9 +295,6 @@ export default {
         notificacaoLida(item) {
             this.lerNotificacao(item);
             this.dialogNotificacao = false;
-        },
-        scrollNotificacoes(e) {
-            this.scrollItens = e.target.scrollTop
         },
     },
 };
