@@ -89,17 +89,10 @@ export default {
             this.editedItem = Object.assign({}, value);
         },
         mensagens(value) {
-            const self = this;
-
             if ('error' in value) {
                 this.mensagensRenderizadas = [];
             } else {
-                value.filter((item) => {
-                    if(self.filtrarSistemasUsuario(item.sistema_id) === true) {
-                        self.mensagensComVinculo.push(item);
-                    }
-                });
-                self.mensagensRenderizadas = self.mensagensComVinculo;
+                this.mensagensRenderizadas = this.filtrarMensagensVinculadas(value);
             }
         },
     },
@@ -172,7 +165,17 @@ export default {
 
             this.websocket.connection.send(message);
         },
-        filtrarSistemasUsuario(sistemaNotificacao) {
+        filtrarMensagensVinculadas(value) {
+            const self = this;
+            value.filter((item) => {
+                if(self.usuarioPossuiVinculoComSistema(item.sistema_id) === true) {
+                    self.mensagensComVinculo.push(item);
+                }
+            });
+            
+            return self.mensagensComVinculo;
+        },
+        usuarioPossuiVinculoComSistema(sistemaNotificacao) {
             const self = this;
             const { sistemas } = self.accountInfo;
             let possuiVinculo = false;
