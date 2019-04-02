@@ -13,7 +13,7 @@ export const Socket_clientConnectedUsers = ({ commit }, data) => {
     commit(types.SOCKET_CLIENT_CONNECTEDUSERS, data);
 };
 
-export const Socket_serverEntrarEmSala = ({ commit}, data) => {
+export const Socket_serverEntrarEmSala = ({ commit }, data) => {
     const { sala } = data;
     $socket.emit('serverEntrarEmSala', {
         sala,

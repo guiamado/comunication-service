@@ -61,7 +61,8 @@ io.on('connection', (socketClient) => {
                 salasDeSistemas.push(sala);
                 socketClient.join(sala);
             }
-            socketClient.to(sala).emit('clientEntrarEmSala', dados);
+            dados.usuario = dadosUsuario;
+            io.to(sala).emit('clientEntrarEmSala', dados);
             console.log('-------');
         } catch (Exception) {
             console.log(Exception);
