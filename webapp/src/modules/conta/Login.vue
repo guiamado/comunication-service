@@ -57,6 +57,11 @@
                                         class="btn btn-link"
                                         style="margin-left: 20px"
                                     >Cadastre-se</router-link>
+                                    <router-link
+                                        to="/recuperar"
+                                        class="btn btn-link"
+                                        style="margin-left: 20px"
+                                    >Esqueci minha senha</router-link>
 
                                 </v-card-actions>
                             </v-form>

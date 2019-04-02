@@ -16,27 +16,14 @@
                         <v-toolbar
                             dark
                             color="primary">
-                            <v-toolbar-title>Cadastrar</v-toolbar-title>
+                            <v-toolbar-title>Recuperar Senha</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
                             <v-form
                                 ref="form"
-                                lazy-validation
+                                v-model="valid"
                                 @submit.prevent="tratarSubmissao">
-                                <v-text-field
-                                    v-validate="'required'"
-                                    v-model="user.nome"
-                                    :rules="[rules.required, rules.minLength]"
-                                    prepend-icon="face"
-                                    label="Nome"
-                                    class="form-control"
-                                    required
-                                />
-                                <div
-                                    v-if="submitted && errors.has('nome')"
-                                    class="invalid-feedback">{{
-                                    errors.first('nome') }}
-                                </div>
+                                
                                 <v-text-field
                                     v-validate="'required'"
                                     v-model="user.email"
@@ -51,20 +38,7 @@
                                     class="invalid-feedback">{{
                                     errors.first('email') }}
                                 </div>
-                                <v-text-field
-                                    v-validate="{ required: true, min: 6 }"
-                                    v-model="user.password"
-                                    :rules="[rules.required, rules.minLength]"
-                                    prepend-icon="lock"
-                                    type="password"
-                                    label="Senha"
-                                    class="form-control"
-                                    required
-                                />
-                                <div
-                                    v-if="submitted && errors.has('password')"
-                                    class="invalid-feedback">{{ errors.first('password') }}
-                                </div>
+                             
                                 <v-card-actions>
                                     <v-spacer/>
                                     <router-link
@@ -72,9 +46,10 @@
                                         class="btn btn-link">Cancel</router-link>
                                     <v-spacer/>
                                     <v-btn
-                                        :disabled="status.registering"
+                                        to="/redefinir"
+                                        :disabled="!valid"
                                         color="primary"
-                                        type="submit"> Cadastrar
+                                        type="submit"> Enviar
                                     </v-btn>
                                     <img v-show="status.registering">
                                 </v-card-actions>
@@ -94,13 +69,11 @@ export default {
     data() {
         return {
             user: {
-                nome: '',
                 email: '',
-                password: '',
             },
             submitted: false,
             rules: {
-                required: value => !!value || 'Campo obrigatório',
+                required: value => !!value || 'E-mail obrigatório.',
                 minLength: object => object.length > 3 || 'Campo obrigatório.',
                 email: (value) => {
                     // eslint-disable-next-line
@@ -108,17 +81,18 @@ export default {
                     return pattern.test(value) || 'E-mail obrigatório.';
                 },
             },
+            valid: true,
         };
     },
     computed: {
         ...mapState('account', ['status']),
     },
     methods: {
-        ...mapActions('account', ['register']),
+        ...mapActions('conta', ['obterContas']),
         tratarSubmissao() {
             this.submitted = true;
             if (this.$refs.form.validate()) {
-                this.register(this.user);
+                this.obterContas();
             }
         },
     },

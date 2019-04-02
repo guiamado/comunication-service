@@ -16,55 +16,48 @@
                         <v-toolbar
                             dark
                             color="primary">
-                            <v-toolbar-title>Cadastrar</v-toolbar-title>
+                            <v-toolbar-title>Redefinir Senha</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
                             <v-form
                                 ref="form"
-                                lazy-validation
+                                v-model="valid"
                                 @submit.prevent="tratarSubmissao">
                                 <v-text-field
-                                    v-validate="'required'"
-                                    v-model="user.nome"
+                                    v-model="user.novaSenha"
+                                    :append-icon="show1 ? 'visibility' : 'visibility_off'"
                                     :rules="[rules.required, rules.minLength]"
-                                    prepend-icon="face"
-                                    label="Nome"
-                                    class="form-control"
-                                    required
-                                />
-                                <div
-                                    v-if="submitted && errors.has('nome')"
-                                    class="invalid-feedback">{{
-                                    errors.first('nome') }}
-                                </div>
-                                <v-text-field
-                                    v-validate="'required'"
-                                    v-model="user.email"
-                                    :rules="[rules.required, rules.email, rules.minLength]"
-                                    prepend-icon="person"
-                                    label="E-mail"
-                                    class="form-control"
-                                    required
-                                />
-                                <div
-                                    v-if="submitted && errors.has('email')"
-                                    class="invalid-feedback">{{
-                                    errors.first('email') }}
-                                </div>
-                                <v-text-field
+                                    :type="show1 ? 'text' : 'password'"
+                                    name="input-10-1"
                                     v-validate="{ required: true, min: 6 }"
-                                    v-model="user.password"
-                                    :rules="[rules.required, rules.minLength]"
                                     prepend-icon="lock"
-                                    type="password"
-                                    label="Senha"
+                                    label="Nova Senha"
                                     class="form-control"
                                     required
+                                    @click:append="show1 = !show1"
                                 />
                                 <div
                                     v-if="submitted && errors.has('password')"
                                     class="invalid-feedback">{{ errors.first('password') }}
                                 </div>
+                                <v-text-field
+                                    v-model="user.confirmarSenha"
+                                    :append-icon="show2 ? 'visibility' : 'visibility_off'"
+                                    :rules="[rules.required, rules.minLength]"
+                                    :type="show2 ? 'text' : 'password'"
+                                    name="input-10-2"
+                                    v-validate="{ required: true, min: 6 }"
+                                    prepend-icon="lock"
+                                    label="Confirmar Senha"
+                                    class="form-control"
+                                    required
+                                    @click:append="show2 = !show2"
+                                />
+                                <div
+                                    v-if="submitted && errors.has('password')"
+                                    class="invalid-feedback">{{ errors.first('password') }}
+                                </div>
+                             
                                 <v-card-actions>
                                     <v-spacer/>
                                     <router-link
@@ -72,9 +65,9 @@
                                         class="btn btn-link">Cancel</router-link>
                                     <v-spacer/>
                                     <v-btn
-                                        :disabled="status.registering"
+                                        :disabled="!valid"
                                         color="primary"
-                                        type="submit"> Cadastrar
+                                        type="submit"> Salvar
                                     </v-btn>
                                     <img v-show="status.registering">
                                 </v-card-actions>
@@ -93,21 +86,24 @@ import { mapState, mapActions } from 'vuex';
 export default {
     data() {
         return {
+            show1: false,
+            show2: true,
+            password: 'Confirmar Senha',
             user: {
-                nome: '',
-                email: '',
-                password: '',
+                novaSenha: '',
+                confirmarSenha: '',
             },
             submitted: false,
             rules: {
-                required: value => !!value || 'Campo obrigatório',
-                minLength: object => object.length > 3 || 'Campo obrigatório.',
+                required: value => !!value || 'Required.',
+                minLength: object => object.length > 3 || 'Senha inválida.',
                 email: (value) => {
                     // eslint-disable-next-line
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return pattern.test(value) || 'E-mail obrigatório.';
+                    return pattern.test(value) || 'Invalid e-mail.';
                 },
             },
+            valid: true,
         };
     },
     computed: {
