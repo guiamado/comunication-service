@@ -23,19 +23,11 @@ export const mutations = {
     [types.SOCKET_CLIENT_ENTRAREMSALA](state, data) {
         console.log('entrando na mutation SOCKET_CLIENT_ENTRAREMSALA');
         const { sala } = data;
-        const { usuario } = data;
-        const horario = moment().format();
         const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
         if (indice === -1) {
             state.websocket.salas.push({
                 sala,
-                mensagens: [
-                    {
-                        mensagem: `Usuário <b>${usuario.name}</b> entrou na sala.`,
-                        horario,
-                        usuario,
-                    },
-                ],
+                mensagens: [],
             });
             state.salaAtual = sala;
         }
@@ -57,9 +49,9 @@ export const mutations = {
         const { usuario } = data;
         const { mensagem } = data;
         const horario = moment().format();
-        const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
-        if (indice !== -1) {
-            websocket.salas[indice].mensagens.push({
+        const indiceSala = state.websocket.salas.findIndex(valor => valor.sala === sala);
+        if (indiceSala !== -1) {
+            websocket.salas[indiceSala].mensagens.push({
                 mensagem,
                 horario,
                 usuario,
