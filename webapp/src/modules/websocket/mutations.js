@@ -46,15 +46,17 @@ export const mutations = {
     [types.SOCKET_CLIENT_MENSAGEMSALA](state, data) {
         console.log('entrando na mutation SOCKET_CLIENTMENSAGEMSALA');
         const { sala } = data;
-        const { usuario } = data;
         const { mensagem } = data;
         const horario = moment().format();
         const indiceSala = state.websocket.salas.findIndex(valor => valor.sala === sala);
         if (indiceSala !== -1) {
-            websocket.salas[indiceSala].mensagens.push({
+            state.websocket.salas[indiceSala].mensagens.push({
                 mensagem,
                 horario,
-                usuario,
+                usuario: {
+                    email: data.usuario.email,
+                    name: data.usuario.name,
+                },
             });
             state.salaAtual = sala;
         }
