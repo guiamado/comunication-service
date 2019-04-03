@@ -104,6 +104,7 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import NotificacaoFormulario from './NotificacaoFormulario.vue';
+import { notificacaoService } from './service';
 
 export default {
     components: { NotificacaoFormulario },
