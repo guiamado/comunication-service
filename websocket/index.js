@@ -44,6 +44,17 @@ io.on('connection', (socketClient) => {
         }
     };
 
+    const tratarSalaDeComunicação = (sala, prefixo) => {
+        const indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor === sala);
+        if (indiceSalaPesquisada === -1) {
+            console.log(`Criando sala ${sala}`);
+            salasDeSistemas.push(sala);
+            socketClient.join(`${prefixo}${sala}`);
+        }
+        // console.log('salas:');
+        // console.log(Object.keys(io.sockets.adapter.rooms));
+    };
+
     console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
     clientes.push(identificadorUsuario);
 
@@ -52,18 +63,12 @@ io.on('connection', (socketClient) => {
     socketClient.on('serverEntrarEmSala', (dados) => {
         try {
             const { sala } = dados;
-            isSistemaAutorizado(sistemasAutorizados, sala);
-
-            const salaPesquisada = salasDeSistemas.find(valor => valor === sala);
-            if (typeof salaPesquisada === 'undefined') {
-                console.log(`Criando sala ${sala}`);
-                salasDeSistemas.push(sala);
-                socketClient.join(sala);
-            }
+            isSistemaAutorizado(sala);
+            tratarSalaDeComunicação(sala, 'sala_');
 
             const novosDados = dados;
             novosDados.usuario = dadosUsuario;
-            io.to(sala).emit('clientEntrarEmSala', novosDados);
+            io.to(`sala_${sala}`).emit('clientEntrarEmSala', novosDados);
         } catch (Exception) {
             console.log(Exception);
         }
@@ -72,10 +77,10 @@ io.on('connection', (socketClient) => {
     socketClient.on('serverSairDeSala', (dados) => {
         try {
             const { sala } = dados;
-            isSistemaAutorizado(sistemasAutorizados, sala);
+            isSistemaAutorizado(sala);
 
             socketClient.leave(sala);
-            socketClient.to(sala).emit('clientSairDeSala', dados);
+            socketClient.to(`sala_${sala}`).emit('clientSairDeSala', dados);
         } catch (Exception) {
             console.log(Exception);
         }
@@ -84,25 +89,31 @@ io.on('connection', (socketClient) => {
     socketClient.on('serverMensagemSala', (dados) => {
         try {
             const { sala } = dados;
-            isSistemaAutorizado(sistemasAutorizados, sala);
+            isSistemaAutorizado(sala);
 
             const novosDados = dados;
             novosDados.usuario = dadosUsuario;
-            io.to(sala).emit('clientMensagemSala', novosDados);
+
+            io.to(`sala_${sala}`).emit('clientMensagemSala', novosDados);
         } catch (Exception) {
             console.log(Exception);
         }
     });
 
-    socketClient.on('serverMensagem', dados => socketClient.to(dados.sala).emit('clientMensagem', dados));
+    socketClient.on('serverNotificacaoSistema', (dados) => {
+        const { sala } = dados;
+        tratarSalaDeComunicação(sala, 'notificacoes_sistema_');
+        io.to(`notificacoes_sistema_${sala}`).emit('clientNotificacaoSistema', dados);
+    });
 
-    socketClient.on('serverMensagemGlobal', dados => salasDeSistemas
-        .forEach(value => socketClient.to(value).emit('clientMensagemGlobal', dados)));
+    // socketClient.on('serverMensagem', dados => socketClient.to(dados.sala).emit('clientMensagem', dados));
+    //
+    // socketClient.on('serverMensagemGlobal', dados => salasDeSistemas
+    //     .forEach(value => socketClient.to(value).emit('clientMensagemGlobal', dados)));
 
     socketClient.on('disconnect', () => {
         const indice = clientes.findIndex(cliente => cliente === identificadorUsuario);
         clientes.splice(indice, 1);
-        console.log('user disconnected');
         io.emit('connectedUsers', clientes.length);
     });
 
