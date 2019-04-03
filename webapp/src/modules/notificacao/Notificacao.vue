@@ -40,6 +40,7 @@
                         :headers="headers"
                         :items="notificacoesRenderizadas"
                         :search="modeloBuscar"
+                        :pagination.sync="pagination"
                         :rows-per-page-items="[ 10, 25, 40 ]"
                         :rows-per-page-text="'Registros por página'"
                         :no-data-text="'Não Há Notificações.'"
@@ -52,7 +53,7 @@
                             <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
                             <td class="text-xs-center">{{ props.item.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.sistema }}</td>
-                            <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
+                            <td class="text-xs-center">{{ props.item.data_envio | formataData }}</td>
                             <td class="text-xs-center">
                                 <v-icon
                                     v-if="props.item.is_notificacao_lida"
@@ -98,7 +99,6 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import NotificacaoFormulario from './NotificacaoFormulario';
-import { notificacaoService } from './service';
 
 export default {
     components: { NotificacaoFormulario },
@@ -108,6 +108,10 @@ export default {
         notificacaoLida: true,
         exibirBotaoGravar: true,
         modeloBuscar: '',
+        pagination: {
+            sortBy: 'data_envio',
+            descending: true,
+        },
         headers: [
             {
                 text: 'Identificador',
@@ -148,7 +152,6 @@ export default {
             },
         ],
         notificacoesRenderizadas: [],
-
         editedItem: {},
         defaultItem: {
             notificacao_id: null,
@@ -163,7 +166,6 @@ export default {
             connection: null,
         },
     }),
-    mixins: [notificacaoService],
     computed: {
         formTitle() {
             return this.editedItem.notificacao_id === null ? 'Criar' : 'Editar';
@@ -175,7 +177,6 @@ export default {
             accountInfo: 'account/accountInfo',
         }),
     },
-
     watch: {
         dialog() {
             if (this.editedItem.autor_id == null) {
@@ -193,8 +194,14 @@ export default {
             } else {
                 this.notificacoesRenderizadas = value;
             }
+            if (this.dialog == false) {
+                const params = {
+                    usuarioId: this.accountInfo.user_id,
+                    isNotificacaoLida: this.notificacaoLida,
+                }
+                this.obterNotificacoes(params);
+            }
         },
-
         editedItem() {
             if (this.editedItem.autor_id == null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
@@ -228,26 +235,21 @@ export default {
             console.log(e);
         };
     },
-    // editedItem
     methods: {
-
         ...mapActions({
             obterNotificacoes: 'notificacao/obterNotificacoes',
             obterContas: 'conta/obterContas',
             obterPlataformas: 'plataforma/obterPlataformas',
             removerNotificacao: 'notificacao/removerNotificacao',
         }),
-
         newItem() {
             this.editedItem = Object.assign({}, this.defaultItem);
             this.dialog = true;
         },
-
         editItem(item) {
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
-
         deleteItem(item) {
             // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
