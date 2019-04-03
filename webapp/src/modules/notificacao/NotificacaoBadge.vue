@@ -31,31 +31,34 @@
                         Notificações
                     </v-card-title>
 
-                    <v-list v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
-                        <v-list-tile
-                            v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge"
-                            :key="indexNotificacao"
-                            :to="minhaNotificacao">
+                    <v-list
+                        v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
+                        <template
+                            v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge">
+                            <v-list-tile
+                                :key="indexNotificacao"
+                                :to="minhaNotificacao"
+                                v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false">
+                                <v-list-tile-content>
+                                    <v-list-tile-title>[{{ minhaNotificacao.sistema }}]</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{ minhaNotificacao.titulo }}</v-list-tile-sub-title>
+                                </v-list-tile-content>
 
-                            <v-list-tile-content v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false">
-                                <v-list-tile-title>[{{ minhaNotificacao.sistema }}]</v-list-tile-title>
-                                <v-list-tile-sub-title>{{ minhaNotificacao.titulo }}</v-list-tile-sub-title>
-                            </v-list-tile-content>
-
-                            <v-list-tile-action>
-                                <v-tooltip bottom>
-                                    <v-btn
-                                        slot="activator"
-                                        flat
-                                        icon
-                                        @click="showItem(minhaNotificacao)"
-                                    >
-                                        <v-icon>visibility</v-icon>
-                                    </v-btn>
-                                    <span>Visualizar Notificação</span>
-                                </v-tooltip>
-                            </v-list-tile-action>
-                        </v-list-tile>
+                                <v-list-tile-action>
+                                    <v-tooltip bottom>
+                                        <v-btn
+                                            slot="activator"
+                                            flat
+                                            icon
+                                            @click="showItem(minhaNotificacao)"
+                                        >
+                                            <v-icon>visibility</v-icon>
+                                        </v-btn>
+                                        <span>Visualizar Notificação</span>
+                                    </v-tooltip>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </template>
                     </v-list>
 
                     <v-card-text v-else-if="notificacoesBadge != null && notificacoesBadge.length === 0">

@@ -68,10 +68,12 @@
                             </v-flex>
                             <v-flex xs8>
                                 {{ websocket }}
-                                <v-list subheader>
+                                <v-list
+                                    v-if="websocket.salas.length > 0 && websocket.indiceSalaAtual != null"
+                                    subheader>
                                     <v-subheader>Mensagens para o Sistema {{ sistema.descricao }}</v-subheader>
                                     <v-list-tile
-                                        v-for="(chat, index) in canal"
+                                        v-for="(chat, index) in websocket.salas[indiceSalaAtual]"
                                         avatar>
                                         <v-list-tile-content>
                                             <v-list-tile-title v-html="chat.name"/>
@@ -107,7 +109,6 @@ export default {
             mensagem: '',
             mensagens: [],
             sistemas: [],
-            canal: [],
 
             isConnected: false,
             socketMessage: '',

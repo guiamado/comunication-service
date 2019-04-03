@@ -29,7 +29,7 @@ export const mutations = {
                 sala,
                 mensagens: [],
             });
-            state.salaAtual = sala;
+            state.indiceSalaAtual = state.websocket.salas.findIndex(valor => valor.sala === sala);
         }
     },
 
@@ -58,7 +58,7 @@ export const mutations = {
                     name: data.usuario.name,
                 },
             });
-            state.salaAtual = sala;
+            state.indiceSalaAtual = indiceSala;
         }
     },
 };

@@ -46,6 +46,7 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import { notificacaoService } from './service';
 
 export default {
     props: {
@@ -62,6 +63,7 @@ export default {
     },
     data: () => ({
         mensagensRenderizadas: [],
+        mensagensComVinculo: [],
         loading: false,
         editedItem: {},
         defaultItem: {
@@ -77,13 +79,13 @@ export default {
             connection: null,
         },
     }),
-
+    mixins: [notificacaoService],
     computed: {
         ...mapGetters({
             mensagens: 'mensagem/mensagens',
+            accountInfo: 'account/accountInfo',
         }),
     },
-
     watch: {
         item(value) {
             this.editedItem = Object.assign({}, value);
@@ -92,11 +94,10 @@ export default {
             if ('error' in value) {
                 this.mensagensRenderizadas = [];
             } else {
-                this.mensagensRenderizadas = value;
+                this.mensagensRenderizadas = this.filtrarMensagensVinculadas(value);
             }
         },
     },
-
     mounted() {
         this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
 
@@ -106,13 +107,12 @@ export default {
 
         this.editedItem = Object.assign({}, this.defaultItem);
         if (this.mensagens.length > 0) {
-            this.mensagensRenderizadas = this.mensagens;
+            this.mensagensRenderizadas = this.filtrarMensagensVinculadas(this.mensagens);
         }
         if (this.mensagens.length == null || this.mensagens.length === 0) {
             this.obterMensagems();
         }
     },
-
     methods: {
 
         ...mapActions({
