@@ -13,6 +13,15 @@ const clientes = [];
 const salasDeSistemas = [];
 const serverPort = 8001;
 
+const self = this;
+
+export const isSistemaAutorizado = (sistemasAutorizados, sala) => {
+    const indice = sistemasAutorizados.findIndex(sistemaAutorizado => sistemaAutorizado.sistema_id === sala);
+    if (indice === -1) {
+        throw new Error('** Sistema solicitado não faz parte do grupo de permissões do usuário. **');
+    }
+};
+
 app.use(express.urlencoded({
     extended: true,
 }));
@@ -31,12 +40,12 @@ io.use(socketioJWT.authorize({
     handshake: true,
 }));
 
+
 io.on('connection', (socketClient) => {
     const decodedToken = socketClient.decoded_token;
     const dadosUsuario = decodedToken.user;
     const identificadorUsuario = dadosUsuario.user_id;
     const sistemasAutorizados = dadosUsuario.sistemas;
-    // const isAdmin = dadosUsuario.is_admin;
 
     console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
 
@@ -45,15 +54,9 @@ io.on('connection', (socketClient) => {
     io.emit('clientConnectedUsers', clientes.length);
 
     socketClient.on('serverEntrarEmSala', (dados) => {
-        console.log('Entrando no evento serverEntrarEmSala');
         try {
             const { sala } = dados;
-            console.log(`Trabalhando com a sala ${sala}`);
-            console.log(sistemasAutorizados);
-            const indice = sistemasAutorizados.findIndex(sistemaAutorizado => sistemaAutorizado.sistema_id === sala);
-            if (indice === -1) {
-                throw new Error('** Sistema solicitado não faz parte do grupo de permissões do usuário. **');
-            }
+            self.isSistemaAutorizado(sistemasAutorizados, sala);
 
             const salaPesquisada = salasDeSistemas.find(valor => valor === sala);
             if (typeof salaPesquisada === 'undefined') {
@@ -61,20 +64,35 @@ io.on('connection', (socketClient) => {
                 salasDeSistemas.push(sala);
                 socketClient.join(sala);
             }
-            dados.usuario = dadosUsuario;
-            io.to(sala).emit('clientEntrarEmSala', dados);
-            console.log('-------');
+
+            const novosDados = dados;
+            novosDados.usuario = dadosUsuario;
+            io.to(sala).emit('clientEntrarEmSala', novosDados);
         } catch (Exception) {
             console.log(Exception);
         }
     });
 
     socketClient.on('serverSairDeSala', (dados) => {
-        console.log('Entrando no evento serverSairDeSala');
         try {
             const { sala } = dados;
+            self.isSistemaAutorizado(sistemasAutorizados, sala);
+
             socketClient.leave(sala);
             socketClient.to(sala).emit('clientSairDeSala', dados);
+        } catch (Exception) {
+            console.log(Exception);
+        }
+    });
+
+    socketClient.on('serverMensagemSala', (dados) => {
+        try {
+            const { sala } = dados;
+            self.isSistemaAutorizado(sistemasAutorizados, sala);
+
+            const novosDados = dados;
+            novosDados.usuario = dadosUsuario;
+            io.to(sala).emit('clientMensagemSala', novosDados);
         } catch (Exception) {
             console.log(Exception);
         }
