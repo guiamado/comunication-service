@@ -10,17 +10,7 @@ const socketioJWT = require('socketio-jwt');
 require('dotenv/config');
 
 const clientes = [];
-const salasDeSistemas = [];
 const serverPort = 8001;
-
-const self = this;
-
-export const isSistemaAutorizado = (sistemasAutorizados, sala) => {
-    const indice = sistemasAutorizados.findIndex(sistemaAutorizado => sistemaAutorizado.sistema_id === sala);
-    if (indice === -1) {
-        throw new Error('** Sistema solicitado não faz parte do grupo de permissões do usuário. **');
-    }
-};
 
 app.use(express.urlencoded({
     extended: true,
@@ -40,15 +30,21 @@ io.use(socketioJWT.authorize({
     handshake: true,
 }));
 
-
 io.on('connection', (socketClient) => {
-    const decodedToken = socketClient.decoded_token;
-    const dadosUsuario = decodedToken.user;
+    const tokenDecodificada = socketClient.decoded_token;
+    const dadosUsuario = tokenDecodificada.user;
     const identificadorUsuario = dadosUsuario.user_id;
     const sistemasAutorizados = dadosUsuario.sistemas;
+    const salasDeSistemas = [];
+
+    const isSistemaAutorizado = (sala) => {
+        const indice = sistemasAutorizados.findIndex(sistemaAutorizado => sistemaAutorizado.sistema_id === sala);
+        if (indice === -1) {
+            throw new Error('** Sistema solicitado não faz parte do grupo de permissões do usuário. **');
+        }
+    };
 
     console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
-
     clientes.push(identificadorUsuario);
 
     io.emit('clientConnectedUsers', clientes.length);
@@ -56,7 +52,7 @@ io.on('connection', (socketClient) => {
     socketClient.on('serverEntrarEmSala', (dados) => {
         try {
             const { sala } = dados;
-            self.isSistemaAutorizado(sistemasAutorizados, sala);
+            isSistemaAutorizado(sistemasAutorizados, sala);
 
             const salaPesquisada = salasDeSistemas.find(valor => valor === sala);
             if (typeof salaPesquisada === 'undefined') {
@@ -76,7 +72,7 @@ io.on('connection', (socketClient) => {
     socketClient.on('serverSairDeSala', (dados) => {
         try {
             const { sala } = dados;
-            self.isSistemaAutorizado(sistemasAutorizados, sala);
+            isSistemaAutorizado(sistemasAutorizados, sala);
 
             socketClient.leave(sala);
             socketClient.to(sala).emit('clientSairDeSala', dados);
@@ -88,7 +84,7 @@ io.on('connection', (socketClient) => {
     socketClient.on('serverMensagemSala', (dados) => {
         try {
             const { sala } = dados;
-            self.isSistemaAutorizado(sistemasAutorizados, sala);
+            isSistemaAutorizado(sistemasAutorizados, sala);
 
             const novosDados = dados;
             novosDados.usuario = dadosUsuario;
