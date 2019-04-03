@@ -25,11 +25,10 @@ export const mutations = {
         const { sala } = data;
         const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
         if (indice === -1) {
-            state.websocket.salas.push({
+            state.indiceSalaAtual = state.websocket.salas.push({
                 sala,
                 mensagens: [],
-            });
-            state.indiceSalaAtual = state.websocket.salas.findIndex(valor => valor.sala === sala);
+            }) - 1;
         }
     },
 
