@@ -19,13 +19,22 @@
             </span>
         </v-toolbar>
 
-        <v-content>
-            <alerta
-                v-if="alert.message != null && alert.message_type != null"
-                :color="alert.message_type"
-            >{{ alert.message }}</alerta>
-            <router-view/>
-        </v-content>
+        <alerta
+            v-if="alert.message != null && alert.message_type != null"
+            :color="alert.message_type">{{ alert.message }}</alerta>
+        <router-view/>
+        <v-footer
+            dark
+            height="auto">
+            <v-card
+                class="flex"
+                flat
+                tile>
+                <v-card-actions class="grey darken-3 justify-center">
+                    <strong>{{ title }}</strong>
+                </v-card-actions>
+            </v-card>
+        </v-footer>
         <!--<v-footer :fixed="fixed" app>-->
         <!--<span>&copy; 2018</span>-->
         <!--</v-footer>-->
