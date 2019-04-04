@@ -9,7 +9,7 @@
             <v-toolbar-side-icon
                 v-if="status.loggedIn"
                 @click.stop="drawer = !drawer"/>
-            <v-toolbar-title v-text="title"/>
+            <v-toolbar-title v-text="this.$route.name"/>
             <notificacao-badge
                 v-show="loading"
                 v-if="status.loggedIn"/>

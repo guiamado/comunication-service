@@ -1,104 +1,106 @@
 <template>
-    <v-container fluid>
-        <v-layout
-            column
-            justify-center>
-            <v-card flat>
-                <v-toolbar
+    <v-content>
+        <v-container fluid>
+            <v-layout
+                column
+                justify-center>
+                <v-card flat>
+                    <v-toolbar
+                        dark
+                        color="primary">
+                        <v-toolbar-title>Notificacões</v-toolbar-title>
+                        <v-dialog
+                            v-model="dialog"
+                            max-width="500px">
+                            <v-card>
+                                <v-card-title light>
+                                    <span class="headline">{{ formTitle }} Notificação</span>
+                                </v-card-title>
+
+                                <v-card-text>
+                                    <notificacao-formulario
+                                        :item="editedItem"
+                                        :dialog.sync="dialog"/>
+                                </v-card-text>
+
+                            </v-card>
+
+                        </v-dialog>
+                        <v-spacer/>
+                        <v-spacer/>
+                        <v-text-field
+                            v-model="modeloBuscar"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        />
+                    </v-toolbar>
+                    <v-card-text>
+                        <v-data-table
+                            :headers="headers"
+                            :items="notificacoesRenderizadas"
+                            :search="modeloBuscar"
+                            :pagination.sync="pagination"
+                            :rows-per-page-items="[ 10, 25, 40 ]"
+                            :rows-per-page-text="'Registros por página'"
+                            :no-data-text="'Não Há Notificações.'"
+                            light
+                            class="elevation-1">
+                            <template
+                                slot="items"
+                                slot-scope="props">
+                                <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
+                                <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
+                                <td class="text-xs-center">{{ props.item.titulo }}</td>
+                                <td class="text-xs-center">{{ props.item.sistema }}</td>
+                                <td class="text-xs-center">{{ props.item.data_envio | formataData }}</td>
+                                <td class="text-xs-center">
+                                    <v-scroll-y-transition >
+                                        <v-icon
+                                            v-show="props.item.is_notificacao_lida"
+                                            color="blue">thumb_up</v-icon>
+                                    </v-scroll-y-transition>
+                                    <v-scroll-y-transition :origin="'bottom center 0'">
+                                        <v-icon
+                                            v-show="!props.item.is_notificacao_lida"
+                                            color="red">thumb_down</v-icon>
+                                    </v-scroll-y-transition>
+                                </td>
+                                <td
+                                    v-if="accountInfo.is_admin"
+                                    class="justify-center layout px-0">
+                                    <v-btn icon>
+                                        <v-icon
+                                            color="grey darken-1"
+                                            @click="deleteItem(props.item)">delete
+                                        </v-icon>
+                                    </v-btn>
+                                </td>
+                                <td
+                                    v-else
+                                    class="justify-center layout px-0 pt-3"> -
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card-text>
+                </v-card>
+            </v-layout>
+            <v-scale-transition v-if="accountInfo.is_admin">
+                <v-btn
+                    v-show="!loading"
+                    fab
+                    color="success"
                     dark
-                    color="primary">
-                    <v-toolbar-title>Notificacões</v-toolbar-title>
-                    <v-dialog
-                        v-model="dialog"
-                        max-width="500px">
-                        <v-card>
-                            <v-card-title light>
-                                <span class="headline">{{ formTitle }} Notificação</span>
-                            </v-card-title>
-
-                            <v-card-text>
-                                <notificacao-formulario
-                                    :item="editedItem"
-                                    :dialog.sync="dialog"/>
-                            </v-card-text>
-
-                        </v-card>
-
-                    </v-dialog>
-                    <v-spacer/>
-                    <v-spacer/>
-                    <v-text-field
-                        v-model="modeloBuscar"
-                        append-icon="search"
-                        label="Buscar"
-                        single-line
-                        hide-details
-                    />
-                </v-toolbar>
-                <v-card-text>
-                    <v-data-table
-                        :headers="headers"
-                        :items="notificacoesRenderizadas"
-                        :search="modeloBuscar"
-                        :pagination.sync="pagination"
-                        :rows-per-page-items="[ 10, 25, 40 ]"
-                        :rows-per-page-text="'Registros por página'"
-                        :no-data-text="'Não Há Notificações.'"
-                        light
-                        class="elevation-1">
-                        <template
-                            slot="items"
-                            slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
-                            <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
-                            <td class="text-xs-center">{{ props.item.titulo }}</td>
-                            <td class="text-xs-center">{{ props.item.sistema }}</td>
-                            <td class="text-xs-center">{{ props.item.data_envio | formataData }}</td>
-                            <td class="text-xs-center">
-                                <v-scroll-y-transition >
-                                    <v-icon
-                                        v-show="props.item.is_notificacao_lida"
-                                        color="blue">thumb_up</v-icon>
-                                </v-scroll-y-transition>
-                                <v-scroll-y-transition :origin="'bottom center 0'">
-                                    <v-icon
-                                        v-show="!props.item.is_notificacao_lida"
-                                        color="red">thumb_down</v-icon>
-                                </v-scroll-y-transition>
-                            </td>
-                            <td
-                                v-if="accountInfo.is_admin"
-                                class="justify-center layout px-0">
-                                <v-btn icon>
-                                    <v-icon
-                                        color="grey darken-1"
-                                        @click="deleteItem(props.item)">delete
-                                    </v-icon>
-                                </v-btn>
-                            </td>
-                            <td
-                                v-else
-                                class="justify-center layout px-0 pt-3"> -
-                            </td>
-                        </template>
-                    </v-data-table>
-                </v-card-text>
-            </v-card>
-        </v-layout>
-        <v-scale-transition v-if="accountInfo.is_admin">
-            <v-btn
-                v-show="!loading"
-                fab
-                color="success"
-                dark
-                fixed
-                bottom
-                right
-                @click="newItem()">
-                <v-icon>add</v-icon>
-            </v-btn>
-        </v-scale-transition>
-    </v-container>
+                    fixed
+                    bottom
+                    right
+                    @click="newItem()">
+                    <v-icon>add</v-icon>
+                </v-btn>
+            </v-scale-transition>
+        </v-container>
+    </v-content>
 </template>
 <script>
 
@@ -202,7 +204,7 @@ export default {
                 const params = {
                     usuarioId: this.accountInfo.user_id,
                     isNotificacaoLida: this.notificacaoLida,
-                }
+                };
                 this.obterNotificacoes(params);
             }
         },

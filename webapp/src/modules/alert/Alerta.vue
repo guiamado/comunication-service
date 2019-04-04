@@ -1,22 +1,24 @@
 <template>
-    <div>
-        <v-snackbar
-            :value="true"
-            :top="false"
-            :timeout="timeout"
-            :color="color"
-            :vertical="false"
-            transition="scale-transition"
-            dismissible>
-            <slot/>
-            <v-btn
-                dark
-                flat
-                @click="snackbar = false">
-                Close
-            </v-btn>
-        </v-snackbar>
-    </div>
+    <v-content>
+        <div>
+            <v-snackbar
+                :value="true"
+                :top="false"
+                :timeout="timeout"
+                :color="color"
+                :vertical="false"
+                transition="scale-transition"
+                dismissible>
+                <slot/>
+                <v-btn
+                    dark
+                    flat
+                    @click="snackbar = false">
+                    Close
+                </v-btn>
+            </v-snackbar>
+        </div>
+    </v-content>
 </template>
 <script>
 export default {

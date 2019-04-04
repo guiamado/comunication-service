@@ -21,32 +21,38 @@ const routesObject = [
     {
         path: '/login',
         component: Login,
+        name: 'Login',
     },
     {
         path: '/cadastrar',
         component: Cadastrar,
+        name: 'Cadastrar',
     },
     {
         path: '*',
         component: NaoEncontrado,
+        name: 'Não Encontrado',
     // redirect: '/'
     },
     {
         path: '/',
         component: Home,
-        name: 'home',
+        name: 'Home',
     },
     {
         path: '/chat',
         component: Chat,
+        name: 'Chats',
     },
     {
         path: '/notificacao',
         component: Notificacao,
+        name: 'Notificações',
     },
     {
         path: '/sobre',
         component: Sobre,
+        name: 'Sobre',
     },
     {
         path: '/administracao',
@@ -56,7 +62,7 @@ const routesObject = [
             {
                 path: '/administracao/plataforma',
                 component: Plataforma,
-                name: Plataforma,
+                name: 'Administração / Plataformas',
                 meta: {
                     title: 'Plataformas',
                 },
@@ -64,7 +70,7 @@ const routesObject = [
             {
                 path: '/administracao/sistema',
                 component: Sistema,
-                name: Sistema,
+                name: 'Administração / Sistemas',
                 meta: {
                     title: 'Sistema',
                 },
@@ -72,7 +78,7 @@ const routesObject = [
             {
                 path: '/administracao/conta',
                 component: Conta,
-                name: Conta,
+                name: 'Administração / Contas',
                 meta: {
                     title: 'Conta',
                 },
@@ -80,7 +86,7 @@ const routesObject = [
             {
                 path: '/administracao/mensagem',
                 component: Mensagem,
-                name: Mensagem,
+                name: 'Administração / Mensagens',
                 meta: {
                     title: 'Mensagem',
                 },
