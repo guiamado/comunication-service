@@ -65,7 +65,7 @@ export default {
     mounted() {
         if (this.accountInfo.is_admin !== true) {
             this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
-            this.$router.push({ name: 'home' });
+            this.$router.push('/');
         }
     },
 };

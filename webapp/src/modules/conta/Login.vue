@@ -101,13 +101,6 @@ export default {
     methods: {
         submit() {
             if (this.$refs.form.validate()) {
-                // Native form submission is not yet supported
-                // axios.post('/api/submit', {
-                //     name: this.name,
-                //     email: this.email,
-                //     select: this.select,
-                //     checkbox: this.checkbox
-                // })
                 const { email, password } = this;
                 if (email && password) {
                     this.login({ email, password });
