@@ -184,7 +184,7 @@ export default {
     },
     watch: {
         dialog(value) {
-            if (value == false) {
+            if (value === false) {
                 this.editedItem = this.defaultItem;
             }
             if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
@@ -195,7 +195,6 @@ export default {
         },
         mensagens(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.mensagensRenderizadas = [];
             } else {
                 this.mensagensRenderizadas = value;

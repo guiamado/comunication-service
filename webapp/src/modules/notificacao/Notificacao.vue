@@ -194,12 +194,11 @@ export default {
         },
         notificacoes(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.notificacoesRenderizadas = [];
             } else {
                 this.notificacoesRenderizadas = value;
             }
-            if (this.dialog == false) {
+            if (this.dialog === false) {
                 const params = {
                     usuarioId: this.accountInfo.user_id,
                     isNotificacaoLida: this.notificacaoLida,

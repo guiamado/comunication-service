@@ -33,8 +33,7 @@ export default {
         top: false,
     }),
     watch: {
-        color(value) {
-            console.log(value);
+        color() {
             this.snackbar = true;
         },
     },

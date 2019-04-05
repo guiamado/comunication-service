@@ -26,7 +26,7 @@
                                     v-if="websocket.salas.length > 0 && websocket.indiceSalaAtual != null"
                                     subheader>
                                     <template
-                                        v-for="(chat, index) in websocket.salas[websocket.indiceSalaAtual].mensagens">
+                                        v-for="(chat) in websocket.salas[websocket.indiceSalaAtual].mensagens">
                                         <v-list-tile
                                             :key="chat.mensagem"
                                             avatar>
@@ -146,9 +146,6 @@ export default {
         }),
     },
     watch: {
-        websocket(data) {
-            console.log(data);
-        },
         accountInfo() {
             this.sistemas = [];
             this.sistemas.push(this.accountInfo.sistemas);

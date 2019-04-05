@@ -169,7 +169,6 @@ export default {
     watch: {
         contas(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.contasIniciais = [];
             } else {
                 this.contasIniciais = value;
