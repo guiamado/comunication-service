@@ -69,7 +69,7 @@
                                     <v-spacer/>
                                     <router-link
                                         to="/login"
-                                        class="btn btn-link">Cancel</router-link>
+                                        class="btn btn-link">Cancelar</router-link>
                                     <v-spacer/>
                                     <v-btn
                                         :disabled="status.registering"
@@ -101,7 +101,7 @@ export default {
             submitted: false,
             rules: {
                 required: value => !!value || 'Campo obrigatório',
-                minLength: object => object.length > 3 || 'Campo obrigatório.',
+                minLength: object => object.length > 5 || 'Campo obrigatório.',
                 email: (value) => {
                     // eslint-disable-next-line
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -33,6 +33,7 @@
                                     prepend-icon="lock"
                                     label="Nova Senha"
                                     class="form-control"
+                                    autocomplete="off"
                                     required
                                     @click:append="show1 = !show1"
                                 />
@@ -47,9 +48,10 @@
                                     :type="show2 ? 'text' : 'password'"
                                     name="input-10-2"
                                     v-validate="{ required: true, min: 6 }"
-                                    prepend-icon="lock"
+                                    prepend-icon="redo"
                                     label="Confirmar Senha"
                                     class="form-control"
+                                    autocomplete="off"
                                     required
                                     @click:append="show2 = !show2"
                                 />
@@ -62,7 +64,7 @@
                                     <v-spacer/>
                                     <router-link
                                         to="/login"
-                                        class="btn btn-link">Cancel</router-link>
+                                        class="btn btn-link">Cancelar</router-link>
                                     <v-spacer/>
                                     <v-btn
                                         :disabled="!valid"
@@ -87,7 +89,7 @@ export default {
     data() {
         return {
             show1: false,
-            show2: true,
+            show2: false,
             password: 'Confirmar Senha',
             user: {
                 novaSenha: '',
@@ -95,12 +97,12 @@ export default {
             },
             submitted: false,
             rules: {
-                required: value => !!value || 'Required.',
-                minLength: object => object.length > 3 || 'Senha inválida.',
+                required: value => !!value || 'Senha obrigatória.',
+                minLength: object => object.length > 5 || 'Senha precisa ser válida.',
                 email: (value) => {
                     // eslint-disable-next-line
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return pattern.test(value) || 'Invalid e-mail.';
+                    return pattern.test(value) || 'Senha precisa ser válida.';
                 },
             },
             valid: true,

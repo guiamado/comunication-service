@@ -43,7 +43,7 @@
                                     <v-spacer/>
                                     <router-link
                                         to="/login"
-                                        class="btn btn-link">Cancel</router-link>
+                                        class="btn btn-link">Cancelar</router-link>
                                     <v-spacer/>
                                     <v-btn
                                         to="/redefinir"
@@ -78,7 +78,7 @@ export default {
                 email: (value) => {
                     // eslint-disable-next-line
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return pattern.test(value) || 'E-mail obrigatório.';
+                    return pattern.test(value) || 'E-mail precisa ser válido.';
                 },
             },
             valid: true,
