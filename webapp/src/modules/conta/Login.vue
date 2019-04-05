@@ -14,11 +14,11 @@
                         column
                         justify-center>
                         <v-card class="elevation-12">
-                            <v-toolbar
-                                dark
-                                color="primary">
-                                <v-toolbar-title>Login</v-toolbar-title>
-                            </v-toolbar>
+                            <!--<v-toolbar-->
+                            <!--dark-->
+                            <!--color="primary">-->
+                            <!--&lt;!&ndash;<v-toolbar-title>Login</v-toolbar-title>&ndash;&gt;-->
+                            <!--</v-toolbar>-->
                             <v-card-text>
                                 <v-form
                                     ref="form"
@@ -31,8 +31,7 @@
                                         label="E-mail"
                                         type="email"
                                         name="email"
-                                        required
-                                    />
+                                        required />
                                     <v-text-field
                                         v-model="password"
                                         :rules="passwordRules"
@@ -41,8 +40,7 @@
                                         label="Senha"
                                         name="password"
                                         browser-autocomplete="new-password"
-                                        required
-                                    />
+                                        required />
 
                                     <v-card-actions>
                                         <!--<v-btn @click="clear">Limpar</v-btn>-->
