@@ -1,6 +1,5 @@
 import moment from 'moment';
 import * as types from './types';
-import { websocket } from './getters';
 
 export const mutations = {
     [types.SOCKET_CONNECT](state, data) {
@@ -25,7 +24,7 @@ export const mutations = {
         const { sala } = data;
         const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
         if (indice === -1) {
-            state.indiceSalaAtual = state.websocket.salas.push({
+            state.websocket.indiceSalaAtual = state.websocket.salas.push({
                 sala,
                 mensagens: [],
             }) - 1;
@@ -57,7 +56,7 @@ export const mutations = {
                     name: data.usuario.name,
                 },
             });
-            state.indiceSalaAtual = indiceSala;
+            state.websocket.indiceSalaAtual = indiceSala;
         }
     },
 };
