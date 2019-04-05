@@ -8,7 +8,6 @@
                     <v-toolbar
                         dark
                         color="primary">
-                        <v-toolbar-title>Notificacões</v-toolbar-title>
                         <v-dialog
                             v-model="dialog"
                             max-width="500px">

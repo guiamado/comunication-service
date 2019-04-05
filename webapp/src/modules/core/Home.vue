@@ -2,11 +2,6 @@
     <v-content>
         <v-container fluid>
             <v-card color="" >
-                <v-toolbar
-                    dark
-                    color="primary">
-                    <v-toolbar-title>Olá!</v-toolbar-title>
-                </v-toolbar>
                 <v-card-text>
                     <v-layout justify-space-around>
                         <v-flex xs5>

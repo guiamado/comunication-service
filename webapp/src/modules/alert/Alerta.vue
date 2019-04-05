@@ -1,24 +1,22 @@
 <template>
-    <v-content>
-        <div>
-            <v-snackbar
-                :value="true"
-                :top="false"
-                :timeout="timeout"
-                :color="color"
-                :vertical="false"
-                transition="scale-transition"
-                dismissible>
-                <slot/>
-                <v-btn
-                    dark
-                    flat
-                    @click="snackbar = false">
-                    Close
-                </v-btn>
-            </v-snackbar>
-        </div>
-    </v-content>
+    <div>
+        <v-snackbar
+            :value="true"
+            :top="top"
+            :timeout="timeout"
+            :color="color"
+            :vertical="false"
+            transition="scale-transition"
+            dismissible>
+            <slot/>
+            <v-btn
+                dark
+                flat
+                @click="snackbar = false">
+                Close
+            </v-btn>
+        </v-snackbar>
+    </div>
 </template>
 <script>
 export default {
@@ -32,7 +30,7 @@ export default {
     data: () => ({
         timeout: 6000,
         snackbar: false,
-        top: true,
+        top: false,
     }),
     watch: {
         color(value) {
