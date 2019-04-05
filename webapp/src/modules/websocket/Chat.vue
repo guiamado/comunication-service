@@ -16,6 +16,35 @@
                         dark
                         color="primary">
                         <v-toolbar-title>{{ sistema.descricao || 'Selecione um sistema' }}</v-toolbar-title>
+                        <v-spacer />
+                        <v-scale-transition>
+                            <v-tooltip bottom>
+                                <v-btn
+                                    v-show="websocket.isConnected === true"
+                                    slot="activator"
+                                    small
+                                    icon
+                                    fab
+                                    color="teal">
+                                    <v-icon>check</v-icon>
+                                </v-btn>
+                                <span>Conectado</span>
+                            </v-tooltip>
+                        </v-scale-transition>
+                        <v-scale-transition>
+                            <v-tooltip bottom>
+                                <v-btn
+                                    v-show="websocket.isConnected === false"
+                                    slot="activator"
+                                    small
+                                    icon
+                                    fab
+                                    color="warning">
+                                    <v-icon>warning</v-icon>
+                                </v-btn>
+                                <span>Desconectado</span>
+                            </v-tooltip>
+                        </v-scale-transition>
                     </v-toolbar>
                     <v-card-text>
                         <v-layout
@@ -94,21 +123,7 @@
                                             @click="enviarMensagem">
                                             Enviar
                                         </v-btn>
-                                        <v-scale-transition>
-                                            <v-alert
-                                                v-show="websocket.isConnected === true"
-                                                :value="true"
-                                                outline
-                                                type="success"> Conectado
-                                            </v-alert>
-                                        </v-scale-transition>
-                                        <v-scale-transition>
-                                            <v-alert
-                                                v-show="websocket.isConnected === false"
-                                                :value="true"
-                                                type="error"> Desconectado
-                                            </v-alert>
-                                        </v-scale-transition>
+
                                     </v-layout>
                                 </v-flex>
                             </v-layout>
