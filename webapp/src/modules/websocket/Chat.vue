@@ -86,7 +86,8 @@
                                         column
                                         fill-height>
                                         <v-btn
-                                            v-show="isEnviando == false"
+                                            :loading="isEnviando"
+                                            :disabled="isEnviando"
                                             light
                                             color="primary"
                                             round
@@ -129,10 +130,8 @@ export default {
     data() {
         return {
             isEnviando: false,
-            usuario: '',
             sistema: {},
             mensagem: '',
-            mensagens: [],
             sistemas: [],
 
             isConnected: false,
@@ -161,6 +160,7 @@ export default {
     methods: {
         ...mapActions({
             websocketEntrarEmSala: 'websocket/Socket_serverEntrarEmSala',
+            websocketMensagemSala: 'websocket/Socket_serverMensagemSala',
         }),
 
         entrarEmSala() {
@@ -170,19 +170,19 @@ export default {
                 sala: self.sistema.sistema_id,
             });
         },
-        enviarMensagem(e) {
+        enviarMensagem(evento) {
             const self = this;
+
+            this.websocketMensagemSala({
+                sala: self.sistema.sistema_id,
+                mensagem: self.mensagem,
+            });
             self.isEnviando = true;
-            //
-            // setTimeout(() => {
-            //     self.isEnviando = false;
-            // }, 1000);
-            //
-            // e.preventDefault();
-            //
-            // this.$refs.mensagem.reset();
-            //
-            // this.$socket.emit('emit_method', data);
+            setTimeout(() => {
+                self.isEnviando = false;
+                this.$refs.mensagem.reset();
+            }, 1000);
+            evento.preventDefault();
         },
     },
 };
