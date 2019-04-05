@@ -2,16 +2,17 @@
     <v-content>
         <v-container
             fluid>
-
-
             <v-layout
                 align-space-around
-                column
-            >
+                column>
+
+
                 <v-card
+                    class="mx-auto"
                     flat
-                    dark
-                >
+                    light>
+
+
                     <v-toolbar
                         dark
                         color="primary">
@@ -46,50 +47,12 @@
                             </v-tooltip>
                         </v-scale-transition>
                     </v-toolbar>
-                    <v-card-text>
-                        <v-layout
-                            row
-                            wrap>
-                            <v-flex xs12>
-                                <v-list
-                                    v-if="websocket.salas.length > 0 && websocket.indiceSalaAtual != null"
-                                    subheader>
-                                    <template
-                                        v-for="(chat) in websocket.salas[websocket.indiceSalaAtual].mensagens">
-                                        <v-list-tile
-                                            :key="chat.mensagem"
-                                            avatar>
-                                            <v-list-tile-content>
-                                                <v-list-tile-title v-html="`${chat.usuario.name} < ${chat.usuario.email} >`"/>
-                                                <v-list-tile-sub-title v-html="chat.mensagem"/>
+                    <v-card-text style="height:calc(100vh - 200px); overflow-y: auto">
 
-                                            </v-list-tile-content>
-                                        </v-list-tile>
-                                    </template>
-                                </v-list>
-                            </v-flex>
-                        </v-layout>
-                    </v-card-text>
-                </v-card>
-            </v-layout>
 
-        </v-container>
-        <v-footer
-            fixed
-            dark
-            height="auto">
-            <v-card
-                class="flex"
-                flat
-                tile>
-                <v-card-text class="">
-                    <v-form @submit="enviarMensagem">
-                        <v-container
-                            grid-list-md
-                            text-xs-center>
-                            <v-layout
-                                row>
-                                <v-flex xs10>
+                        <v-window v-model="step">
+                            <v-window-item :value="1">
+                                <v-card-text>
                                     <v-select
                                         v-model="sistema"
                                         :items="sistemas"
@@ -97,41 +60,105 @@
                                         item-text="descricao"
                                         label="Sistemas"
                                         light
-                                        solo
-                                        @change="entrarEmSala" />
-                                    <v-textarea
-                                        ref="mensagem"
-                                        v-model="mensagem"
-                                        solo
-                                        label="mensagem"
-                                        light
-                                        required/>
-                                </v-flex>
+                                        solo />
+                                </v-card-text>
+                            </v-window-item>
 
-                                <v-flex xs2>
-                                    <v-layout
-                                        align-center
-                                        justify-center
-                                        column
-                                        fill-height>
-                                        <v-btn
-                                            :loading="isEnviando"
-                                            :disabled="isEnviando"
-                                            light
-                                            color="primary"
-                                            round
-                                            @click="enviarMensagem">
-                                            Enviar
-                                        </v-btn>
+                            <v-window-item :value="2">
+                                <v-card-text>
+                                    <v-list
+                                        v-if="websocket.salas.length > 0 && websocket.indiceSalaAtual != null"
+                                        subheader>
+                                        <template
+                                            v-for="(chat) in websocket.salas[websocket.indiceSalaAtual].mensagens">
+                                            <v-list-tile
+                                                :key="chat.mensagem"
+                                                avatar>
+                                                <v-list-tile-content>
+                                                    <v-list-tile-title v-html="`${chat.usuario.name} < ${chat.usuario.email} >`"/>
+                                                    <v-list-tile-sub-title v-html="chat.mensagem"/>
+                                                </v-list-tile-content>
+                                            </v-list-tile>
+                                        </template>
+                                    </v-list>
+                                    <v-footer
+                                        dark>
+                                        <v-card
+                                            class="flex"
+                                            flat
+                                            tile>
+                                            <v-card-text class="">
+                                                <v-form @submit="enviarMensagem">
+                                                    <v-container
+                                                        grid-list-md
+                                                        text-xs-center>
+                                                        <v-layout
+                                                            row>
+                                                            <v-flex xs8>
 
-                                    </v-layout>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-form>
-                </v-card-text>
-            </v-card>
-        </v-footer>
+                                                                <v-text-field
+                                                                    ref="mensagem"
+                                                                    v-model="mensagem"
+                                                                    solo
+                                                                    label="mensagem"
+                                                                    light
+                                                                    required/>
+                                                            </v-flex>
+
+                                                            <v-flex xs4>
+                                                                <v-layout
+                                                                    align-center
+                                                                    justify-center
+                                                                    column
+                                                                    fill-height>
+                                                                <v-btn
+                                                                    :loading="isEnviando"
+                                                                    :disabled="isEnviando"
+                                                                    light
+                                                                    color="primary"
+                                                                    round
+                                                                    @click="enviarMensagem">
+                                                                    Enviar
+                                                                </v-btn>
+
+                                                                </v-layout>
+                                                            </v-flex>
+                                                        </v-layout>
+                                                    </v-container>
+                                                </v-form>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-footer>
+                                </v-card-text>
+                            </v-window-item>
+                        </v-window>
+                    </v-card-text>
+
+                    <v-divider/>
+
+                    <v-card-actions>
+                        <v-btn
+                            :disabled="step === 1"
+                            flat
+                            @click="step--">
+                            Voltar
+                        </v-btn>
+                        <v-spacer/>
+                        <v-btn
+                            v-if="step === 1"
+                            color="primary"
+                            depressed
+                            @click="entrarEmSala">
+                            Entrar
+                        </v-btn>
+
+                    </v-card-actions>
+                </v-card>
+            </v-layout>
+
+        </v-container>
+
+
     </v-content>
 
 
@@ -151,6 +178,9 @@ export default {
 
             isConnected: false,
             socketMessage: '',
+
+
+            step: 1,
         };
     },
 
@@ -159,6 +189,14 @@ export default {
             websocket: 'websocket/websocket',
             accountInfo: 'account/accountInfo',
         }),
+
+        currentTitle() {
+            switch (this.step) {
+            case 1: return 'Sign-up';
+            case 2: return 'Create a password';
+            default: return 'Account created';
+            }
+        },
     },
     watch: {
         accountInfo() {
@@ -181,6 +219,7 @@ export default {
             this.websocketEntrarEmSala({
                 sala: self.sistema.sistema_id,
             });
+            self.step += self.step;
         },
         enviarMensagem(evento) {
             const self = this;

@@ -3,10 +3,12 @@ import * as types from './types';
 
 export const mutations = {
     [types.SOCKET_CONNECT](state, data) {
+        console.log(data);
         state.websocket.isConnected = true;
     },
 
     [types.SOCKET_DISCONNECT](state, data) {
+        console.log(data);
         state.websocket.isConnected = false;
     },
 
@@ -15,12 +17,10 @@ export const mutations = {
     },
 
     [types.SOCKET_SERVER_ENTRAREMSALA](state, data) {
-        console.log('entrando na mutation SOCKET_SERVER_ENTRAREMSALA');
         console.log(data);
     },
 
     [types.SOCKET_CLIENT_ENTRAREMSALA](state, data) {
-        console.log('entrando na mutation SOCKET_CLIENT_ENTRAREMSALA');
         const { sala } = data;
         const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
         if (indice === -1) {
@@ -32,7 +32,6 @@ export const mutations = {
     },
 
     [types.SOCKET_CLIENT_SAIRDASALA](state, data) {
-        console.log('entrando na mutation SOCKET_CLIENT_SAIRDASALA');
         const { sala } = data;
         const indice = state.websocket.salas.findIndex(valor => valor.sala === sala);
 
@@ -42,7 +41,6 @@ export const mutations = {
     },
 
     [types.SOCKET_CLIENT_MENSAGEMSALA](state, data) {
-        console.log('entrando na mutation SOCKET_CLIENTMENSAGEMSALA');
         const { sala } = data;
         const { mensagem } = data;
         const horario = moment().format();
