@@ -10,6 +10,7 @@ const socketioJWT = require('socketio-jwt');
 require('dotenv/config');
 
 const clientes = [];
+const salasDeSistemas = [];
 const serverPort = 8001;
 
 app.use(express.urlencoded({
@@ -35,7 +36,7 @@ io.on('connection', (socketClient) => {
     const dadosUsuario = tokenDecodificada.user;
     const identificadorUsuario = dadosUsuario.user_id;
     const sistemasAutorizados = dadosUsuario.sistemas;
-    const salasDeSistemas = [];
+
 
     const isSistemaAutorizado = (sala) => {
         const indice = sistemasAutorizados.findIndex(sistemaAutorizado => sistemaAutorizado.sistema_id === sala);
@@ -56,7 +57,11 @@ io.on('connection', (socketClient) => {
     };
 
     console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
-    clientes.push(identificadorUsuario);
+
+    const indiceClientePesquisado = clientes.findIndex(cliente => cliente === identificadorUsuario);
+    if (indiceClientePesquisado === -1) {
+        clientes.push(identificadorUsuario);
+    }
 
     io.emit('clientConnectedUsers', clientes.length);
 
