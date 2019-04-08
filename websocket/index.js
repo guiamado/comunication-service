@@ -69,8 +69,6 @@ io.on('connection', (socketClient) => {
         }
 
         io.to(`${prefixo}${sala}`).emit('clientMembrosSala', salasDeSistemas[indiceSalaPesquisada].membros);
-        // console.log('salas:');
-        // console.log(Object.keys(io.sockets.adapter.rooms));
     };
 
     console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
@@ -101,8 +99,6 @@ io.on('connection', (socketClient) => {
             const { sala } = dados;
             isSistemaAutorizado(sala);
 
-            socketClient.leave(sala);
-            socketClient.to(`sala_${sala}`).emit('clientSairDeSala', dados);
 
             const indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
             const indiceSalaUsuarioPesquisada = salasDeSistemas[indiceSalaPesquisada]
@@ -111,6 +107,10 @@ io.on('connection', (socketClient) => {
             if (indiceSalaUsuarioPesquisada === -1) {
                 salasDeSistemas[indiceSalaPesquisada].membros.slice(indiceSalaUsuarioPesquisada, 1);
             }
+            socketClient.leave(sala);
+            socketClient.to(`sala_${sala}`).emit('clientSairDeSala', dados);
+
+            io.to(`sala_${sala}`).emit('clientMembrosSala', salasDeSistemas[indiceSalaPesquisada].membros);
         } catch (Exception) {
             console.log(Exception);
         }
