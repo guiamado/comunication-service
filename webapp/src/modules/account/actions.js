@@ -22,7 +22,6 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
                     const objetoJWT = obterInformacoesJWT();
                     commit(types.SETACCOUNTINFO, objetoJWT.user);
-                    router.push('/');
                 } else {
                     dispatch('alert/error', 'Falha ao realizar login.', {
                         root: true,

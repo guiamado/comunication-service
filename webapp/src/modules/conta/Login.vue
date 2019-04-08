@@ -96,7 +96,13 @@ export default {
             if (this.$refs.form.validate()) {
                 const { email, password } = this;
                 if (email && password) {
-                    this.login({ email, password });
+                    this.login({ email, password }).then(()=> {
+                        const token = localStorage.getItem('token');
+
+                        this.$socket.io.opts.query.token = token;
+                        this.$socket.open();
+                        this.$router.push('/');
+                    });
                 }
             }
         },

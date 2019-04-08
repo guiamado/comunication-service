@@ -14,8 +14,6 @@ import Mensagem from './modules/mensagem/Mensagem.vue';
 import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
-import VueSocketIO from "vue-socket.io";
-import $socket from "./modules/websocket/_helpers/socket-client-instance";
 
 Vue.use(Router);
 
@@ -123,19 +121,6 @@ router.beforeEach((to, from, next) => {
 
     try {
         obterInformacoesJWT();
-        const token = localStorage.getItem('token');
-    
-        if (token != null) {
-            Vue.use(new VueSocketIO({
-                debug: false,
-                connection: $socket,
-                vuex: {
-                    store,
-                    actionPrefix: 'Socket_',
-                    mutationPrefix: 'Socket_',
-                },
-            }));
-        }
 
         return next();
     } catch (Exception) {
