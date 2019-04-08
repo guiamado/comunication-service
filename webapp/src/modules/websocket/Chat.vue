@@ -15,22 +15,35 @@
                         prominent
                         color="primary">
                         <v-toolbar-title>
-                            {{ websocket.nomeSalaAtual || 'Selecione um sistema' }}
+                            {{ (websocket.nomeSalaAtual) ? `Sala ${websocket.nomeSalaAtual}` : 'Selecione um sistema' }}
 
                         </v-toolbar-title>
                         <v-spacer/>
+
                         <v-scale-transition>
-                            <v-badge
-                                v-if="numeroJanela === 2 && hasMembrosNaSalaAtual"
-                                right
-                                color="red">
-                                <span slot="badge">{{ websocket.salas[websocket.indiceSalaAtual].membros.length }}</span>
-                                <v-icon
-                                    color="glue lighten-1"
-                                    large>
-                                    account_circle
-                                </v-icon>
-                            </v-badge>
+                            <v-tooltip
+                                bottom>
+                                <v-badge
+                                    v-if="numeroJanela === 2 && typeof websocket.salas[websocket.indiceSalaAtual] != 'undefined'"
+                                    slot="activator"
+                                    right
+                                    color="red">
+                                    <span slot="badge">{{ websocket.salas[websocket.indiceSalaAtual].membros.length }}</span>
+                                    <!--<span slot="badge"></span>-->
+                                    <v-icon
+                                        color="glue lighten-1"
+                                        large>
+                                        account_circle
+                                    </v-icon>
+                                </v-badge>
+                                <template
+                                    v-if="numeroJanela === 2 && typeof websocket.salas[websocket.indiceSalaAtual] != 'undefined'">
+                                    <h3>Membros da Sala:</h3>
+                                    <div v-for="(membro) in websocket.salas[websocket.indiceSalaAtual].membros">
+                                        <div>{{ membro.nome }} <{{ membro.email }}></div>
+                                    </div>
+                                </template>
+                            </v-tooltip>
                         </v-scale-transition>
                     </v-toolbar>
                     <v-card-text style="height:calc(100vh - 300px); overflow-y: auto">
@@ -89,6 +102,7 @@
                             inset
                             vertical
                         />
+                        <v-spacer />
                         <v-btn
                             v-if="numeroJanela === 1"
                             color="primary"
