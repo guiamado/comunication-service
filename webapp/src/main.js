@@ -12,20 +12,6 @@ import $socket from './modules/websocket/_helpers/socket-client-instance';
 
 Vue.use(VeeValidate);
 
-const token = localStorage.getItem('token');
-
-if (token != null) {
-    Vue.use(new VueSocketIO({
-        debug: false,
-        connection: $socket,
-        vuex: {
-            store,
-            actionPrefix: 'Socket_',
-            mutationPrefix: 'Socket_',
-        },
-    }));
-}
-
 filters.create(Vue);
 
 new Vue({
