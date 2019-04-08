@@ -44,7 +44,6 @@ export const mutations = {
         }
     },
 
-
     [types.SOCKET_CLIENT_MENSAGEMSALA](state, data) {
         const { sala } = data;
         const { mensagem } = data;
