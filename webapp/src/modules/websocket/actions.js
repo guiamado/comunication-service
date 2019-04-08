@@ -33,10 +33,8 @@ export const Socket_clientConnectedUsers = ({ commit }, dados) => {
 
 export const Socket_clientEntrarEmSala = ({ commit, dispatch }, dados) => {
     commit(types.SOCKET_CLIENT_ENTRAREMSALA, dados);
-
-    const { usuario } = dados;
     const { sala } = dados;
-    const mensagem = `Usuário <b>${usuario.name}</b> entrou na sala.`;
+    const mensagem = 'Entrou na sala.';
     dispatch('Socket_serverMensagemSala', {
         sala,
         mensagem,

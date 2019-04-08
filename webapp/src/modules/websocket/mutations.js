@@ -12,12 +12,16 @@ export const mutations = {
         state.websocket.isConnected = false;
     },
 
-    [types.SOCKET_CLIENT_CONNECTEDUSERS](state, data) {
-        state.websocket.connectedUsers = data;
-    },
-
     [types.SOCKET_SERVER_ENTRAREMSALA](state, data) {
         console.log(data);
+    },
+
+    [types.SOCKET_SERVER_MENSAGEMSALA](state, data) {
+        console.log(data);
+    },
+
+    [types.SOCKET_CLIENT_CONNECTEDUSERS](state, data) {
+        state.websocket.connectedUsers = data;
     },
 
     [types.SOCKET_CLIENT_ENTRAREMSALA](state, data) {
@@ -40,6 +44,7 @@ export const mutations = {
         }
     },
 
+
     [types.SOCKET_CLIENT_MENSAGEMSALA](state, data) {
         const { sala } = data;
         const { mensagem } = data;
@@ -59,9 +64,8 @@ export const mutations = {
     },
 
     [types.SOCKET_CLIENT_MEMBROSSALA](state, data) {
-        const { sala } = data;
         const { membros } = data;
-        const indiceSala = state.websocket.salas.findIndex(valor => valor.sala === sala);
-        state.websocket.salas[indiceSala].membros = membros;
+        
+        state.websocket.salas[state.websocket.indiceSalaAtual].membros = membros;
     },
 };
