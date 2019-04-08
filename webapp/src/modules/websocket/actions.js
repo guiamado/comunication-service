@@ -50,3 +50,7 @@ export const Socket_clientSairDaSala = ({ commit }, dados) => {
 export const Socket_clientMensagemSala = ({ commit }, dados) => {
     commit(types.SOCKET_CLIENT_MENSAGEMSALA, dados);
 };
+
+export const Socket_clientMembrosSala = ({ commit }, dados) => {
+    commit(types.SOCKET_CLIENT_MEMBROSSALA, dados);
+};
