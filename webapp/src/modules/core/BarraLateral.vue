@@ -10,7 +10,7 @@
         app>
         <v-card
             dark
-            color="primary">
+            color="cyan darken-4">
             <v-list class="pa-1">
                 <v-list-tile
                     avatar

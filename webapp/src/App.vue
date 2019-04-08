@@ -5,7 +5,7 @@
             :clipped-left="clipped"
             app
             dark
-            color="primary">
+            color="teal darken-4">
             <v-toolbar-side-icon
                 v-if="status.loggedIn"
                 @click.stop="drawer = !drawer"/>
@@ -14,9 +14,40 @@
                 v-show="loading"
                 v-if="status.loggedIn"/>
             <v-spacer/>
-            <span>
-                Usuários Conectados ({{ websocket.connectedUsers }})
-            </span>
+
+
+            <v-scale-transition>
+                <v-tooltip
+                    v-if="status.loggedIn"
+                    bottom>
+                    <v-btn
+                        v-show="websocket.isConnected === true"
+                        slot="activator"
+                        small
+                        icon
+                        fab
+                        color="teal">
+                        <v-icon>check</v-icon>
+                    </v-btn>
+                    <span>Conectado</span>
+                </v-tooltip>
+            </v-scale-transition>
+            <v-scale-transition>
+                <v-tooltip
+                    v-if="status.loggedIn"
+                    bottom>
+                    <v-btn
+                        v-show="websocket.isConnected === false"
+                        slot="activator"
+                        small
+                        icon
+                        fab
+                        color="warning">
+                        <v-icon>warning</v-icon>
+                    </v-btn>
+                    <span>Desconectado</span>
+                </v-tooltip>
+            </v-scale-transition>
         </v-toolbar>
 
         <alerta
@@ -29,15 +60,13 @@
             <v-card
                 class="flex"
                 flat
+                color="teal darken-4"
                 tile>
-                <v-card-actions class="grey darken-3 justify-center">
+                <v-card-actions class="justify-center">
                     <strong>{{ title }}</strong>
                 </v-card-actions>
             </v-card>
         </v-footer>
-        <!--<v-footer :fixed="fixed" app>-->
-        <!--<span>&copy; 2018</span>-->
-        <!--</v-footer>-->
     </v-app>
 </template>
 

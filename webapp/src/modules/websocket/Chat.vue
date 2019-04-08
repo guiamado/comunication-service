@@ -7,7 +7,7 @@
                 column>
 
                 <v-card
-                class="mx-auto"
+                    class="mx-auto"
                     light>
 
                     <v-toolbar
@@ -21,7 +21,7 @@
                         <v-spacer/>
                         <v-scale-transition>
                             <v-badge
-                                v-if="isPossuiMembrosNaSalaAtual"
+                                v-if="numeroJanela === 2 && hasMembrosNaSalaAtual"
                                 right
                                 color="red">
                                 <span slot="badge">{{ websocket.salas[websocket.indiceSalaAtual].membros.length }}</span>
@@ -169,15 +169,7 @@ export default {
             accountInfo: 'account/accountInfo',
         }),
 
-        currentTitle() {
-            switch (this.numeroJanela) {
-            case 1: return 'Sign-up';
-            case 2: return 'Create a password';
-            default: return 'Account created';
-            }
-        },
-
-        isPossuiMembrosNaSalaAtual() {
+        hasMembrosNaSalaAtual() {
             if (this.websocket.indiceSalaAtual == null) {
                 return false;
             }
