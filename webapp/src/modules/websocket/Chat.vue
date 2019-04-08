@@ -11,6 +11,7 @@
                     light>
 
                     <v-toolbar
+                        style="background: linear-gradient(70deg, #006064, #4DD0E1)"
                         dark
                         prominent
                         color="primary">
@@ -24,12 +25,12 @@
                             <v-tooltip
                                 bottom>
                                 <v-badge
-                                    v-if="numeroJanela === 2 && typeof websocket.salas[websocket.indiceSalaAtual] != 'undefined'"
+                                    v-if="numeroJanela === 2 && typeof websocket.salas[websocket.indiceSalaAtual] != 'undefined' && typeof websocket.salas[websocket.indiceSalaAtual].membros != 'undefined'"
                                     slot="activator"
                                     right
                                     color="red">
                                     <span slot="badge">{{ websocket.salas[websocket.indiceSalaAtual].membros.length }}</span>
-                                    <!--<span slot="badge"></span>-->
+                                    <!--<span slot="badge">{{ 1 }}</span>-->
                                     <v-icon
                                         color="glue lighten-1"
                                         large>

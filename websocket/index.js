@@ -54,10 +54,10 @@ io.on('connection', (socketClient) => {
             }) - 1;
         }
 
-        const indiceSalaUsuarioPesquisada = salasDeSistemas[indiceSalaPesquisada]
+        const indiceUsuarioSalaPesquisada = salasDeSistemas[indiceSalaPesquisada]
             .membros
             .findIndex(membro => membro.email === dadosUsuario.email);
-        if (indiceSalaUsuarioPesquisada === -1) {
+        if (indiceUsuarioSalaPesquisada === -1) {
             salasDeSistemas[indiceSalaPesquisada].membros.push({
                 nome: dadosUsuario.name,
                 email: dadosUsuario.email,
@@ -71,7 +71,7 @@ io.on('connection', (socketClient) => {
             usuario: dadosUsuario,
         });
 
-        console.log(`tratando entrada em sala: ${sala}`)
+        console.log(`tratando entrada em sala: ${sala}`);
         io.to(`${prefixo}${sala}`).emit('clientMembrosSala', {
             sala,
             membros: salasDeSistemas[indiceSalaPesquisada].membros,
@@ -80,11 +80,12 @@ io.on('connection', (socketClient) => {
 
     const tratarSaidaDeSala = (sala, prefixo) => {
         const indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
-        const indiceSalaUsuarioPesquisada = salasDeSistemas[indiceSalaPesquisada]
+        const indiceUsuarioSalaPesquisada = salasDeSistemas[indiceSalaPesquisada]
             .membros
             .findIndex(membro => membro.email === dadosUsuario.email);
-        if (indiceSalaUsuarioPesquisada === -1) {
-            salasDeSistemas[indiceSalaPesquisada].membros.slice(indiceSalaUsuarioPesquisada, 1);
+
+        if (indiceUsuarioSalaPesquisada !== -1) {
+            salasDeSistemas[indiceSalaPesquisada].membros.splice(indiceUsuarioSalaPesquisada, 1);
         }
         socketClient.to(`${prefixo}${sala}`).emit('clientSairDaSala', {
             sala,
@@ -95,6 +96,7 @@ io.on('connection', (socketClient) => {
             membros: salasDeSistemas[indiceSalaPesquisada].membros,
         });
         socketClient.leave(sala);
+        console.log(`${dadosUsuario.name} saindo da sala ${sala}`);
     };
 
     console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
@@ -128,7 +130,6 @@ io.on('connection', (socketClient) => {
 
     socketClient.on('serverMensagemSala', (dados) => {
         try {
-
             const { sala } = dados;
             isSistemaAutorizado(sala);
 

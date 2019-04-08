@@ -36,7 +36,21 @@ export const mutations = {
     },
 
     [types.SOCKET_CLIENT_SAIRDASALA](state, data) {
-        console.log(data);
+        const { sala } = data;
+        const { usuario } = data;
+        const indiceSalaPesquisada = state.websocket.salas.findIndex(valor => valor.sala === sala);
+        if (indiceSalaPesquisada === -1) {
+            return false;
+        }
+        const indiceUsuarioSalaPesquisada = state.websocket.salas[indiceSalaPesquisada]
+            .membros
+            .findIndex(membro => membro.email === usuario.email);
+
+        if (indiceUsuarioSalaPesquisada === -1) {
+            return false;
+        }
+
+        state.websocket.salas[indiceSalaPesquisada].membros.splice(indiceUsuarioSalaPesquisada, 1);
     },
 
     [types.SOCKET_CLIENT_MENSAGEMSALA](state, data) {
@@ -59,8 +73,8 @@ export const mutations = {
 
     [types.SOCKET_CLIENT_MEMBROSSALA](state, data) {
         const { membros } = data;
-        console.log('SOCKET_CLIENT_MEMBROSSALA')
-        console.log(data)
+        console.log('SOCKET_CLIENT_MEMBROSSALA');
+        console.log(data);
         state.websocket.salas[state.websocket.indiceSalaAtual].membros = membros;
     },
 
