@@ -46,7 +46,6 @@ io.on('connection', (socketClient) => {
 
     const tratarEntradaEmSala = (sala, prefixo) => {
         let indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
-        console.log(`indice sala pesquisada: ${indiceSalaPesquisada}`);
         if (indiceSalaPesquisada === -1) {
             console.log(`Criando sala ${sala}`);
             indiceSalaPesquisada = salasDeSistemas.push({

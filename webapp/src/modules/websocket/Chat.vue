@@ -15,7 +15,7 @@
                     <v-toolbar
                         dark
                         color="primary">
-                        <v-toolbar-title>{{ sistema.descricao || 'Selecione um sistema' }}</v-toolbar-title>
+                        <v-toolbar-title>{{ websocket.nomeSalaAtual || 'Selecione um sistema' }}</v-toolbar-title>
                         <v-spacer />
                         <v-scale-transition>
                             <v-tooltip bottom>
@@ -202,6 +202,7 @@ export default {
         ...mapActions({
             websocketEntrarEmSala: 'websocket/Socket_serverEntrarEmSala',
             websocketMensagemSala: 'websocket/Socket_serverMensagemSala',
+            definirNomeSalaAtual: 'websocket/definirNomeSalaAtual',
         }),
 
         entrarEmSala() {
@@ -209,6 +210,9 @@ export default {
 
             this.websocketEntrarEmSala({
                 sala: self.sistema.sistema_id,
+            });
+            this.definirNomeSalaAtual({
+                nomeSalaAtual: self.sistema.descricao,
             });
             self.numeroJanela += self.numeroJanela;
         },

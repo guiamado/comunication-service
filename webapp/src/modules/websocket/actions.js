@@ -59,3 +59,7 @@ export const Socket_clientMensagemSala = ({ commit }, dados) => {
 export const Socket_clientMembrosSala = ({ commit }, dados) => {
     commit(types.SOCKET_CLIENT_MEMBROSSALA, dados);
 };
+
+export const definirNomeSalaAtual = ({ commit }, dados) => {
+    commit(types.DEFINIR_NOME_SALA_ATUAL, dados);
+};

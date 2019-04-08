@@ -64,7 +64,11 @@ export const mutations = {
 
     [types.SOCKET_CLIENT_MEMBROSSALA](state, data) {
         const { membros } = data;
-        
         state.websocket.salas[state.websocket.indiceSalaAtual].membros = membros;
+    },
+
+    [types.DEFINIR_NOME_SALA_ATUAL](state, data) {
+        const { nomeSalaAtual } = data;
+        state.websocket.nomeSalaAtual = nomeSalaAtual;
     },
 };
