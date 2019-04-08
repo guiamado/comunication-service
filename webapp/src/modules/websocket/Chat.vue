@@ -7,43 +7,30 @@
                 column>
 
                 <v-card
-                    class="mx-auto"
-                    flat
+                class="mx-auto"
                     light>
-
 
                     <v-toolbar
                         dark
+                        prominent
                         color="primary">
-                        <v-toolbar-title>{{ websocket.nomeSalaAtual || 'Selecione um sistema' }}</v-toolbar-title>
-                        <v-spacer />
+                        <v-toolbar-title>
+                            {{ websocket.nomeSalaAtual || 'Selecione um sistema' }}
+
+                        </v-toolbar-title>
+                        <v-spacer/>
                         <v-scale-transition>
-                            <v-tooltip bottom>
-                                <v-btn
-                                    v-show="websocket.isConnected === true"
-                                    slot="activator"
-                                    small
-                                    icon
-                                    fab
-                                    color="teal">
-                                    <v-icon>check</v-icon>
-                                </v-btn>
-                                <span>Conectado</span>
-                            </v-tooltip>
-                        </v-scale-transition>
-                        <v-scale-transition>
-                            <v-tooltip bottom>
-                                <v-btn
-                                    v-show="websocket.isConnected === false"
-                                    slot="activator"
-                                    small
-                                    icon
-                                    fab
-                                    color="warning">
-                                    <v-icon>warning</v-icon>
-                                </v-btn>
-                                <span>Desconectado</span>
-                            </v-tooltip>
+                            <v-badge
+                                v-if="isPossuiMembrosNaSalaAtual"
+                                right
+                                color="red">
+                                <span slot="badge">{{ websocket.salas[websocket.indiceSalaAtual].membros.length }}</span>
+                                <v-icon
+                                    color="glue lighten-1"
+                                    large>
+                                    account_circle
+                                </v-icon>
+                            </v-badge>
                         </v-scale-transition>
                     </v-toolbar>
                     <v-card-text style="height:calc(100vh - 300px); overflow-y: auto">
@@ -68,14 +55,19 @@
                                         subheader>
                                         <template
                                             v-for="(chat) in websocket.salas[websocket.indiceSalaAtual].mensagens">
+
                                             <v-list-tile
                                                 :key="chat.mensagem"
                                                 avatar>
                                                 <v-list-tile-content>
                                                     <v-list-tile-title v-html="obterTituloMensagem(chat)"/>
-                                                    <v-list-tile-sub-title v-html="chat.mensagem"/>
+                                                    <v-list-tile-sub-title v-html="obterTextoMensagem(chat)"/>
+
                                                 </v-list-tile-content>
                                             </v-list-tile>
+                                            <v-divider
+                                                :key="chat.mensagem"
+                                            />
                                         </template>
                                     </v-list>
                                 </v-card-text>
@@ -92,60 +84,56 @@
                             @click="numeroJanela--">
                             Voltar
                         </v-btn>
-                        <v-spacer/>
+                        <v-divider
+                            class="mx-3"
+                            inset
+                            vertical
+                        />
                         <v-btn
                             v-if="numeroJanela === 1"
                             color="primary"
                             depressed
+                            right
                             @click="entrarEmSala">
                             Entrar
                         </v-btn>
-                        <v-card
-                            v-if="numeroJanela === 2"
-                            class="flex"
-                            flat
-                            tile>
-                            <v-card-text class="">
-                                <v-form @submit="enviarMensagem">
-                                    <v-container
-                                        grid-list-md
-                                        text-xs-center>
-                                        <v-layout
-                                            row>
-                                            <v-flex xs8>
+                        <div
+                            v-if="numeroJanela === 2">
+                            <v-form @submit="enviarMensagem">
+                                <v-container
+                                    grid-list-md
+                                    text-xs-center>
+                                    <v-layout
+                                        text-xs-center
+                                        row>
+                                        <v-flex xs9>
 
-                                                <v-text-field
-                                                    ref="mensagem"
-                                                    v-model="mensagem"
-                                                    solo
-                                                    label="mensagem"
-                                                    light
-                                                    required/>
-                                            </v-flex>
+                                            <v-text-field
+                                                ref="mensagem"
+                                                v-model="mensagem"
+                                                solo
+                                                label="mensagem"
+                                                light
+                                                style="height: 45px;"
+                                                required/>
+                                        </v-flex>
 
-                                            <v-flex xs4>
-                                                <v-layout
-                                                    align-center
-                                                    justify-center
-                                                    column
-                                                    fill-height>
-                                                    <v-btn
-                                                        :loading="isEnviando"
-                                                        :disabled="isEnviando"
-                                                        light
-                                                        color="primary"
-                                                        round
-                                                        @click="enviarMensagem">
-                                                        Enviar
-                                                    </v-btn>
+                                        <v-flex xs3>
+                                            <v-btn
+                                                :loading="isEnviando"
+                                                :disabled="isEnviando"
+                                                light
+                                                color="primary"
+                                                round
+                                                @click="enviarMensagem">
+                                                Enviar
+                                            </v-btn>
 
-                                                </v-layout>
-                                            </v-flex>
-                                        </v-layout>
-                                    </v-container>
-                                </v-form>
-                            </v-card-text>
-                        </v-card>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-container>
+                            </v-form>
+                        </div>
 
                     </v-card-actions>
                 </v-card>
@@ -187,6 +175,23 @@ export default {
             case 2: return 'Create a password';
             default: return 'Account created';
             }
+        },
+
+        isPossuiMembrosNaSalaAtual() {
+            if (this.websocket.indiceSalaAtual == null) {
+                return false;
+            }
+            const { indiceSalaAtual } = this.websocket;
+
+            if (typeof this.websocket.salas[indiceSalaAtual] === 'undefined') {
+                return false;
+            }
+
+            const membrosSalaAtual = this.websocket.salas[indiceSalaAtual].membros;
+            if (typeof membrosSalaAtual === 'undefined') {
+                return false;
+            }
+            return membrosSalaAtual.length > 0;
         },
     },
     watch: {
@@ -232,9 +237,13 @@ export default {
         },
 
         obterTituloMensagem(chat) {
-            const horarioFormatado = this.$options.filters.formataData(chat.horario);
-            return `${chat.usuario.name} [${horarioFormatado}]`;
+            return `${chat.usuario.name}`;
         },
+        obterTextoMensagem(chat) {
+            const horarioFormatado = this.$options.filters.formataData(chat.horario);
+            return `[${horarioFormatado}] ${chat.mensagem}`;
+        },
+
     },
 
 };
