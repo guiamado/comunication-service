@@ -67,7 +67,10 @@ io.on('connection', (socketClient) => {
             console.log(`Usuário ${dadosUsuario.name} entrou na sala : ${sala}`);
         }
 
-        io.to(`${prefixo}${sala}`).emit('clientMembrosSala', salasDeSistemas[indiceSalaPesquisada].membros);
+        io.to(`${prefixo}${sala}`).emit('clientMembrosSala', {
+            sala,
+            membros: salasDeSistemas[indiceSalaPesquisada].membros,
+        });
     };
 
     const tratarSaidaDeSala = (sala) => {
@@ -80,7 +83,10 @@ io.on('connection', (socketClient) => {
         }
         socketClient.leave(sala);
 
-        io.to(`sala_${sala}`).emit('clientMembrosSala', salasDeSistemas[indiceSalaPesquisada].membros);
+        io.to(`sala_${sala}`).emit('clientMembrosSala', {
+            sala,
+            membros: salasDeSistemas[indiceSalaPesquisada].membros,
+        });
     };
 
     console.log(`Usuário [ ${dadosUsuario.name} ] conectado.`);
