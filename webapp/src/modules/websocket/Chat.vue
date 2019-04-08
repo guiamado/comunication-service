@@ -232,7 +232,6 @@ export default {
         },
 
         obterTituloMensagem(chat) {
-            console.log('123');
             const horarioFormatado = this.$options.filters.formataData(chat.horario);
             return `${chat.usuario.name} [${horarioFormatado}]`;
         },

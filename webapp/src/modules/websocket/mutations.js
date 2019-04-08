@@ -36,12 +36,7 @@ export const mutations = {
     },
 
     [types.SOCKET_CLIENT_SAIRDASALA](state, data) {
-        const { sala } = data;
-        const indiceSala = state.websocket.salas.findIndex(valor => valor.sala === sala);
-
-        if (indiceSala !== -1) {
-            state.websocket.salas.splice(indiceSala, 1);
-        }
+        console.log(data);
     },
 
     [types.SOCKET_CLIENT_MENSAGEMSALA](state, data) {
@@ -64,6 +59,8 @@ export const mutations = {
 
     [types.SOCKET_CLIENT_MEMBROSSALA](state, data) {
         const { membros } = data;
+        console.log('SOCKET_CLIENT_MEMBROSSALA')
+        console.log(data)
         state.websocket.salas[state.websocket.indiceSalaAtual].membros = membros;
     },
 
