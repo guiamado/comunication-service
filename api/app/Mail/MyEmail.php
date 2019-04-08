@@ -12,9 +12,21 @@ class MyEmail extends Mailable
 {
     use Queueable,
         SerializesModels;
+
+    protected $user;
+
+    public function __construct($user)
+    {
+        $this->user= $user;
+    }
+
     //build the message.
     public function build() {
         return $this->from('amado.guigui@gmail.com')
-            ->view('my-email');
+            ->subject('Assunto do Email')
+            ->view('my-email')
+            ->with([
+                'user' => $this->user,
+            ]);
     }
 }
