@@ -37,7 +37,6 @@ io.on('connection', (socketClient) => {
     const identificadorUsuario = dadosUsuario.user_id;
     const sistemasAutorizados = dadosUsuario.sistemas;
 
-
     const isSistemaAutorizado = (sala) => {
         const indice = sistemasAutorizados.findIndex(sistemaAutorizado => sistemaAutorizado.sistema_id === sala);
         if (indice === -1) {
@@ -45,13 +44,31 @@ io.on('connection', (socketClient) => {
         }
     };
 
-    const tratarSalaDeComunicação = (sala, prefixo) => {
-        const indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor === sala);
+    const tratarEntradaEmSala = (sala, prefixo) => {
+        let indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
         if (indiceSalaPesquisada === -1) {
             console.log(`Criando sala ${sala}`);
-            salasDeSistemas.push(sala);
+            salasDeSistemas.push({
+                sala,
+                membros: [],
+            });
             socketClient.join(`${prefixo}${sala}`);
         }
+
+        indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
+
+        const indiceSalaUsuarioPesquisada = salasDeSistemas[indiceSalaPesquisada]
+            .membros
+            .findIndex(membro => membro.email === dadosUsuario.email);
+        if (indiceSalaUsuarioPesquisada === -1) {
+            salasDeSistemas[indiceSalaPesquisada].membros.push({
+                nome: dadosUsuario.name,
+                email: dadosUsuario.email,
+            });
+            socketClient.join(`${prefixo}${sala}`);
+        }
+
+        io.to(`${prefixo}${sala}`).emit('clientMembrosSala', salasDeSistemas[indiceSalaPesquisada].membros);
         // console.log('salas:');
         // console.log(Object.keys(io.sockets.adapter.rooms));
     };
@@ -69,7 +86,7 @@ io.on('connection', (socketClient) => {
         try {
             const { sala } = dados;
             isSistemaAutorizado(sala);
-            tratarSalaDeComunicação(sala, 'sala_');
+            tratarEntradaEmSala(sala, 'sala_');
 
             const novosDados = dados;
             novosDados.usuario = dadosUsuario;
@@ -86,6 +103,14 @@ io.on('connection', (socketClient) => {
 
             socketClient.leave(sala);
             socketClient.to(`sala_${sala}`).emit('clientSairDeSala', dados);
+
+            const indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
+            const indiceSalaUsuarioPesquisada = salasDeSistemas[indiceSalaPesquisada]
+                .membros
+                .findIndex(membro => membro.email === dadosUsuario.email);
+            if (indiceSalaUsuarioPesquisada === -1) {
+                salasDeSistemas[indiceSalaPesquisada].membros.slice(indiceSalaUsuarioPesquisada, 1);
+            }
         } catch (Exception) {
             console.log(Exception);
         }
@@ -107,7 +132,7 @@ io.on('connection', (socketClient) => {
 
     socketClient.on('serverNotificacaoSistema', (dados) => {
         const { sala } = dados;
-        tratarSalaDeComunicação(sala, 'notificacoes_sistema_');
+        tratarEntradaEmSala(sala, 'notificacoes_sistema_');
         io.to(`notificacoes_sistema_${sala}`).emit('clientNotificacaoSistema', dados);
     });
 
