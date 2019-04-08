@@ -48,14 +48,12 @@ io.on('connection', (socketClient) => {
         let indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
         if (indiceSalaPesquisada === -1) {
             console.log(`Criando sala ${sala}`);
-            salasDeSistemas.push({
+            indiceSalaPesquisada = salasDeSistemas.push({
                 sala,
                 membros: [],
-            });
+            }) - 1;
             socketClient.join(`${prefixo}${sala}`);
         }
-
-        indiceSalaPesquisada = salasDeSistemas.findIndex(valor => valor.sala === sala);
 
         const indiceSalaUsuarioPesquisada = salasDeSistemas[indiceSalaPesquisada]
             .membros
@@ -66,6 +64,7 @@ io.on('connection', (socketClient) => {
                 email: dadosUsuario.email,
             });
             socketClient.join(`${prefixo}${sala}`);
+            console.log(`Usuário ${dadosUsuario.name} entrou na sala : ${sala}`);
         }
 
         io.to(`${prefixo}${sala}`).emit('clientMembrosSala', salasDeSistemas[indiceSalaPesquisada].membros);
