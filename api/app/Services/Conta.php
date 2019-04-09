@@ -36,7 +36,7 @@ class Conta implements IService
                 "nome" => 'required|string|min:3|max:50',
                 "email" => 'required|string|min:3|max:50',
                 "password" => 'required|string|min:3|max:50',
-                "sistemas" => 'required|array|min:1',
+                "sistemas" => 'array',
             ]);
 
             if ($validator->fails()) {
