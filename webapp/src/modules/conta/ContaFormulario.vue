@@ -1,66 +1,66 @@
 <template>
+    <v-form
+            ref="form"
+            v-model="valid">
+        <v-container grid-list-md>
+            <v-layout wrap>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <v-text-field
+                        v-model="editedItem.nome"
+                        :rules="[rules.required, rules.minLength]"
+                        prepend-icon="face"
+                        required
+                        label="Nome"/>
+                    <v-text-field
+                        v-model="editedItem.email"
+                        :rules="[rules.required, rules.email, rules.minLength]"
+                        prepend-icon="person"
+                        required
+                        label="E-mail"/>
+                    <v-text-field
+                        v-validate="{ required: true, min: 6 }"
+                        v-model="editedItem.password"
+                        :rules="[rules.required, rules.minLength]"
+                        prepend-icon="lock"
+                        type="password"
+                        label="Senha"
+                        class="form-control"
+                        required />
+                </v-flex>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <h3>Administração</h3>
+                    <v-switch
+                        :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
+                        v-model="editedItem.is_admin"/>
+                </v-flex>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <h3>Situação</h3>
+                    <v-switch
+                        :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
+                        v-model="editedItem.is_ativo"/>
+                </v-flex>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <h3> Sistemas </h3>
+                    <v-list style="overflow: auto; max-height: 300px">
+                        <v-list-tile
+                            v-for="sistema in sistemas"
+                            :key="sistema.title"
+                            avatar>
 
-    <v-container grid-list-md>
-        <v-layout wrap>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <v-text-field
-                    v-model="editedItem.nome"
-                    :rules="[rules.required, rules.minLength]"
-                    prepend-icon="face"
-                    required
-                    label="Nome"/>
-                <v-text-field
-                    v-model="editedItem.email"
-                    :rules="[rules.required, rules.email, rules.minLength]"
-                    prepend-icon="person"
-                    required
-                    label="E-mail"/>
-                <v-text-field
-                    v-validate="{ required: true, min: 6 }"
-                    v-model="editedItem.password"
-                    :rules="[rules.required, rules.minLength]"
-                    prepend-icon="lock"
-                    type="password"
-                    label="Senha"
-                    class="form-control"
-                    required />
-            </v-flex>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <h3>Administração</h3>
-                <v-switch
-                    :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
-                    v-model="editedItem.is_admin"/>
-            </v-flex>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <h3>Situação</h3>
-                <v-switch
-                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                    v-model="editedItem.is_ativo"/>
-            </v-flex>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <h3> Sistemas </h3>
-                <v-list style="overflow: auto; max-height: 300px">
-                    <v-list-tile
-                        v-for="sistema in sistemas"
-                        :key="sistema.title"
-                        avatar>
+                            <v-list-tile-content>
 
-                        <v-list-tile-content>
-                            <v-form
-                                ref="form"
-                                v-model="valid">
                                 <v-checkbox
                                     v-model="editedItem.sistemas"
                                     :label="sistema.descricao"
@@ -68,28 +68,27 @@
                                     color="success"
                                     :rules="[rules.required, rules.minLengthCheckBox]"
                                     required/>
-                            </v-form>
-                        </v-list-tile-content>
+                            </v-list-tile-content>
 
-                    </v-list-tile>
-                </v-list>
-            </v-flex>
-            <v-flex class="text-xs-center">
-                <v-btn
-                    color="error"
-                    dark
-                    @click.native="close">Fechar</v-btn>
-                <v-btn
-                    v-if="!loading"
-                    :disabled="!valid"
-                    dark
-                    color="blue darken-1"
-                    @click.native="save">Gravar
-                </v-btn>
-            </v-flex>
-        </v-layout>
-    </v-container>
-
+                        </v-list-tile>
+                    </v-list>
+                </v-flex>
+                <v-flex class="text-xs-center">
+                    <v-btn
+                        color="error"
+                        dark
+                        @click.native="close">Fechar</v-btn>
+                    <v-btn
+                        v-if="!loading"
+                        :disabled="!valid"
+                        dark
+                        color="blue darken-1"
+                        @click.native="save">Gravar
+                    </v-btn>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-form>
 </template>
 <script>
 
