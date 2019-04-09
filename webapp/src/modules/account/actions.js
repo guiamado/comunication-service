@@ -1,5 +1,5 @@
-import router from '@/router';
 import axios from 'axios';
+import router from '../../router';
 import * as types from './types';
 import { obterInformacoesJWT } from './_helpers/jwt';
 import { requisicaoAutorizada } from './_helpers/requisicao-autorizada';
@@ -8,7 +8,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
     commit(types.LOGINREQUEST, { email });
 
     return requisicaoAutorizada.post(
-        'http://localhost/v1/autenticacao/login',
+        `http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/autenticacao/login`,
         { email, password },
     ).then((response) => {
         try {
@@ -50,7 +50,7 @@ export const logout = ({ commit }) => {
 
 export const register = ({ dispatch, commit }, user) => {
     commit(types.REGISTERREQUEST);
-    axios.post('http://localhost/v1/conta', JSON.parse(JSON.stringify(user))).then(
+    axios.post(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/conta`, JSON.parse(JSON.stringify(user))).then(
         () => {
             commit(types.REGISTERSUCCESS);
             dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
