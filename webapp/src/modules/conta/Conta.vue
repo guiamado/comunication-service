@@ -1,101 +1,103 @@
 <template>
-    <v-container fluid>
-        <v-layout
-            column
-            justify-center>
-            <v-card
-                flat
-                dark>
-                <v-toolbar
-                    dark
-                    color="primary">
-                    <v-spacer/>
-                    <v-spacer/>
-                    <v-spacer/>
-                    <v-text-field
-                        v-model="modeloBuscar"
-                        append-icon="search"
-                        label="Buscar"
-                        single-line
-                        hide-details
-                    />
-                </v-toolbar>
-                <v-card-text>
-                    <v-data-table
-                        :headers="headers"
-                        :items="contasIniciais"
-                        :search="modeloBuscar"
-                        :rows-per-page-items="[ 10, 25, 40 ]"
-                        :rows-per-page-text="'Registros por página'"
-                        light
-                        class="elevation-1">
-                        <template
-                            slot="items"
-                            slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.usuario_id }}</td>
-                            <td
-                                class="text-xs-center"
-                                v-html="props.item.nome"/>
-                            <td class="text-xs-center">{{ props.item.email }}</td>
-                            <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
-                            <td class="text-xs-center">
-                                <v-icon
-                                    v-if="props.item.is_admin"
-                                    color="primary">check_circle_outline</v-icon>
-                            </td>
-                            <td class="justify-center layout px-0">
-                                <v-btn icon>
-                                    <v-icon
-                                        color="grey darken-1"
-                                        @click="editItem(props.item)">edit
-                                    </v-icon>
-                                </v-btn>
-                                <v-btn
-                                    icon
-                                    v-if="accountInfo.user_id != props.item.usuario_id">
-                                    <v-icon
-                                        color="grey darken-1"
-                                        @click="deleteItem(props.item)">delete
-                                    </v-icon>
-                                </v-btn>
-                            </td>
-                        </template>
-                        <template slot="no-data">
-                            <v-btn
-                                color="primary"
-                                @click="obterContas">Reset</v-btn>
-                        </template>
-                    </v-data-table>
-                    <v-btn
-                        fab
-                        color="success"
+    <v-content>
+        <v-container fluid>
+            <v-layout
+                column
+                justify-center>
+                <v-card
+                    flat
+                    dark>
+                    <v-toolbar
                         dark
-                        fixed
-                        bottom
-                        right
-                        @click="dialog = !dialog">
-                        <v-icon>add</v-icon>
-                    </v-btn>
-                </v-card-text>
-            </v-card>
-        </v-layout>
+                        color="primary">
+                        <v-spacer/>
+                        <v-spacer/>
+                        <v-spacer/>
+                        <v-text-field
+                            v-model="modeloBuscar"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        />
+                    </v-toolbar>
+                    <v-card-text>
+                        <v-data-table
+                            :headers="headers"
+                            :items="contasIniciais"
+                            :search="modeloBuscar"
+                            :rows-per-page-items="[ 10, 25, 40 ]"
+                            :rows-per-page-text="'Registros por página'"
+                            light
+                            class="elevation-1">
+                            <template
+                                slot="items"
+                                slot-scope="props">
+                                <td class="text-xs-center">{{ props.item.usuario_id }}</td>
+                                <td
+                                    class="text-xs-center"
+                                    v-html="props.item.nome"/>
+                                <td class="text-xs-center">{{ props.item.email }}</td>
+                                <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
+                                <td class="text-xs-center">
+                                    <v-icon
+                                        v-if="props.item.is_admin"
+                                        color="primary">check_circle_outline</v-icon>
+                                </td>
+                                <td class="justify-center layout px-0">
+                                    <v-btn icon>
+                                        <v-icon
+                                            color="grey darken-1"
+                                            @click="editItem(props.item)">edit
+                                        </v-icon>
+                                    </v-btn>
+                                    <v-btn
+                                        v-if="accountInfo.user_id != props.item.usuario_id"
+                                        icon>
+                                        <v-icon
+                                            color="grey darken-1"
+                                            @click="deleteItem(props.item)">delete
+                                        </v-icon>
+                                    </v-btn>
+                                </td>
+                            </template>
+                            <template slot="no-data">
+                                <v-btn
+                                    color="primary"
+                                    @click="obterContas">Reset</v-btn>
+                            </template>
+                        </v-data-table>
+                        <v-btn
+                            fab
+                            color="success"
+                            dark
+                            fixed
+                            bottom
+                            right
+                            @click="dialog = !dialog">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                    </v-card-text>
+                </v-card>
+            </v-layout>
 
-        <v-dialog
-            v-model="dialog"
-            max-width="500px">
-            <v-card light>
-                <v-card-title>
-                    <span class="headline">{{ formTitle }} Conta</span>
-                </v-card-title>
+            <v-dialog
+                v-model="dialog"
+                max-width="500px">
+                <v-card light>
+                    <v-card-title>
+                        <span class="headline">{{ formTitle }} Conta</span>
+                    </v-card-title>
 
-                <v-card-text>
-                    <conta-formulario
-                        :item="editedItem"
-                        :dialog.sync="dialog"/>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
-    </v-container>
+                    <v-card-text>
+                        <conta-formulario
+                            :item="editedItem"
+                            :dialog.sync="dialog"/>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
+        </v-container>
+    </v-content>
 </template>
 <script>
 
@@ -167,7 +169,6 @@ export default {
     watch: {
         contas(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.contasIniciais = [];
             } else {
                 this.contasIniciais = value;

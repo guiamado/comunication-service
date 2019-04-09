@@ -1,6 +1,6 @@
+import router from '@/router';
 import axios from 'axios';
 import * as types from './types';
-import router from '../../router.js';
 import { obterInformacoesJWT } from './_helpers/jwt';
 import { requisicaoAutorizada } from './_helpers/requisicao-autorizada';
 
@@ -22,11 +22,11 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
                     const objetoJWT = obterInformacoesJWT();
                     commit(types.SETACCOUNTINFO, objetoJWT.user);
-                    router.push({ name: 'home' });
+                } else {
+                    dispatch('alert/error', 'Falha ao realizar login.', {
+                        root: true,
+                    });
                 }
-                dispatch('alert/error', 'Falha ao realizar login.', {
-                    root: true,
-                });
             }
         } catch (Exception) {
             dispatch('alert/error', `Erro: ${Exception}`, {

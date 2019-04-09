@@ -10,7 +10,7 @@
         app>
         <v-card
             dark
-            color="primary">
+            color="cyan darken-4">
             <v-list class="pa-1">
                 <v-list-tile
                     avatar
@@ -111,8 +111,8 @@ export default {
                 },
                 {
                     icon: 'chat',
-                    title: '(Teste) Chat/WebSocket',
-                    to: '/websocket',
+                    title: 'Chat',
+                    to: '/chat',
                 },
             ];
             if (this.accountInfo.is_admin === true) {

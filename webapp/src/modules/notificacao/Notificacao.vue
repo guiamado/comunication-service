@@ -1,107 +1,115 @@
 <template>
-    <v-container fluid>
-        <v-layout
-            column
-            justify-center>
-            <v-card flat>
-                <v-toolbar
+    <v-content>
+        <v-container fluid>
+            <v-layout
+                column
+                justify-center>
+                <v-card flat>
+                    <v-toolbar
+                        dark
+                        color="primary">
+                        <v-dialog
+                            v-model="dialog"
+                            max-width="500px">
+                            <v-card>
+                                <v-card-title light>
+                                    <span class="headline">{{ formTitle }} Notificação</span>
+                                </v-card-title>
+
+                                <v-card-text>
+                                    <notificacao-formulario
+                                        :item="editedItem"
+                                        :dialog.sync="dialog"/>
+                                </v-card-text>
+
+                            </v-card>
+
+                        </v-dialog>
+                        <v-spacer/>
+                        <v-spacer/>
+                        <v-text-field
+                            v-model="modeloBuscar"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        />
+                    </v-toolbar>
+                    <v-card-text>
+                        <v-data-table
+                            :headers="headers"
+                            :items="notificacoesRenderizadas"
+                            :search="modeloBuscar"
+                            :pagination.sync="pagination"
+                            :rows-per-page-items="[ 10, 25, 40 ]"
+                            :rows-per-page-text="'Registros por página'"
+                            :no-data-text="'Não Há Notificações.'"
+                            light
+                            class="elevation-1">
+                            <template
+                                slot="items"
+                                slot-scope="props">
+                                <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
+                                <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
+                                <td class="text-xs-center">{{ props.item.titulo }}</td>
+                                <td class="text-xs-center">{{ props.item.sistema }}</td>
+                                <td class="text-xs-center">{{ props.item.data_envio | formataData }}</td>
+                                <td class="text-xs-center">
+                                    <v-scroll-y-transition >
+                                        <v-icon
+                                            v-show="props.item.is_notificacao_lida"
+                                            color="blue">thumb_up</v-icon>
+                                    </v-scroll-y-transition>
+                                    <v-scroll-y-transition :origin="'bottom center 0'">
+                                        <v-icon
+                                            v-show="!props.item.is_notificacao_lida"
+                                            color="red">thumb_down</v-icon>
+                                    </v-scroll-y-transition>
+                                </td>
+                                <td
+                                    v-if="accountInfo.is_admin"
+                                    class="justify-center layout px-0">
+                                    <v-btn icon>
+                                        <v-icon
+                                            color="grey darken-1"
+                                            @click="deleteItem(props.item)">delete
+                                        </v-icon>
+                                    </v-btn>
+                                </td>
+                                <td
+                                    v-else
+                                    class="justify-center layout px-0 pt-3"> -
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card-text>
+                </v-card>
+            </v-layout>
+            <v-scale-transition v-if="accountInfo.is_admin">
+                <v-btn
+                    v-show="!loading"
+                    fab
+                    color="success"
                     dark
-                    color="primary">
-                    <v-toolbar-title>Notificacões</v-toolbar-title>
-                    <v-dialog
-                        v-model="dialog"
-                        max-width="500px">
-                        <v-card>
-                            <v-card-title light>
-                                <span class="headline">{{ formTitle }} Notificação</span>
-                            </v-card-title>
-
-                            <v-card-text>
-                                <notificacao-formulario
-                                    :item="editedItem"
-                                    :dialog.sync="dialog"/>
-                            </v-card-text>
-
-                        </v-card>
-
-                    </v-dialog>
-                    <v-spacer/>
-                    <v-spacer/>
-                    <v-text-field
-                        v-model="modeloBuscar"
-                        append-icon="search"
-                        label="Buscar"
-                        single-line
-                        hide-details
-                    />
-                </v-toolbar>
-                <v-card-text>
-                    <v-data-table
-                        :headers="headers"
-                        :items="notificacoesRenderizadas"
-                        :search="modeloBuscar"
-                        :pagination.sync="pagination"
-                        :rows-per-page-items="[ 10, 25, 40 ]"
-                        :rows-per-page-text="'Registros por página'"
-                        :no-data-text="'Não Há Notificações.'"
-                        light
-                        class="elevation-1">
-                        <template
-                            slot="items"
-                            slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
-                            <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
-                            <td class="text-xs-center">{{ props.item.titulo }}</td>
-                            <td class="text-xs-center">{{ props.item.sistema }}</td>
-                            <td class="text-xs-center">{{ props.item.data_envio | formataData }}</td>
-                            <td class="text-xs-center">
-                                <v-icon
-                                    v-if="props.item.is_notificacao_lida"
-                                    color="blue">thumb_up</v-icon>
-                                <v-icon
-                                    v-if="!props.item.is_notificacao_lida"
-                                    color="red">thumb_down</v-icon>
-                            </td>
-                            <td
-                                v-if="accountInfo.is_admin"
-                                class="justify-center layout px-0">
-                                <v-btn icon>
-                                    <v-icon
-                                        color="grey darken-1"
-                                        @click="deleteItem(props.item)">delete
-                                    </v-icon>
-                                </v-btn>
-                            </td>
-                            <td
-                                v-else
-                                class="justify-center layout px-0 pt-3"> -
-                            </td>
-                        </template>
-                    </v-data-table>
-                </v-card-text>
-            </v-card>
-        </v-layout>
-        <v-scale-transition v-if="accountInfo.is_admin">
-            <v-btn
-                fab
-                color="success"
-                dark
-                fixed
-                bottom
-                right
-                @click="newItem()">
-                <v-icon>add</v-icon>
-            </v-btn>
-        </v-scale-transition>
-    </v-container>
+                    fixed
+                    bottom
+                    right
+                    @click="newItem()">
+                    <v-icon>add</v-icon>
+                </v-btn>
+            </v-scale-transition>
+        </v-container>
+    </v-content>
 </template>
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
-import NotificacaoFormulario from './NotificacaoFormulario';
+import NotificacaoFormulario from './NotificacaoFormulario.vue';
+import { notificacaoService } from './service';
 
 export default {
     components: { NotificacaoFormulario },
+    mixins: [notificacaoService],
     data: () => ({
         loading: false,
         dialog: false,
@@ -162,9 +170,6 @@ export default {
             is_ativo: true,
             plataformas: [],
         },
-        websocket: {
-            connection: null,
-        },
     }),
     computed: {
         formTitle() {
@@ -189,16 +194,15 @@ export default {
         },
         notificacoes(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.notificacoesRenderizadas = [];
             } else {
                 this.notificacoesRenderizadas = value;
             }
-            if (this.dialog == false) {
+            if (this.dialog === false) {
                 const params = {
                     usuarioId: this.accountInfo.user_id,
                     isNotificacaoLida: this.notificacaoLida,
-                }
+                };
                 this.obterNotificacoes(params);
             }
         },
@@ -210,30 +214,23 @@ export default {
     },
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
-        if (this.notificacoes.length == null || this.notificacoes.length === 0) {
+        if (this.notificacoes == null || this.notificacoes.length === 0) {
             const params = {
                 usuarioId: this.accountInfo.user_id,
                 isNotificacaoLida: this.notificacaoLida,
-            }
+            };
             this.obterNotificacoes(params);
         }
         if (this.notificacoes.length > 0) {
             this.notificacoesRenderizadas = this.notificacoes;
         }
 
-        if (this.contas.length == null || this.contas.length === 0) {
+        if (this.contas == null || this.contas.length === 0) {
             this.obterContas();
         }
-        if (this.plataformas.length == null || this.plataformas.length === 0) {
+        if (this.plataformas == null || this.plataformas.length === 0) {
             this.obterPlataformas();
         }
-
-        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
-
-        this.websocket.connection.onopen = function (e) {
-            console.log('Conexão estabelecida - Componente Notificacao.vue');
-            console.log(e);
-        };
     },
     methods: {
         ...mapActions({
@@ -252,14 +249,14 @@ export default {
         },
         deleteItem(item) {
             // eslint-disable-next-line
-            if (confirm('Deseja remover esse item?')) {
-                if (this.accountInfo.is_admin !== true) {
-                    this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
-                }
-                if (this.accountInfo.is_admin === true) {
-                    this.removerNotificacao(item.notificacao_id);
-                }
+            if (!confirm('Deseja remover esse item?')) {
+                return false;
             }
+            if (this.accountInfo.is_admin !== true) {
+                this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                return false;
+            }
+            return this.removerNotificacao(item.notificacao_id);
         },
     },
 };

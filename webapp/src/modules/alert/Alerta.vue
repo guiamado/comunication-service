@@ -2,7 +2,7 @@
     <div>
         <v-snackbar
             :value="true"
-            :top="false"
+            :top="top"
             :timeout="timeout"
             :color="color"
             :vertical="false"
@@ -30,11 +30,10 @@ export default {
     data: () => ({
         timeout: 6000,
         snackbar: false,
-        top: true,
+        top: false,
     }),
     watch: {
-        color(value) {
-            console.log(value);
+        color() {
             this.snackbar = true;
         },
     },

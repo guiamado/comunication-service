@@ -36,9 +36,9 @@
                         <template
                             v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge">
                             <v-list-tile
+                                v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
                                 :key="indexNotificacao"
-                                :to="minhaNotificacao"
-                                v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false">
+                                :to="minhaNotificacao">
                                 <v-list-tile-content>
                                     <v-list-tile-title>[{{ minhaNotificacao.sistema }}]</v-list-tile-title>
                                     <v-list-tile-sub-title>{{ minhaNotificacao.titulo }}</v-list-tile-sub-title>
@@ -242,9 +242,6 @@ export default {
             menu: false,
             message: false,
             hints: true,
-            websocket: {
-                connection: null,
-            },
         };
     },
     computed: {
@@ -259,12 +256,6 @@ export default {
         },
     },
     mounted() {
-        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
-
-        this.websocket.connection.onopen = () => {
-            console.log('Conexão estabelecida');
-        };
-
         if (this.notificacoesBadge == null || this.notificacoesBadge.length === 0) {
             const params = {
                 usuarioId: this.accountInfo.user_id,
