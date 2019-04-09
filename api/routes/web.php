@@ -24,6 +24,7 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->post('/conta', 'ContaController@post');
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
+        $router->post('/send[/{id}]','EmailController@sendEmail');
         $router->get('/conta[/{id}]', 'ContaController@get');
         $router->patch(
             '/conta/{id}',

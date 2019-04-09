@@ -40,3 +40,15 @@ export const atualizarConta = ({ dispatch, commit }, conta) => requisicaoAutoriz
         root: true,
     });
 });
+
+export const enviarEmail = ({ dispatch, commit }, conta) => {
+    requisicaoAutorizada.post('http://localhost/v1/send', conta).then((response) => {
+        const { data } = response;
+        commit(types.ENVIAR_EMAIL, data.data);
+        dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
+    }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
+};

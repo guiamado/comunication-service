@@ -22,8 +22,8 @@ class MyEmail extends Mailable
 
     //build the message.
     public function build() {
-        return $this->from('amado.guigui@gmail.com')
-            ->subject('Assunto do Email')
+        return $this->from('amado.silva133@gmail.com')
+            ->subject('Conta Criada Servico Notificacao')
             ->view('my-email')
             ->with([
                 'user' => $this->user,

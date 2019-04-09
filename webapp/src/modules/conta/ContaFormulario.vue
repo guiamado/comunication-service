@@ -99,6 +99,7 @@ export default {
         },
     },
     data: () => ({
+        emailEnviado: '',
         loading: false,
         editedItem: {},
         defaultItem: {
@@ -144,6 +145,7 @@ export default {
             cadastrarConta: 'conta/cadastrarConta',
             obterSistemas: 'sistema/obterSistemas',
             atualizarConta: 'conta/atualizarConta',
+            enviarEmail: 'conta/enviarEmail',
         }),
 
         save() {
@@ -154,6 +156,7 @@ export default {
                 this.atualizarConta(self.editedItem);
             } else {
                 this.cadastrarConta(self.editedItem);
+                this.enviarEmail(self.editedItem);
             }
             self.loading = false;
             self.close();
