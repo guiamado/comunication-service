@@ -58,13 +58,17 @@
                         avatar>
 
                         <v-list-tile-content>
-                            <v-checkbox
-                                v-model="editedItem.sistemas"
-                                :label="sistema.descricao"
-                                :value="sistema"
-                                color="success"
-                                :rules="[rules.required, rules.minLengthCheckBox]"
-                                required/>
+                            <v-form
+                                ref="form"
+                                v-model="valid">
+                                <v-checkbox
+                                    v-model="editedItem.sistemas"
+                                    :label="sistema.descricao"
+                                    :value="sistema"
+                                    color="success"
+                                    :rules="[rules.required, rules.minLengthCheckBox]"
+                                    required/>
+                            </v-form>
                         </v-list-tile-content>
 
                     </v-list-tile>
@@ -77,6 +81,7 @@
                     @click.native="close">Fechar</v-btn>
                 <v-btn
                     v-if="!loading"
+                    :disabled="!valid"
                     dark
                     color="blue darken-1"
                     @click.native="save">Gravar
@@ -100,6 +105,7 @@ export default {
     },
     data: () => ({
         loading: false,
+        valid: true,
         editedItem: {},
         defaultItem: {
             usuario_id: null,
