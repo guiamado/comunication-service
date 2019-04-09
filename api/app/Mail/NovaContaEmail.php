@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MyEmail extends Mailable
+class NovaContaEmail extends Mailable
 {
     use Queueable,
         SerializesModels;
@@ -24,7 +24,7 @@ class MyEmail extends Mailable
     public function build() {
         return $this->from('amado.silva133@gmail.com')
             ->subject('Conta Criada Servico Notificacao')
-            ->view('my-email')
+            ->view('nova-conta-email')
             ->with([
                 'user' => $this->user,
             ]);

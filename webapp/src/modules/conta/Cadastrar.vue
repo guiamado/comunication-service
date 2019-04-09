@@ -114,11 +114,15 @@ export default {
         ...mapState('account', ['status']),
     },
     methods: {
-        ...mapActions('account', ['register']),
+        ...mapActions({
+            register: 'account/register',
+            enviarEmail: 'conta/enviarEmail',
+        }),
         tratarSubmissao() {
             this.submitted = true;
             if (this.$refs.form.validate()) {
                 this.register(this.user);
+                this.enviarEmail(this.user);
             }
         },
     },
