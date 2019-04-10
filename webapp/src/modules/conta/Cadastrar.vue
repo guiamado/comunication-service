@@ -33,11 +33,6 @@
                                         class="form-control"
                                         required
                                     />
-                                    <div
-                                        v-if="submetido && errors.has('nome')"
-                                        class="invalid-feedback">{{
-                                        errors.first('nome') }}
-                                    </div>
                                     <v-text-field
                                         v-validate="'required'"
                                         v-model="user.email"
@@ -47,11 +42,6 @@
                                         class="form-control"
                                         required
                                     />
-                                    <div
-                                        v-if="submetido && errors.has('email')"
-                                        class="invalid-feedback">{{
-                                        errors.first('email') }}
-                                    </div>
                                     <v-text-field
                                         v-validate="{ required: true, min: 6 }"
                                         v-model="user.password"
@@ -62,10 +52,6 @@
                                         class="form-control"
                                         required
                                     />
-                                    <div
-                                        v-if="submetido && errors.has('password')"
-                                        class="invalid-feedback">{{ errors.first('password') }}
-                                    </div>
                                     <v-card-actions>
                                         <v-spacer/>
                                         <router-link
@@ -100,7 +86,6 @@ export default {
                 email: '',
                 password: '',
             },
-            submetido: false,
             rules: {
                 required: value => !!value || 'Required.',
                 minLength: object => object.length > 3 || 'Campo obrigatório.',
@@ -118,7 +103,6 @@ export default {
     methods: {
         ...mapActions('account', ['registrar']),
         tratarSubmissao() {
-            this.submetido = true;
             if (this.$refs.form.validate()) {
                 this.registrar(this.user);
             }
