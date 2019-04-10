@@ -5,7 +5,7 @@ import { obterInformacoesJWT } from './_auxiliares/jwt';
 import { requisicaoAutorizada } from './_auxiliares/requisicao-autorizada';
 
 export const login = ({ dispatch, commit }, { email, password }) => {
-    commit(types.LOGINREQUEST, { email });
+    commit(types.LOGIN_REQUISICAO, { email });
 
     return requisicaoAutorizada.post(
         'http://localhost/v1/autenticacao/login',
@@ -15,13 +15,13 @@ export const login = ({ dispatch, commit }, { email, password }) => {
             if (response.data && response.data.data) {
                 const { data } = response.data;
                 if (data && data.token) {
-                    commit(types.LOGINSUCCESS, data.token);
+                    commit(types.LOGIN_SUCESSO, data.token);
                     dispatch('alert/info', 'Login realizado com sucesso!', {
                         root: true,
                     });
 
                     const objetoJWT = obterInformacoesJWT();
-                    commit(types.SETACCOUNTINFO, objetoJWT.user);
+                    commit(types.DEFINIR_INFORMACOES_CONTA, objetoJWT.user);
                 } else {
                     dispatch('alert/error', 'Falha ao realizar login.', {
                         root: true,
@@ -35,7 +35,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
         }
     }).catch((error) => {
         if (error.response && error.response.data) {
-            commit(types.LOGINFAILURE, error.response.data.error);
+            commit(types.LOGIN_FALHA, error.response.data.error);
             dispatch('alert/error', `Erro: ${error.response.data.error}`, {
                 root: true,
             });
@@ -49,16 +49,16 @@ export const logout = ({ commit }) => {
 };
 
 export const registrar = ({ dispatch, commit }, user) => {
-    commit(types.REGISTERREQUEST);
+    commit(types.REGISTRAR_REQUISICAO);
     axios.post('http://localhost/v1/conta', JSON.parse(JSON.stringify(user))).then(
         () => {
-            commit(types.REGISTERSUCCESS);
+            commit(types.REGISTRAR_SUCESSO);
             dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
             router.push('/login');
         },
         (error) => {
             if (error.response && error.response.data) {
-                commit(types.REGISTERFAILURE);
+                commit(types.REGISTRAR_FALHA);
                 dispatch('alert/error', error.response.data.error, {
                     root: true,
                 });
