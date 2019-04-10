@@ -125,7 +125,7 @@ export default {
             sistemas: 'sistema/sistema',
             contas: 'conta/conta',
             plataformas: 'plataforma/plataforma',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
     watch: {

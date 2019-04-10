@@ -12,6 +12,6 @@ const loggedIn = informacoesJWT !== '';
 export const state = {
     status: { loggedIn },
     token: informacoesJWT,
-    accountInfo: informacoesJWT ? informacoesJWT.user : '',
+    informacoesConta: informacoesJWT ? informacoesJWT.user : '',
 };
 

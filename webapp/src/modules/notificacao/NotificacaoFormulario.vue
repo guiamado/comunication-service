@@ -49,6 +49,7 @@ import { mapActions, mapGetters } from 'vuex';
 import { notificacaoService } from './service';
 
 export default {
+    mixins: [notificacaoService],
     props: {
         item: {
             type: Object,
@@ -79,11 +80,9 @@ export default {
             connection: null,
         },
     }),
-    mixins: [notificacaoService],
     computed: {
         ...mapGetters({
             mensagens: 'mensagem/mensagens',
-            accountInfo: 'account/accountInfo',
         }),
     },
     watch: {

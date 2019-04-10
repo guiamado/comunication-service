@@ -179,7 +179,7 @@ export default {
             sistemas: 'sistema/sistema',
             contas: 'conta/conta',
             plataformas: 'plataforma/plataforma',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
     watch: {
@@ -187,8 +187,8 @@ export default {
             if (value === false) {
                 this.editedItem = this.defaultItem;
             }
-            if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
+            if (this.editedItem.autor_id == null && this.informacoesConta.user_id !== null) {
+                this.editedItem.autor_id = this.informacoesConta.user_id;
             }
 
             this.exibirBotaoGravar = true;

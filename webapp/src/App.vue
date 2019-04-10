@@ -105,7 +105,7 @@ export default {
         ...mapGetters({
             status: 'account/status',
             user: 'account/user',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
             websocket: 'websocket/websocket',
         }),
     },

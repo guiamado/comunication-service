@@ -181,7 +181,7 @@ export default {
     computed: {
         ...mapGetters({
             websocket: 'websocket/websocket',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
 
         hasMembrosNaSalaAtual() {
@@ -202,13 +202,13 @@ export default {
         },
     },
     watch: {
-        accountInfo() {
+        informacoesConta() {
             this.sistemas = [];
-            this.sistemas.push(this.accountInfo.sistemas);
+            this.sistemas.push(this.informacoesConta.sistemas);
         },
     },
     mounted() {
-        this.sistemas = this.accountInfo.sistemas;
+        this.sistemas = this.informacoesConta.sistemas;
     },
     methods: {
         ...mapActions({

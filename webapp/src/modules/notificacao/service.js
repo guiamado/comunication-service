@@ -12,7 +12,7 @@ export const notificacaoService = {
         },
         usuarioPossuiVinculoComSistema(sistemaNotificacao) {
             const self = this;
-            const { sistemas } = self.accountInfo;
+            const { sistemas } = self.informacoesConta;
             let possuiVinculo = false;
             sistemas.forEach((value) => {
                 if (parseInt(value.sistema_id, 10) === parseInt(sistemaNotificacao, 10)) {

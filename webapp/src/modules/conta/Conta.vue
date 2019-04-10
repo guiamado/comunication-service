@@ -52,7 +52,7 @@
                                         </v-icon>
                                     </v-btn>
                                     <v-btn
-                                        v-if="accountInfo.user_id != props.item.usuario_id"
+                                        v-if="informacoesConta.user_id != props.item.usuario_id"
                                         icon>
                                         <v-icon
                                             color="grey darken-1"
@@ -162,7 +162,7 @@ export default {
         },
         ...mapGetters({
             contas: 'conta/conta',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
 
@@ -188,10 +188,10 @@ export default {
 
         editItem(item) {
             const self = this;
-            if (self.accountInfo.is_admin !== true) {
+            if (self.informacoesConta.is_admin !== true) {
                 self.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
             }
-            if (self.accountInfo.is_admin === true) {
+            if (self.informacoesConta.is_admin === true) {
                 self.editedIndex = self.contas.indexOf(item);
                 self.editedItem.sistemas = [];
                 self.editedItem = Object.assign({}, item);
@@ -208,10 +208,10 @@ export default {
         deleteItem(item) {
             // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
-                if (this.accountInfo.is_admin !== true) {
+                if (this.informacoesConta.is_admin !== true) {
                     this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
                 }
-                if (this.accountInfo.is_admin === true) {
+                if (this.informacoesConta.is_admin === true) {
                     this.removerConta(item.usuario_id);
                 }
             }
