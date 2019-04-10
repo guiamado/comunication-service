@@ -18,7 +18,7 @@
 
                                 <v-card-text>
                                     <notificacao-formulario
-                                        :item="editedItem"
+                                        :item="itemEditado"
                                         :dialog.sync="dialog"/>
                                 </v-card-text>
 
@@ -160,7 +160,7 @@ export default {
             },
         ],
         notificacoesRenderizadas: [],
-        editedItem: {},
+        itemEditado: {},
         defaultItem: {
             notificacao_id: null,
             autor_id: null,
@@ -173,7 +173,7 @@ export default {
     }),
     computed: {
         formTitle() {
-            return this.editedItem.notificacao_id === null ? 'Criar' : 'Editar';
+            return this.itemEditado.notificacao_id === null ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             notificacoes: 'notificacao/notificacoes',
@@ -184,11 +184,11 @@ export default {
     },
     watch: {
         dialog() {
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.informacoesConta.user_id;
+            if (this.itemEditado.autor_id == null) {
+                this.itemEditado.autor_id = this.informacoesConta.user_id;
             }
             this.exibirBotaoGravar = true;
-            if (this.editedItem.notificacao_id != null) {
+            if (this.itemEditado.notificacao_id != null) {
                 this.exibirBotaoGravar = false;
             }
         },
@@ -206,14 +206,14 @@ export default {
                 this.obterNotificacoes(params);
             }
         },
-        editedItem() {
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.informacoesConta.user_id;
+        itemEditado() {
+            if (this.itemEditado.autor_id == null) {
+                this.itemEditado.autor_id = this.informacoesConta.user_id;
             }
         },
     },
     mounted() {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
         if (this.notificacoes == null || this.notificacoes.length === 0) {
             const params = {
                 usuarioId: this.informacoesConta.user_id,
@@ -240,11 +240,11 @@ export default {
             removerNotificacao: 'notificacao/removerNotificacao',
         }),
         newItem() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.dialog = true;
         },
         editItem(item) {
-            this.editedItem = Object.assign({}, item);
+            this.itemEditado = Object.assign({}, item);
             this.dialog = true;
         },
         deleteItem(item) {

@@ -7,7 +7,7 @@
                 sm6
                 md12>
                 <v-text-field
-                    v-model="editedItem.descricao"
+                    v-model="itemEditado.descricao"
                     label="Descrição"/>
             </v-flex>
             <v-flex
@@ -16,8 +16,8 @@
                 md12>
                 <h3>Situação:</h3>
                 <v-switch
-                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                    v-model="editedItem.is_ativo"/>
+                    :label="`${itemEditado.is_ativo ? 'Ativo' : 'Inativo'}`"
+                    v-model="itemEditado.is_ativo"/>
             </v-flex>
             <v-flex class="text-xs-center">
                 <v-btn
@@ -53,7 +53,7 @@ export default {
     },
     data: () => ({
         loading: false,
-        editedItem: {},
+        itemEditado: {},
         defaultItem: {
             plataforma_id: null,
             descricao: '',
@@ -63,17 +63,17 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedItem.plataforma_id === null ? 'Criar' : 'Editar';
+            return this.itemEditado.plataforma_id === null ? 'Criar' : 'Editar';
         },
     },
 
     watch: {
         item(value) {
-            this.editedItem = Object.assign({}, value);
+            this.itemEditado = Object.assign({}, value);
         },
     },
     mounted() {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
     },
 
     methods: {
@@ -85,19 +85,19 @@ export default {
 
         save() {
             const self = this;
-            if (self.editedItem.is_ativo === null || self.editedItem.is_ativo === '') {
-                self.editedItem.is_ativo = false;
+            if (self.itemEditado.is_ativo === null || self.itemEditado.is_ativo === '') {
+                self.itemEditado.is_ativo = false;
             }
-            if (self.editedItem.plataforma_id !== null) {
-                self.atualizarPlataforma(self.editedItem);
+            if (self.itemEditado.plataforma_id !== null) {
+                self.atualizarPlataforma(self.itemEditado);
             } else {
-                self.cadastrarPlataforma(self.editedItem);
+                self.cadastrarPlataforma(self.itemEditado);
             }
             this.close();
         },
 
         close() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.$emit('update:dialog', false);
         },
     },

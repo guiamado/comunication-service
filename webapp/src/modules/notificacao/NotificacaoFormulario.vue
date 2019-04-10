@@ -7,7 +7,7 @@
                 sm6
                 md12>
                 <v-textarea
-                    v-model="editedItem.codigo_destinatario"
+                    v-model="itemEditado.codigo_destinatario"
                     :rules="[(object) => object != null && object.length != null && object.length > 3 || 'Campo obrigatório.']"
                     label="Código Destinatário"
                     auto-grow
@@ -17,8 +17,8 @@
                     rows="5"/>
 
                 <v-select
-                    v-model="editedItem.mensagem_id"
-                    :disabled="editedItem.notificacao_id != null"
+                    v-model="itemEditado.mensagem_id"
+                    :disabled="itemEditado.notificacao_id != null"
                     :items="mensagensRenderizadas"
                     :rules="[v => !!v || 'Campo obrigatório']"
                     label="Mensagem"
@@ -66,7 +66,7 @@ export default {
         mensagensRenderizadas: [],
         mensagensComVinculo: [],
         loading: false,
-        editedItem: {},
+        itemEditado: {},
         defaultItem: {
             notificacao_id: null,
             autor_id: null,
@@ -87,7 +87,7 @@ export default {
     },
     watch: {
         item(value) {
-            this.editedItem = Object.assign({}, value);
+            this.itemEditado = Object.assign({}, value);
         },
         mensagens(value) {
             if ('error' in value) {
@@ -104,7 +104,7 @@ export default {
             console.log('Conexão estabelecida');
         };
 
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
         if (this.mensagens.length > 0) {
             this.mensagensRenderizadas = this.filtrarMensagensVinculadas(this.mensagens);
         }
@@ -124,36 +124,36 @@ export default {
             const self = this;
             self.loading = true;
 
-            if (self.editedItem.notificacao_id !== null) {
-                this.atualizarNotificacao(self.editedItem);
+            if (self.itemEditado.notificacao_id !== null) {
+                this.atualizarNotificacao(self.itemEditado);
             } else {
-                this.cadastrarNotificacao(self.editedItem);
-                this.enviarNotificacao(self.editedItem);
+                this.cadastrarNotificacao(self.itemEditado);
+                this.enviarNotificacao(self.itemEditado);
             }
             this.$emit('update:dialog', false);
         },
 
-        enviarNotificacao(editedItem) {
+        enviarNotificacao(itemEditado) {
             let objetoMensagem = {};
             Object.keys(this.mensagensRenderizadas).forEach((indice) => {
-                if (this.mensagensRenderizadas[indice].mensagem_id === editedItem.mensagem_id) {
+                if (this.mensagensRenderizadas[indice].mensagem_id === itemEditado.mensagem_id) {
                     objetoMensagem = this.mensagensRenderizadas[indice];
                 }
             });
 
             if (Object.keys(objetoMensagem).length > 0) {
                 const objetoNotificacao = {
-                    sistema: editedItem.sistema_id,
-                    codigo_destinatario: editedItem.codigo_destinatario,
+                    sistema: itemEditado.sistema_id,
+                    codigo_destinatario: itemEditado.codigo_destinatario,
                     mensagem: objetoMensagem,
-                    data_envio: editedItem.data_envio,
+                    data_envio: itemEditado.data_envio,
                 };
                 this.enviarMensagem(JSON.stringify(objetoNotificacao));
             }
         },
 
         close() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.$emit('update:dialog', false);
         },
 

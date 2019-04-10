@@ -85,7 +85,7 @@
 
                     <v-card-text>
                         <mensagem-formulario
-                            :item="editedItem"
+                            :item="itemEditado"
                             :dialog.sync="dialog"
                         />
                     </v-card-text>
@@ -111,7 +111,7 @@ export default {
         sistemasRenderizados: [],
         modeloBuscar: '',
         indiceEditado: -1,
-        editedItem: {
+        itemEditado: {
             titulo: null,
             autor_id: null,
             created_at: null,
@@ -185,10 +185,10 @@ export default {
     watch: {
         dialog(value) {
             if (value === false) {
-                this.editedItem = this.defaultItem;
+                this.itemEditado = this.defaultItem;
             }
-            if (this.editedItem.autor_id == null && this.informacoesConta.user_id !== null) {
-                this.editedItem.autor_id = this.informacoesConta.user_id;
+            if (this.itemEditado.autor_id == null && this.informacoesConta.user_id !== null) {
+                this.itemEditado.autor_id = this.informacoesConta.user_id;
             }
 
             this.exibirBotaoGravar = true;
@@ -240,7 +240,7 @@ export default {
         }),
         editItem(item) {
             this.indiceEditado = this.mensagens.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+            this.itemEditado = Object.assign({}, item);
             this.dialog = true;
         },
         deleteItem(item) {
@@ -252,7 +252,7 @@ export default {
         close() {
             this.dialog = false;
             setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
+                this.itemEditado = Object.assign({}, this.defaultItem);
                 this.indiceEditado = -1;
             }, 300);
         },

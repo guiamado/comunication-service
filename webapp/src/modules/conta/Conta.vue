@@ -91,7 +91,7 @@
 
                     <v-card-text>
                         <conta-formulario
-                            :item="editedItem"
+                            :item="itemEditado"
                             :dialog.sync="dialog"/>
                     </v-card-text>
                 </v-card>
@@ -145,7 +145,7 @@ export default {
         ],
         contasIniciais: [],
         indiceEditado: -1,
-        editedItem: {},
+        itemEditado: {},
         defaultItem: {
             usuario_id: null,
             descricao: '',
@@ -193,13 +193,13 @@ export default {
             }
             if (self.informacoesConta.is_admin === true) {
                 self.indiceEditado = self.contas.indexOf(item);
-                self.editedItem.sistemas = [];
-                self.editedItem = Object.assign({}, item);
+                self.itemEditado.sistemas = [];
+                self.itemEditado = Object.assign({}, item);
                 self.dialog = true;
 
-                if (Object.prototype.hasOwnProperty.call(self.editedItem, 'sistemas')) {
-                    Object.keys(self.editedItem.sistemas).forEach((indice) => {
-                        delete self.editedItem.sistemas[indice].usuario_has_sistema;
+                if (Object.prototype.hasOwnProperty.call(self.itemEditado, 'sistemas')) {
+                    Object.keys(self.itemEditado.sistemas).forEach((indice) => {
+                        delete self.itemEditado.sistemas[indice].usuario_has_sistema;
                     });
                 }
             }
