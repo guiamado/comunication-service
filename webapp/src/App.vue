@@ -50,9 +50,7 @@
             </v-scale-transition>
         </v-toolbar>
 
-        <alerta
-            v-if="alert.message != null && alert.message_type != null"
-            :color="alert.message_type">{{ alert.message }}</alerta>
+        <alerta />
         <router-view/>
         <v-footer
             dark
@@ -97,11 +95,7 @@ export default {
         };
     },
     computed: {
-        ...mapState({
-            alert: state => state.alert,
-            // isLoggedIn: state => state.isLoggedIn
-            // status: state => state.status
-        }),
+
         ...mapGetters({
             status: 'account/status',
             user: 'account/user',
@@ -111,11 +105,6 @@ export default {
     },
     mounted() {
         this.loading = true;
-    },
-    methods: {
-        ...mapActions({
-            limpar: 'alert/limpar',
-        }),
     },
 };
 </script>

@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div
+        v-if="alert.mensagem != null && alert.tipoMensagem != null"
+        :color="alert.tipoMensagem">
         <v-snackbar
             :value="true"
             :top="top"
@@ -8,6 +10,7 @@
             :vertical="false"
             transition="scale-transition"
             dismissible>
+            {{ alert.mensagem }}
             <slot/>
             <v-btn
                 dark
@@ -19,6 +22,8 @@
     </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
     name: 'Alerta',
     props: {
@@ -32,10 +37,21 @@ export default {
         snackbar: false,
         top: false,
     }),
+    computed: {
+        ...mapGetters({
+            mensagem: 'alert/mensagem',
+            tipoMensagem: 'alert/tipoMensagem',
+        }),
+    },
     watch: {
         color() {
             this.snackbar = true;
         },
+    },
+    methods: {
+        ...mapActions({
+            limpar: 'alert/limpar',
+        }),
     },
 };
 </script>

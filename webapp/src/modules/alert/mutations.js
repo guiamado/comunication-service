@@ -4,20 +4,20 @@ export default {
     [types.GETALLREQUEST](state) {
         state.all = { loading: true };
     },
-    [types.SUCCESS](state, message) {
-        state.message_type = 'success';
-        state.message = message;
+    [types.SUCCESS](state, mensagem) {
+        state.tipoMensagem = 'success';
+        state.mensagem = mensagem;
     },
-    [types.ERROR](state, message) {
-        state.message_type = 'error';
-        state.message = message;
+    [types.ERROR](state, mensagem) {
+        state.tipoMensagem = 'error';
+        state.mensagem = mensagem;
     },
-    [types.INFO](state, message) {
-        state.message_type = 'info';
-        state.message = message;
+    [types.INFO](state, mensagem) {
+        state.tipoMensagem = 'info';
+        state.mensagem = mensagem;
     },
     [types.CLEAR](state) {
-        state.message_type = null;
-        state.message = null;
+        state.tipoMensagem = null;
+        state.mensagem = null;
     },
 };

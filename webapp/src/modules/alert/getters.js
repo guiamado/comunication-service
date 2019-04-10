@@ -1,2 +1,2 @@
-export const message = state => state.message;
-export const message_type = state => state.message_type;
+export const mensagem = state => state.mensagem;
+export const tipoMensagem = state => state.tipoMensagem;
