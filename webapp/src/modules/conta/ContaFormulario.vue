@@ -1,7 +1,7 @@
 <template>
     <v-form
-            ref="form"
-            v-model="valid">
+        ref="form"
+        v-model="valid">
         <v-container grid-list-md>
             <v-layout wrap>
                 <v-flex
@@ -65,8 +65,8 @@
                                     v-model="editedItem.sistemas"
                                     :label="sistema.descricao"
                                     :value="sistema"
-                                    color="success"
                                     :rules="[rules.required, rules.minLengthCheckBox]"
+                                    color="success"
                                     required/>
                             </v-list-tile-content>
 
