@@ -1,5 +1,5 @@
 import * as types from './types';
-import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
+import { requisicaoAutorizada } from '../account/_auxiliares/requisicao-autorizada';
 
 export const obterPlataformas = ({ dispatch, commit }) => requisicaoAutorizada.get('http://localhost/v1/plataforma')
     .then((response) => {

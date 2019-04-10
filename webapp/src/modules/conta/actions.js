@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as types from './types';
-import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
+import { requisicaoAutorizada } from '../account/_auxiliares/requisicao-autorizada';
 
 export const obterContas = ({ dispatch, commit }) => {
     requisicaoAutorizada.get('http://localhost/v1/conta').then((response) => {

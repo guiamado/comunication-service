@@ -1,5 +1,5 @@
 import * as types from './types';
-import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
+import { requisicaoAutorizada } from '../account/_auxiliares/requisicao-autorizada';
 
 export const obterNotificacoes = ({ dispatch, commit }, params) => {
     let url = `http://localhost/v1/notificacao-usuario/${params.usuarioId}`;

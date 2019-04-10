@@ -1,8 +1,8 @@
 import router from '@/router';
 import axios from 'axios';
 import * as types from './types';
-import { obterInformacoesJWT } from './_helpers/jwt';
-import { requisicaoAutorizada } from './_helpers/requisicao-autorizada';
+import { obterInformacoesJWT } from './_auxiliares/jwt';
+import { requisicaoAutorizada } from './_auxiliares/requisicao-autorizada';
 
 export const login = ({ dispatch, commit }, { email, password }) => {
     commit(types.LOGINREQUEST, { email });
