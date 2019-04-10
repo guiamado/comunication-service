@@ -34,7 +34,7 @@
                                         required
                                     />
                                     <div
-                                        v-if="submitted && errors.has('nome')"
+                                        v-if="submetido && errors.has('nome')"
                                         class="invalid-feedback">{{
                                         errors.first('nome') }}
                                     </div>
@@ -48,7 +48,7 @@
                                         required
                                     />
                                     <div
-                                        v-if="submitted && errors.has('email')"
+                                        v-if="submetido && errors.has('email')"
                                         class="invalid-feedback">{{
                                         errors.first('email') }}
                                     </div>
@@ -63,7 +63,7 @@
                                         required
                                     />
                                     <div
-                                        v-if="submitted && errors.has('password')"
+                                        v-if="submetido && errors.has('password')"
                                         class="invalid-feedback">{{ errors.first('password') }}
                                     </div>
                                     <v-card-actions>
@@ -100,7 +100,7 @@ export default {
                 email: '',
                 password: '',
             },
-            submitted: false,
+            submetido: false,
             rules: {
                 required: value => !!value || 'Required.',
                 minLength: object => object.length > 3 || 'Campo obrigatório.',
@@ -118,7 +118,7 @@ export default {
     methods: {
         ...mapActions('account', ['registrar']),
         tratarSubmissao() {
-            this.submitted = true;
+            this.submetido = true;
             if (this.$refs.form.validate()) {
                 this.registrar(this.user);
             }
