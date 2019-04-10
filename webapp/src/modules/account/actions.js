@@ -8,7 +8,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
     commit(types.LOGIN_REQUISICAO, { email });
 
     return requisicaoAutorizada.post(
-        `http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/autenticacao/login`,
+        `http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/autenticacao/login`,
         { email, password },
     ).then((response) => {
         try {
@@ -50,7 +50,7 @@ export const logout = ({ commit }) => {
 
 export const registrar = ({ dispatch, commit }, user) => {
     commit(types.REGISTRAR_REQUISICAO);
-    axios.post(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/conta`, JSON.parse(JSON.stringify(user))).then(
+    axios.post(`http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/conta`, JSON.parse(JSON.stringify(user))).then(
         () => {
             commit(types.REGISTRAR_SUCESSO);
             dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });

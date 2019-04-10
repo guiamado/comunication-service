@@ -98,7 +98,7 @@ export default {
         },
     },
     mounted() {
-        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}`);
 
         this.websocket.connection.onopen = () => {
             console.log('Conexão estabelecida');
