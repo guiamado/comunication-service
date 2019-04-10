@@ -76,7 +76,7 @@
 
                     <v-card-text>
                         <sistema-formulario
-                            :item="editedItem"
+                            :item="itemEditado"
                             :dialog.sync="dialog"/>
                     </v-card-text>
                 </v-card>
@@ -136,7 +136,7 @@ export default {
         ],
         sistemasRenderizados: [],
         indiceEditado: -1,
-        editedItem: {
+        itemEditado: {
             sistema_id: null,
             descricao: null,
             url: null,
@@ -186,7 +186,7 @@ export default {
 
         editItem(item) {
             this.indiceEditado = this.sistemas.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+            this.itemEditado = Object.assign({}, item);
             this.dialog = true;
         },
 

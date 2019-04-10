@@ -10,14 +10,14 @@
                     sm6
                     md12>
                     <v-text-field
-                        v-model="editedItem.titulo"
+                        v-model="itemEditado.titulo"
                         :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
                         label="Título"
                         box
                         minlength="3"
                         required/>
                     <v-textarea
-                        v-model="editedItem.descricao"
+                        v-model="itemEditado.descricao"
                         :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
                         auto-grow
                         box
@@ -27,8 +27,8 @@
                         rows="5"
                     />
                     <div
-                        style="overflow: auto; max-height: 300px"
-                         v-if="editedItem.mensagem_id == null">
+                        v-if="itemEditado.mensagem_id == null"
+                        style="overflow: auto; max-height: 300px">
                         <h3> Plataformas </h3>
                         <v-list>
                             <v-list-tile
@@ -37,7 +37,7 @@
                                 avatar>
                                 <v-list-tile-content>
                                     <v-checkbox
-                                        v-model="editedItem.plataformas"
+                                        v-model="itemEditado.plataformas"
                                         :label="plataforma.descricao"
                                         :value="plataforma"
                                         color="success"
@@ -49,8 +49,8 @@
                     </div>
                     <br>
                     <v-select
-                        v-model="editedItem.sistema_id"
-                        :disabled="editedItem.mensagem_id != null"
+                        v-model="itemEditado.sistema_id"
+                        :disabled="itemEditado.mensagem_id != null"
                         :items="sistemasRenderizados"
                         :rules="[v => !!v || 'Campo obrigatório']"
                         label="Sistema"
@@ -65,8 +65,8 @@
                     md12>
                     <h3>Situação</h3>
                     <v-switch
-                        :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                        v-model="editedItem.is_ativo"/>
+                        :label="`${itemEditado.is_ativo ? 'Ativo' : 'Inativo'}`"
+                        v-model="itemEditado.is_ativo"/>
                 </v-flex>
             </v-layout>
             <v-layout class="text-xs-center">
@@ -108,7 +108,7 @@ export default {
         loading: false,
         plataformasSelecionadas: [],
         sistemasRenderizados: [],
-        editedItem: {},
+        itemEditado: {},
         defaultItem: {
             titulo: null,
             autor_id: null,
@@ -129,13 +129,13 @@ export default {
         }),
     },
     watch: {
-        dialog(val){
-            if(val === true){
-                this.editedItem = Object.assign({}, this.item);
+        dialog(val) {
+            if (val === true) {
+                this.itemEditado = Object.assign({}, this.item);
             }
         },
         // item(val) {
-        //     this.editedItem = Object.assign({}, val);
+        //     this.itemEditado = Object.assign({}, val);
         // },
         sistemas(value) {
             if ('error' in value) {
@@ -146,7 +146,7 @@ export default {
         },
     },
     mounted() {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
         if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
@@ -173,15 +173,15 @@ export default {
             const self = this;
             self.loading = true;
 
-            if (self.editedItem.mensagem_id !== null) {
-                this.atualizarMensagem(self.editedItem);
+            if (self.itemEditado.mensagem_id !== null) {
+                this.atualizarMensagem(self.itemEditado);
             } else {
-                this.cadastrarMensagem(self.editedItem);
+                this.cadastrarMensagem(self.itemEditado);
             }
             this.$emit('update:dialog', false);
         },
         close() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.$emit('update:dialog', false);
         },
 

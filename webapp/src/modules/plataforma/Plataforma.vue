@@ -82,7 +82,7 @@
 
                     <v-card-text>
                         <plataforma-formulario
-                            :item="editedItem"
+                            :item="itemEditado"
                             :dialog.sync="dialog"/>
                     </v-card-text>
                 </v-card>
@@ -126,7 +126,7 @@ export default {
             },
         ],
         plataformasIniciais: [],
-        editedItem: {
+        itemEditado: {
             plataforma_id: null,
             descricao: '',
             is_ativo: true,
@@ -135,7 +135,7 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedItem.plataforma_id === null ? 'Criar' : 'Editar';
+            return this.itemEditado.plataforma_id === null ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             plataformas: 'plataforma/plataforma',
@@ -165,7 +165,7 @@ export default {
         }),
 
         newItem() {
-            this.editedItem = Object.assign({}, {
+            this.itemEditado = Object.assign({}, {
                 plataforma_id: null,
                 descricao: '',
                 is_ativo: true,
@@ -175,7 +175,7 @@ export default {
 
         editItem(item) {
             this.indiceEditado = this.plataformas.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+            this.itemEditado = Object.assign({}, item);
             this.dialog = true;
         },
 
@@ -188,7 +188,7 @@ export default {
     close() {
         this.dialog = false;
         setTimeout(() => {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.indiceEditado = -1;
         }, 300);
     },
