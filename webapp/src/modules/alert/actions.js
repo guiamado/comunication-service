@@ -1,18 +1,16 @@
 import * as types from './types';
 
-const segundosDuracaoMensagem = 8;
-
 export const success = ({ dispatch, commit }, message) => {
     commit(types.SUCCESS, message);
-    setTimeout(() => (dispatch('alert/limpar', message, { root: true })), segundosDuracaoMensagem * 1000);
+    dispatch('alert/limpar', message, { root: true });
 };
 export const error = ({ dispatch, commit }, message) => {
     commit(types.ERROR, message);
-    setTimeout(() => (dispatch('alert/limpar', message, { root: true })), segundosDuracaoMensagem * 1000);
+    dispatch('alert/limpar', message, { root: true });
 };
 export const info = ({ dispatch, commit }, message) => {
     commit(types.INFO, message);
-    setTimeout(() => (dispatch('alert/limpar', message, { root: true })), segundosDuracaoMensagem * 1000);
+    dispatch('alert/limpar', message, { root: true });
 };
 export const limpar = ({ commit }, message) => {
     commit(types.LIMPAR, message);

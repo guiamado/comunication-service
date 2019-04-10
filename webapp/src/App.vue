@@ -70,7 +70,7 @@
 
 <script>
 
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import NotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
 import BarraLateral from './modules/core/BarraLateral.vue';
 import Alerta from './modules/alert/Alerta.vue';
@@ -99,7 +99,6 @@ export default {
         ...mapGetters({
             status: 'account/status',
             user: 'account/user',
-            informacoesConta: 'account/informacoesConta',
             websocket: 'websocket/websocket',
         }),
     },
