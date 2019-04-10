@@ -144,7 +144,7 @@ export default {
             },
         ],
         contasIniciais: [],
-        editedIndex: -1,
+        indiceEditado: -1,
         editedItem: {},
         defaultItem: {
             usuario_id: null,
@@ -158,7 +158,7 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : 'Editar';
+            return this.indiceEditado === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             contas: 'conta/conta',
@@ -192,7 +192,7 @@ export default {
                 self.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
             }
             if (self.informacoesConta.is_admin === true) {
-                self.editedIndex = self.contas.indexOf(item);
+                self.indiceEditado = self.contas.indexOf(item);
                 self.editedItem.sistemas = [];
                 self.editedItem = Object.assign({}, item);
                 self.dialog = true;

@@ -135,7 +135,7 @@ export default {
             },
         ],
         sistemasRenderizados: [],
-        editedIndex: -1,
+        indiceEditado: -1,
         editedItem: {
             sistema_id: null,
             descricao: null,
@@ -153,7 +153,7 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : 'Editar';
+            return this.indiceEditado === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             sistemas: 'sistema/sistema',
@@ -185,7 +185,7 @@ export default {
         }),
 
         editItem(item) {
-            this.editedIndex = this.sistemas.indexOf(item);
+            this.indiceEditado = this.sistemas.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },

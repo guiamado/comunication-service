@@ -275,7 +275,7 @@ export default {
             self.dialog = false;
             setTimeout(() => {
                 self.editedItem = Object.assign({}, this.defaultItem);
-                self.editedIndex = -1;
+                self.indiceEditado = -1;
             }, 300);
         },
         showItem(item) {

@@ -1,34 +1,34 @@
 import axios from 'axios';
 import { obterCabecalhoComToken } from './jwt';
 
-function post(urlString, data, config) {
+function post(urlString, data, configuracoes) {
     const cabecalho = obterCabecalhoComToken();
-    const mergedConfig = Object.assign(cabecalho, config);
-    return axios.post(urlString, data, mergedConfig);
+    const configuracoesMescladas = Object.assign(cabecalho, configuracoes);
+    return axios.post(urlString, data, configuracoesMescladas);
 }
 
-function get(urlString, config) {
+function get(urlString, configuracoes) {
     const cabecalho = obterCabecalhoComToken();
-    const mergedConfig = Object.assign(cabecalho, config);
-    return axios.get(urlString, mergedConfig);
+    const configuracoesMescladas = Object.assign(cabecalho, configuracoes);
+    return axios.get(urlString, configuracoesMescladas);
 }
 
-function remove(urlString, config) {
+function remove(urlString, configuracoes) {
     const cabecalho = obterCabecalhoComToken();
-    const mergedConfig = Object.assign(cabecalho, config);
-    return axios.delete(urlString, mergedConfig);
+    const configuracoesMescladas = Object.assign(cabecalho, configuracoes);
+    return axios.delete(urlString, configuracoesMescladas);
 }
 
-function put(urlString, data, config) {
+function put(urlString, data, configuracoes) {
     const cabecalho = obterCabecalhoComToken();
-    const mergedConfig = Object.assign(cabecalho, config);
-    return axios.put(urlString, data, mergedConfig);
+    const configuracoesMescladas = Object.assign(cabecalho, configuracoes);
+    return axios.put(urlString, data, configuracoesMescladas);
 }
 
-function patch(urlString, data, config) {
+function patch(urlString, data, configuracoes) {
     const cabecalho = obterCabecalhoComToken();
-    const mergedConfig = Object.assign(cabecalho, config);
-    return axios.patch(urlString, data, mergedConfig);
+    const configuracoesMescladas = Object.assign(cabecalho, configuracoes);
+    return axios.patch(urlString, data, configuracoesMescladas);
 }
 
 export const requisicaoAutorizada = {

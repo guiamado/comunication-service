@@ -174,7 +174,7 @@ export default {
         },
 
         editItem(item) {
-            this.editedIndex = this.plataformas.indexOf(item);
+            this.indiceEditado = this.plataformas.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
@@ -189,7 +189,7 @@ export default {
         this.dialog = false;
         setTimeout(() => {
             this.editedItem = Object.assign({}, this.defaultItem);
-            this.editedIndex = -1;
+            this.indiceEditado = -1;
         }, 300);
     },
 };

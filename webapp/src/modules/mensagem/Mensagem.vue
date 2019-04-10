@@ -110,7 +110,7 @@ export default {
         mensagensRenderizadas: [],
         sistemasRenderizados: [],
         modeloBuscar: '',
-        editedIndex: -1,
+        indiceEditado: -1,
         editedItem: {
             titulo: null,
             autor_id: null,
@@ -172,7 +172,7 @@ export default {
     }),
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : '';
+            return this.indiceEditado === -1 ? 'Criar' : '';
         },
         ...mapGetters({
             mensagens: 'mensagem/mensagens',
@@ -239,7 +239,7 @@ export default {
             atualizarMensagem: 'mensagem/atualizarMensagem',
         }),
         editItem(item) {
-            this.editedIndex = this.mensagens.indexOf(item);
+            this.indiceEditado = this.mensagens.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
@@ -253,7 +253,7 @@ export default {
             this.dialog = false;
             setTimeout(() => {
                 this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
+                this.indiceEditado = -1;
             }, 300);
         },
 
