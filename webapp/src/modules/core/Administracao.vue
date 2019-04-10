@@ -58,12 +58,12 @@ export default {
 
     computed: {
         ...mapGetters({
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
 
     mounted() {
-        if (this.accountInfo.is_admin !== true) {
+        if (this.informacoesConta.is_admin !== true) {
             this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
             this.$router.push('/');
         }

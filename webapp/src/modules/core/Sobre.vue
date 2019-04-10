@@ -23,7 +23,7 @@
 
 <script>
 
-import MarkdownViewer from '../_helpers/markdown-viewer/MarkdownViewer.vue';
+import MarkdownViewer from '../_auxiliares/markdown-viewer/MarkdownViewer.vue';
 
 export default {
     name: 'Sobre',

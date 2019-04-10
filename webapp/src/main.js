@@ -8,7 +8,7 @@ import router from './router';
 import store from './store';
 import filters from './filters';
 import './registerServiceWorker';
-import $socket from './modules/websocket/_helpers/socket-client-instance';
+import $socket from './modules/websocket/_auxiliares/socket-client-instance';
 
 Vue.use(VeeValidate);
 

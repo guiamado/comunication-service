@@ -247,7 +247,7 @@ export default {
     computed: {
         ...mapGetters({
             notificacoesBadge: 'notificacao/notificacoesBadge',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
     watch: {
@@ -258,7 +258,7 @@ export default {
     mounted() {
         if (this.notificacoesBadge == null || this.notificacoesBadge.length === 0) {
             const params = {
-                usuarioId: this.accountInfo.user_id,
+                usuarioId: this.informacoesConta.user_id,
                 isNotificacaoLida: null,
             };
 
@@ -274,8 +274,8 @@ export default {
             const self = this;
             self.dialog = false;
             setTimeout(() => {
-                self.editedItem = Object.assign({}, this.defaultItem);
-                self.editedIndex = -1;
+                self.itemEditado = Object.assign({}, this.defaultItem);
+                self.indiceEditado = -1;
             }, 300);
         },
         showItem(item) {

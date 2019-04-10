@@ -76,7 +76,7 @@
 
                     <v-card-text>
                         <sistema-formulario
-                            :item="editedItem"
+                            :item="itemEditado"
                             :dialog.sync="dialog"/>
                     </v-card-text>
                 </v-card>
@@ -102,7 +102,7 @@ import SistemaFormulario from './SistemaFormulario.vue';
 export default {
     components: { SistemaFormulario },
     data: () => ({
-        loading: false,
+        carregando: false,
         dialog: false,
         modeloBuscar: '',
         headers: [
@@ -135,8 +135,8 @@ export default {
             },
         ],
         sistemasRenderizados: [],
-        editedIndex: -1,
-        editedItem: {
+        indiceEditado: -1,
+        itemEditado: {
             sistema_id: null,
             descricao: null,
             url: null,
@@ -153,7 +153,7 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : 'Editar';
+            return this.indiceEditado === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             sistemas: 'sistema/sistema',
@@ -185,8 +185,8 @@ export default {
         }),
 
         editItem(item) {
-            this.editedIndex = this.sistemas.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+            this.indiceEditado = this.sistemas.indexOf(item);
+            this.itemEditado = Object.assign({}, item);
             this.dialog = true;
         },
 

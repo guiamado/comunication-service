@@ -33,11 +33,6 @@
                                         class="form-control"
                                         required
                                     />
-                                    <div
-                                        v-if="submitted && errors.has('nome')"
-                                        class="invalid-feedback">{{
-                                        errors.first('nome') }}
-                                    </div>
                                     <v-text-field
                                         v-validate="'required'"
                                         v-model="user.email"
@@ -47,11 +42,6 @@
                                         class="form-control"
                                         required
                                     />
-                                    <div
-                                        v-if="submitted && errors.has('email')"
-                                        class="invalid-feedback">{{
-                                        errors.first('email') }}
-                                    </div>
                                     <v-text-field
                                         v-validate="{ required: true, min: 6 }"
                                         v-model="user.password"
@@ -62,10 +52,6 @@
                                         class="form-control"
                                         required
                                     />
-                                    <div
-                                        v-if="submitted && errors.has('password')"
-                                        class="invalid-feedback">{{ errors.first('password') }}
-                                    </div>
                                     <v-card-actions>
                                         <v-spacer/>
                                         <router-link
@@ -73,11 +59,11 @@
                                             class="btn btn-link">Cancel</router-link>
                                         <v-spacer/>
                                         <v-btn
-                                            :disabled="status.registering"
+                                            :disabled="status.registrando"
                                             color="primary"
                                             type="submit"> Cadastrar
                                         </v-btn>
-                                        <img v-show="status.registering">
+                                        <img v-show="status.registrando">
                                     </v-card-actions>
                                 </v-form>
                             </v-card-text>
@@ -100,14 +86,13 @@ export default {
                 email: '',
                 password: '',
             },
-            submitted: false,
             rules: {
-                required: value => !!value || 'Required.',
+                required: value => !!value || 'Campo obrigatório.',
                 minLength: object => object.length > 3 || 'Campo obrigatório.',
                 email: (value) => {
                     // eslint-disable-next-line
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return pattern.test(value) || 'Invalid e-mail.';
+                    return pattern.test(value) || 'E-mail inválido.';
                 },
             },
         };
@@ -116,11 +101,10 @@ export default {
         ...mapState('account', ['status']),
     },
     methods: {
-        ...mapActions('account', ['register']),
+        ...mapActions('account', ['registrar']),
         tratarSubmissao() {
-            this.submitted = true;
             if (this.$refs.form.validate()) {
-                this.register(this.user);
+                this.registrar(this.user);
             }
         },
     },

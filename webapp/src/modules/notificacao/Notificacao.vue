@@ -18,7 +18,7 @@
 
                                 <v-card-text>
                                     <notificacao-formulario
-                                        :item="editedItem"
+                                        :item="itemEditado"
                                         :dialog.sync="dialog"/>
                                 </v-card-text>
 
@@ -67,7 +67,7 @@
                                     </v-scroll-y-transition>
                                 </td>
                                 <td
-                                    v-if="accountInfo.is_admin"
+                                    v-if="informacoesConta.is_admin"
                                     class="justify-center layout px-0">
                                     <v-btn icon>
                                         <v-icon
@@ -85,9 +85,9 @@
                     </v-card-text>
                 </v-card>
             </v-layout>
-            <v-scale-transition v-if="accountInfo.is_admin">
+            <v-scale-transition v-if="informacoesConta.is_admin">
                 <v-btn
-                    v-show="!loading"
+                    v-show="!carregando"
                     fab
                     color="success"
                     dark
@@ -111,7 +111,7 @@ export default {
     components: { NotificacaoFormulario },
     mixins: [notificacaoService],
     data: () => ({
-        loading: false,
+        carregando: false,
         dialog: false,
         notificacaoLida: true,
         exibirBotaoGravar: true,
@@ -160,7 +160,7 @@ export default {
             },
         ],
         notificacoesRenderizadas: [],
-        editedItem: {},
+        itemEditado: {},
         defaultItem: {
             notificacao_id: null,
             autor_id: null,
@@ -173,22 +173,22 @@ export default {
     }),
     computed: {
         formTitle() {
-            return this.editedItem.notificacao_id === null ? 'Criar' : 'Editar';
+            return this.itemEditado.notificacao_id === null ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             notificacoes: 'notificacao/notificacoes',
             contas: 'conta/conta',
             plataformas: 'plataforma/plataforma',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
     watch: {
         dialog() {
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
+            if (this.itemEditado.autor_id == null) {
+                this.itemEditado.autor_id = this.informacoesConta.user_id;
             }
             this.exibirBotaoGravar = true;
-            if (this.editedItem.notificacao_id != null) {
+            if (this.itemEditado.notificacao_id != null) {
                 this.exibirBotaoGravar = false;
             }
         },
@@ -200,23 +200,23 @@ export default {
             }
             if (this.dialog === false) {
                 const params = {
-                    usuarioId: this.accountInfo.user_id,
+                    usuarioId: this.informacoesConta.user_id,
                     isNotificacaoLida: this.notificacaoLida,
                 };
                 this.obterNotificacoes(params);
             }
         },
-        editedItem() {
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
+        itemEditado() {
+            if (this.itemEditado.autor_id == null) {
+                this.itemEditado.autor_id = this.informacoesConta.user_id;
             }
         },
     },
     mounted() {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
         if (this.notificacoes == null || this.notificacoes.length === 0) {
             const params = {
-                usuarioId: this.accountInfo.user_id,
+                usuarioId: this.informacoesConta.user_id,
                 isNotificacaoLida: this.notificacaoLida,
             };
             this.obterNotificacoes(params);
@@ -240,11 +240,11 @@ export default {
             removerNotificacao: 'notificacao/removerNotificacao',
         }),
         newItem() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.dialog = true;
         },
         editItem(item) {
-            this.editedItem = Object.assign({}, item);
+            this.itemEditado = Object.assign({}, item);
             this.dialog = true;
         },
         deleteItem(item) {
@@ -252,7 +252,7 @@ export default {
             if (!confirm('Deseja remover esse item?')) {
                 return false;
             }
-            if (this.accountInfo.is_admin !== true) {
+            if (this.informacoesConta.is_admin !== true) {
                 this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
                 return false;
             }

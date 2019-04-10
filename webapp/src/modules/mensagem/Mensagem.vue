@@ -85,7 +85,7 @@
 
                     <v-card-text>
                         <mensagem-formulario
-                            :item="editedItem"
+                            :item="itemEditado"
                             :dialog.sync="dialog"
                         />
                     </v-card-text>
@@ -110,8 +110,8 @@ export default {
         mensagensRenderizadas: [],
         sistemasRenderizados: [],
         modeloBuscar: '',
-        editedIndex: -1,
-        editedItem: {
+        indiceEditado: -1,
+        itemEditado: {
             titulo: null,
             autor_id: null,
             created_at: null,
@@ -172,23 +172,23 @@ export default {
     }),
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : '';
+            return this.indiceEditado === -1 ? 'Criar' : '';
         },
         ...mapGetters({
             mensagens: 'mensagem/mensagens',
             sistemas: 'sistema/sistema',
             contas: 'conta/conta',
             plataformas: 'plataforma/plataforma',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
     watch: {
         dialog(value) {
             if (value === false) {
-                this.editedItem = this.defaultItem;
+                this.itemEditado = this.defaultItem;
             }
-            if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
+            if (this.itemEditado.autor_id == null && this.informacoesConta.user_id !== null) {
+                this.itemEditado.autor_id = this.informacoesConta.user_id;
             }
 
             this.exibirBotaoGravar = true;
@@ -239,8 +239,8 @@ export default {
             atualizarMensagem: 'mensagem/atualizarMensagem',
         }),
         editItem(item) {
-            this.editedIndex = this.mensagens.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+            this.indiceEditado = this.mensagens.indexOf(item);
+            this.itemEditado = Object.assign({}, item);
             this.dialog = true;
         },
         deleteItem(item) {
@@ -252,8 +252,8 @@ export default {
         close() {
             this.dialog = false;
             setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
+                this.itemEditado = Object.assign({}, this.defaultItem);
+                this.indiceEditado = -1;
             }, 300);
         },
 

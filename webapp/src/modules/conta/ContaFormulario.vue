@@ -1,7 +1,7 @@
 <template>
     <v-form
-            ref="form"
-            v-model="valid">
+        ref="form"
+        v-model="valid">
         <v-container grid-list-md>
             <v-layout wrap>
                 <v-flex
@@ -9,20 +9,20 @@
                     sm6
                     md12>
                     <v-text-field
-                        v-model="editedItem.nome"
+                        v-model="itemEditado.nome"
                         :rules="[rules.required, rules.minLength]"
                         prepend-icon="face"
                         required
                         label="Nome"/>
                     <v-text-field
-                        v-model="editedItem.email"
+                        v-model="itemEditado.email"
                         :rules="[rules.required, rules.email, rules.minLength]"
                         prepend-icon="person"
                         required
                         label="E-mail"/>
                     <v-text-field
                         v-validate="{ required: true, min: 6 }"
-                        v-model="editedItem.password"
+                        v-model="itemEditado.password"
                         :rules="[rules.required, rules.minLength]"
                         prepend-icon="lock"
                         type="password"
@@ -36,8 +36,8 @@
                     md12>
                     <h3>Administração</h3>
                     <v-switch
-                        :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
-                        v-model="editedItem.is_admin"/>
+                        :label="`${itemEditado.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
+                        v-model="itemEditado.is_admin"/>
                 </v-flex>
                 <v-flex
                     xs12
@@ -45,8 +45,8 @@
                     md12>
                     <h3>Situação</h3>
                     <v-switch
-                        :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                        v-model="editedItem.is_ativo"/>
+                        :label="`${itemEditado.is_ativo ? 'Ativo' : 'Inativo'}`"
+                        v-model="itemEditado.is_ativo"/>
                 </v-flex>
                 <v-flex
                     xs12
@@ -62,11 +62,11 @@
                             <v-list-tile-content>
 
                                 <v-checkbox
-                                    v-model="editedItem.sistemas"
+                                    v-model="itemEditado.sistemas"
                                     :label="sistema.descricao"
                                     :value="sistema"
-                                    color="success"
                                     :rules="[rules.required, rules.minLengthCheckBox]"
+                                    color="success"
                                     required/>
                             </v-list-tile-content>
 
@@ -79,7 +79,7 @@
                         dark
                         @click.native="close">Fechar</v-btn>
                     <v-btn
-                        v-if="!loading"
+                        v-if="!carregando"
                         :disabled="!valid"
                         dark
                         color="blue darken-1"
@@ -103,9 +103,9 @@ export default {
         },
     },
     data: () => ({
-        loading: false,
+        carregando: false,
         valid: true,
-        editedItem: {},
+        itemEditado: {},
         defaultItem: {
             usuario_id: null,
             descricao: '',
@@ -133,11 +133,11 @@ export default {
 
     watch: {
         item(value) {
-            this.editedItem = Object.assign({}, value);
+            this.itemEditado = Object.assign({}, value);
         },
     },
     mounted() {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
         if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
@@ -153,19 +153,19 @@ export default {
 
         save() {
             const self = this;
-            self.loading = true;
+            self.carregando = true;
 
-            if (self.editedItem.usuario_id !== null) {
-                this.atualizarConta(self.editedItem);
+            if (self.itemEditado.usuario_id !== null) {
+                this.atualizarConta(self.itemEditado);
             } else {
-                this.cadastrarConta(self.editedItem);
+                this.cadastrarConta(self.itemEditado);
             }
-            self.loading = false;
+            self.carregando = false;
             self.close();
         },
 
         close() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.$emit('update:dialog', false);
         },
     },

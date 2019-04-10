@@ -52,7 +52,7 @@
                                         </v-icon>
                                     </v-btn>
                                     <v-btn
-                                        v-if="accountInfo.user_id != props.item.usuario_id"
+                                        v-if="informacoesConta.user_id != props.item.usuario_id"
                                         icon>
                                         <v-icon
                                             color="grey darken-1"
@@ -91,7 +91,7 @@
 
                     <v-card-text>
                         <conta-formulario
-                            :item="editedItem"
+                            :item="itemEditado"
                             :dialog.sync="dialog"/>
                     </v-card-text>
                 </v-card>
@@ -107,7 +107,7 @@ import ContaFormulario from './ContaFormulario.vue';
 export default {
     components: { ContaFormulario },
     data: () => ({
-        loading: false,
+        carregando: false,
         dialog: false,
         headers: [
             {
@@ -144,8 +144,8 @@ export default {
             },
         ],
         contasIniciais: [],
-        editedIndex: -1,
-        editedItem: {},
+        indiceEditado: -1,
+        itemEditado: {},
         defaultItem: {
             usuario_id: null,
             descricao: '',
@@ -158,11 +158,11 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : 'Editar';
+            return this.indiceEditado === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             contas: 'conta/conta',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
 
@@ -188,18 +188,18 @@ export default {
 
         editItem(item) {
             const self = this;
-            if (self.accountInfo.is_admin !== true) {
+            if (self.informacoesConta.is_admin !== true) {
                 self.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
             }
-            if (self.accountInfo.is_admin === true) {
-                self.editedIndex = self.contas.indexOf(item);
-                self.editedItem.sistemas = [];
-                self.editedItem = Object.assign({}, item);
+            if (self.informacoesConta.is_admin === true) {
+                self.indiceEditado = self.contas.indexOf(item);
+                self.itemEditado.sistemas = [];
+                self.itemEditado = Object.assign({}, item);
                 self.dialog = true;
 
-                if (Object.prototype.hasOwnProperty.call(self.editedItem, 'sistemas')) {
-                    Object.keys(self.editedItem.sistemas).forEach((indice) => {
-                        delete self.editedItem.sistemas[indice].usuario_has_sistema;
+                if (Object.prototype.hasOwnProperty.call(self.itemEditado, 'sistemas')) {
+                    Object.keys(self.itemEditado.sistemas).forEach((indice) => {
+                        delete self.itemEditado.sistemas[indice].usuario_has_sistema;
                     });
                 }
             }
@@ -208,10 +208,10 @@ export default {
         deleteItem(item) {
             // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
-                if (this.accountInfo.is_admin !== true) {
+                if (this.informacoesConta.is_admin !== true) {
                     this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
                 }
-                if (this.accountInfo.is_admin === true) {
+                if (this.informacoesConta.is_admin === true) {
                     this.removerConta(item.usuario_id);
                 }
             }

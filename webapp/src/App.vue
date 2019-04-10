@@ -11,7 +11,7 @@
                 @click.stop="drawer = !drawer"/>
             <v-toolbar-title v-text="this.$route.name"/>
             <notificacao-badge
-                v-show="loading"
+                v-show="carregando"
                 v-if="status.loggedIn"/>
             <v-spacer/>
 
@@ -50,9 +50,7 @@
             </v-scale-transition>
         </v-toolbar>
 
-        <alerta
-            v-if="alert.message != null && alert.message_type != null"
-            :color="alert.message_type">{{ alert.message }}</alerta>
+        <alerta />
         <router-view/>
         <v-footer
             dark
@@ -72,7 +70,7 @@
 
 <script>
 
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import NotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
 import BarraLateral from './modules/core/BarraLateral.vue';
 import Alerta from './modules/alert/Alerta.vue';
@@ -86,7 +84,7 @@ export default {
     },
     data() {
         return {
-            loading: false,
+            carregando: false,
             clipped: false,
             drawer: false,
             fixed: false,
@@ -97,25 +95,15 @@ export default {
         };
     },
     computed: {
-        ...mapState({
-            alert: state => state.alert,
-            // isLoggedIn: state => state.isLoggedIn
-            // status: state => state.status
-        }),
+
         ...mapGetters({
             status: 'account/status',
             user: 'account/user',
-            accountInfo: 'account/accountInfo',
             websocket: 'websocket/websocket',
         }),
     },
     mounted() {
-        this.loading = true;
-    },
-    methods: {
-        ...mapActions({
-            clearAlert: 'alert/clear',
-        }),
+        this.carregando = true;
     },
 };
 </script>
