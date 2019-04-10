@@ -48,7 +48,7 @@ export const logout = ({ commit }) => {
     commit(types.LOGOUT);
 };
 
-export const register = ({ dispatch, commit }, user) => {
+export const registrar = ({ dispatch, commit }, user) => {
     commit(types.REGISTERREQUEST);
     axios.post('http://localhost/v1/conta', JSON.parse(JSON.stringify(user))).then(
         () => {

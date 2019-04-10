@@ -73,11 +73,11 @@
                                             class="btn btn-link">Cancel</router-link>
                                         <v-spacer/>
                                         <v-btn
-                                            :disabled="status.registering"
+                                            :disabled="status.registrando"
                                             color="primary"
                                             type="submit"> Cadastrar
                                         </v-btn>
-                                        <img v-show="status.registering">
+                                        <img v-show="status.registrando">
                                     </v-card-actions>
                                 </v-form>
                             </v-card-text>
@@ -116,11 +116,11 @@ export default {
         ...mapState('account', ['status']),
     },
     methods: {
-        ...mapActions('account', ['register']),
+        ...mapActions('account', ['registrar']),
         tratarSubmissao() {
             this.submitted = true;
             if (this.$refs.form.validate()) {
-                this.register(this.user);
+                this.registrar(this.user);
             }
         },
     },

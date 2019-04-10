@@ -25,7 +25,7 @@ export default {
         state.message_type = null;
     },
     [types.REGISTERREQUEST](state) {
-        state.status = { registering: true };
+        state.status = { registrando: true };
     },
     [types.REGISTERSUCCESS](state) {
         state.status = {};
