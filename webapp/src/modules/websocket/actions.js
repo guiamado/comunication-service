@@ -35,7 +35,7 @@ export const Socket_clientEntrarEmSala = ({ commit, dispatch }, dados) => {
     commit(types.SOCKET_CLIENT_ENTRAREMSALA, dados);
     const { sala } = dados;
     const mensagem = 'Entrou na sala.';
-    dispatch('Socket_serverMensagemSala', {
+    dispatch('websocket/Socket_serverMensagemSala', {
         sala,
         mensagem,
     });
@@ -46,7 +46,7 @@ export const Socket_clientSairDaSala = ({ commit, dispatch }, dados) => {
     const { sala } = dados;
     const { usuario } = dados;
     const mensagem = `${usuario.name} Saiu na sala.`;
-    dispatch('Socket_serverMensagemSala', {
+    dispatch('websocket/Socket_serverMensagemSala', {
         sala,
         mensagem,
     });
