@@ -1,7 +1,7 @@
 import * as types from './types';
 import { requisicaoAutorizada } from '../account/_auxiliares/requisicao-autorizada';
 
-export const obterPlataformas = ({ dispatch, commit }) => requisicaoAutorizada.get('http://localhost/v1/plataforma')
+export const obterPlataformas = ({ dispatch, commit }) => requisicaoAutorizada.get(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/plataforma`)
     .then((response) => {
         const { data } = response;
         commit(types.SET_PLATAFORMA, data.data);
@@ -12,7 +12,7 @@ export const obterPlataformas = ({ dispatch, commit }) => requisicaoAutorizada.g
         });
     });
 
-export const removerPlataforma = ({ dispatch, commit }, plataformaId) => requisicaoAutorizada.delete(`http://localhost/v1/plataforma/${plataformaId}`)
+export const removerPlataforma = ({ dispatch, commit }, plataformaId) => requisicaoAutorizada.delete(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/plataforma/${plataformaId}`)
     .then(() => {
         commit(types.DELETE_PLATAFORMA, plataformaId);
     }).catch((error) => {
@@ -21,7 +21,7 @@ export const removerPlataforma = ({ dispatch, commit }, plataformaId) => requisi
         });
     });
 
-export const cadastrarPlataforma = ({ dispatch, commit }, plataforma) => requisicaoAutorizada.post('http://localhost/v1/plataforma', plataforma)
+export const cadastrarPlataforma = ({ dispatch, commit }, plataforma) => requisicaoAutorizada.post(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/plataforma`, plataforma)
     .then((response) => {
         const { data } = response;
         commit(types.ACRESCENTAR_PLATAFORMA, data.data);
@@ -32,7 +32,7 @@ export const cadastrarPlataforma = ({ dispatch, commit }, plataforma) => requisi
         });
     });
 
-export const atualizarPlataforma = ({ dispatch, commit }, plataforma) => requisicaoAutorizada.patch(`http://localhost/v1/plataforma/${plataforma.plataforma_id}`, plataforma)
+export const atualizarPlataforma = ({ dispatch, commit }, plataforma) => requisicaoAutorizada.patch(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/plataforma/${plataforma.plataforma_id}`, plataforma)
     .then(() => {
         commit(types.ATUALIZAR_PLATAFORMA, plataforma);
     })

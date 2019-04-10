@@ -2,7 +2,7 @@ import * as types from './types';
 import { requisicaoAutorizada } from '../account/_auxiliares/requisicao-autorizada';
 
 export const obterNotificacoes = ({ dispatch, commit }, params) => {
-    let url = `http://localhost/v1/notificacao-usuario/${params.usuarioId}`;
+    let url = `http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/notificacao-usuario/${params.usuarioId}`;
     if (params.isNotificacaoLida != null) {
         url += `/${params.isNotificacaoLida}`;
     }
@@ -19,7 +19,7 @@ export const obterNotificacoes = ({ dispatch, commit }, params) => {
         });
 };
 
-export const removerNotificacao = ({ dispatch, commit }, notificacaoId) => requisicaoAutorizada.delete(`http://localhost/v1/notificacao/${notificacaoId}`)
+export const removerNotificacao = ({ dispatch, commit }, notificacaoId) => requisicaoAutorizada.delete(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/notificacao/${notificacaoId}`)
     .then(() => {
         commit(types.REMOVER_NOTIFICACAO, notificacaoId);
         commit(types.REMOVER_NOTIFICACAO_BADGE, notificacaoId);
@@ -29,7 +29,7 @@ export const removerNotificacao = ({ dispatch, commit }, notificacaoId) => requi
         });
     });
 
-export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.post('http://localhost/v1/notificacao', notificacao)
+export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.post(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/notificacao`, notificacao)
     .then((response) => {
         const { data } = response;
         commit(types.ACRESCENTAR_NOTIFICACAO, data.data);
@@ -41,7 +41,7 @@ export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => requi
         });
     });
 
-export const atualizarNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.patch(`http://localhost/v1/notificacao/${notificacao.notificacao_id}`, notificacao)
+export const atualizarNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.patch(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/notificacao/${notificacao.notificacao_id}`, notificacao)
     .then(() => {
         commit(types.ATUALIZAR_NOTIFICACAO, notificacao);
         commit(types.ATUALIZAR_NOTIFICACAO_BADGE, notificacao);
@@ -52,7 +52,7 @@ export const atualizarNotificacao = ({ dispatch, commit }, notificacao) => requi
         });
     });
 
-export const lerNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.patch(`http://localhost/v1/notificacao-usuario-sistema/${notificacao.notificacao_id}/${notificacao.usuario_id}`)
+export const lerNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.patch(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/notificacao-usuario-sistema/${notificacao.notificacao_id}/${notificacao.usuario_id}`)
     .then((response) => {
         const { data } = response.data;
         commit(types.ATUALIZAR_NOTIFICACAO, data);
