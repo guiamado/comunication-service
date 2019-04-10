@@ -13,7 +13,7 @@
                 dark
                 flat
                 @click="snackbar = false">
-                Close
+                Fechar
             </v-btn>
         </v-snackbar>
     </div>
