@@ -3,7 +3,7 @@ import * as types from './types';
 import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
 
 export const obterContas = ({ dispatch, commit }) => {
-    requisicaoAutorizada.get('http://localhost/v1/conta').then((response) => {
+    requisicaoAutorizada.get(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/conta`).then((response) => {
         const { data } = response;
         commit(types.OBTER_CONTAS, data.data);
     }).catch((error) => {
@@ -14,7 +14,7 @@ export const obterContas = ({ dispatch, commit }) => {
 };
 
 export const removerConta = ({ dispatch, commit }, usuarioId) => {
-    requisicaoAutorizada.delete(`http://localhost/v1/conta/${usuarioId}`).then(() => {
+    requisicaoAutorizada.delete(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/conta/${usuarioId}`).then(() => {
         commit(types.DELETE_CONTA, usuarioId);
     }).catch((error) => {
         dispatch('alert/error', error.response.data.error, {
@@ -23,7 +23,7 @@ export const removerConta = ({ dispatch, commit }, usuarioId) => {
     });
 };
 
-export const cadastrarConta = ({ dispatch, commit }, conta) => axios.post('http://localhost/v1/conta', conta).then((response) => {
+export const cadastrarConta = ({ dispatch, commit }, conta) => axios.post(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/conta`, conta).then((response) => {
     const { data } = response;
     commit(types.ACRESCENTAR_CONTA, data.data);
     dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
@@ -33,7 +33,7 @@ export const cadastrarConta = ({ dispatch, commit }, conta) => axios.post('http:
     });
 });
 
-export const atualizarConta = ({ dispatch, commit }, conta) => requisicaoAutorizada.patch(`http://localhost/v1/conta/${conta.usuario_id}`, conta).then(() => {
+export const atualizarConta = ({ dispatch, commit }, conta) => requisicaoAutorizada.patch(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/conta/${conta.usuario_id}`, conta).then(() => {
     commit(types.ATUALIZAR_CONTA, conta);
 }).catch((error) => {
     dispatch('alert/error', error.response.data.error, {

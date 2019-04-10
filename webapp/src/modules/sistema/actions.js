@@ -2,7 +2,7 @@ import * as types from './types';
 import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
 
 export const obterSistemas = ({ dispatch, commit }) => {
-    requisicaoAutorizada.get('http://localhost/v1/sistema').then((response) => {
+    requisicaoAutorizada.get(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/sistema`).then((response) => {
         const { data } = response.data;
         commit(types.OBTER_SISTEMAS, data);
     }).catch((error) => {
@@ -13,7 +13,7 @@ export const obterSistemas = ({ dispatch, commit }) => {
 };
 
 export const removerSistema = ({ dispatch, commit }, sistemaId) => {
-    requisicaoAutorizada.delete(`http://localhost/v1/sistema/${sistemaId}`).then(() => {
+    requisicaoAutorizada.delete(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/sistema/${sistemaId}`).then(() => {
         commit(types.REMOVER_SISTEMA, sistemaId);
     }).catch((error) => {
         dispatch('alert/error', error.response.data.error, {
@@ -22,7 +22,7 @@ export const removerSistema = ({ dispatch, commit }, sistemaId) => {
     });
 };
 
-export const cadastrarSistema = ({ dispatch, commit }, sistema) => requisicaoAutorizada.post('http://localhost/v1/sistema', sistema).then((response) => {
+export const cadastrarSistema = ({ dispatch, commit }, sistema) => requisicaoAutorizada.post(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/sistema`, sistema).then((response) => {
     const { data } = response;
     commit(types.ACRESCENTAR_SISTEMA, data.data);
     dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
@@ -32,7 +32,7 @@ export const cadastrarSistema = ({ dispatch, commit }, sistema) => requisicaoAut
     });
 });
 
-export const atualizarSistema = ({ dispatch, commit }, sistema) => requisicaoAutorizada.patch(`http://localhost/v1/sistema/${sistema.sistema_id}`, sistema).then(() => {
+export const atualizarSistema = ({ dispatch, commit }, sistema) => requisicaoAutorizada.patch(`http://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}/v1/sistema/${sistema.sistema_id}`, sistema).then(() => {
     commit(types.ATUALIZAR_SISTEMA, sistema);
 }).catch((error) => {
     dispatch('alert/error', error.response.data.error, {
