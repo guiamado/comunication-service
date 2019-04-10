@@ -1,13 +1,13 @@
 <template>
     <div
-        v-if="mensagem != null && tipoMensagem != null"
-        :color="tipoMensagem">
+        v-if="mensagem != null && tipoMensagem != null">
         <v-snackbar
+            v-model="snackbar"
             :value="true"
             :top="top"
             :timeout="tempoDeDuracao"
-            :color="color"
             :vertical="false"
+            :color="tipoMensagem"
             transition="scale-transition"
             dismissible>
             {{ mensagem }}
@@ -27,15 +27,14 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     name: 'Alerta',
     data: () => ({
-        snackbar: false,
         top: false,
-        color: true,
     }),
     computed: {
         ...mapGetters({
             mensagem: 'alert/mensagem',
             tipoMensagem: 'alert/tipoMensagem',
             tempoDeDuracao: 'alert/tempoDeDuracao',
+            snackbar: 'alert/snackbar',
         }),
     },
     methods: {
