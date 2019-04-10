@@ -75,7 +75,7 @@
                         color="error"
                         @click.native="close">Fechar</v-btn>
                     <v-btn
-                        v-if="!loading"
+                        v-if="!carregando"
                         dark
                         color="blue darken-1"
                         @click.native="save">
@@ -105,7 +105,7 @@ export default {
     },
     data: () => ({
         valid: true,
-        loading: false,
+        carregando: false,
         plataformasSelecionadas: [],
         sistemasRenderizados: [],
         itemEditado: {},
@@ -171,7 +171,7 @@ export default {
         }),
         save() {
             const self = this;
-            self.loading = true;
+            self.carregando = true;
 
             if (self.itemEditado.mensagem_id !== null) {
                 this.atualizarMensagem(self.itemEditado);

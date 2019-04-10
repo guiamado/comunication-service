@@ -79,7 +79,7 @@
                         dark
                         @click.native="close">Fechar</v-btn>
                     <v-btn
-                        v-if="!loading"
+                        v-if="!carregando"
                         :disabled="!valid"
                         dark
                         color="blue darken-1"
@@ -103,7 +103,7 @@ export default {
         },
     },
     data: () => ({
-        loading: false,
+        carregando: false,
         valid: true,
         itemEditado: {},
         defaultItem: {
@@ -153,14 +153,14 @@ export default {
 
         save() {
             const self = this;
-            self.loading = true;
+            self.carregando = true;
 
             if (self.itemEditado.usuario_id !== null) {
                 this.atualizarConta(self.itemEditado);
             } else {
                 this.cadastrarConta(self.itemEditado);
             }
-            self.loading = false;
+            self.carregando = false;
             self.close();
         },
 

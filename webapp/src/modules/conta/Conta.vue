@@ -107,7 +107,7 @@ import ContaFormulario from './ContaFormulario.vue';
 export default {
     components: { ContaFormulario },
     data: () => ({
-        loading: false,
+        carregando: false,
         dialog: false,
         headers: [
             {

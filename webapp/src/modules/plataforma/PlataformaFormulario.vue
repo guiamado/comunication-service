@@ -25,7 +25,7 @@
                     dark
                     @click.native="close">Fechar</v-btn>
                 <v-btn
-                    v-if="!loading"
+                    v-if="!carregando"
                     dark
                     color="blue darken-1"
                     @click.native="save">Gravar
@@ -52,7 +52,7 @@ export default {
         },
     },
     data: () => ({
-        loading: false,
+        carregando: false,
         itemEditado: {},
         defaultItem: {
             plataforma_id: null,

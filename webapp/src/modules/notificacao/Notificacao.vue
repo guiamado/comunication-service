@@ -87,7 +87,7 @@
             </v-layout>
             <v-scale-transition v-if="informacoesConta.is_admin">
                 <v-btn
-                    v-show="!loading"
+                    v-show="!carregando"
                     fab
                     color="success"
                     dark
@@ -111,7 +111,7 @@ export default {
     components: { NotificacaoFormulario },
     mixins: [notificacaoService],
     data: () => ({
-        loading: false,
+        carregando: false,
         dialog: false,
         notificacaoLida: true,
         exibirBotaoGravar: true,

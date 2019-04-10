@@ -34,7 +34,7 @@
                     dark
                     @click.native="close">Fechar</v-btn>
                 <v-btn
-                    v-if="!loading"
+                    v-if="!carregando"
                     dark
                     color="blue darken-1"
                     @click.native="save">Gravar
@@ -65,7 +65,7 @@ export default {
     data: () => ({
         mensagensRenderizadas: [],
         mensagensComVinculo: [],
-        loading: false,
+        carregando: false,
         itemEditado: {},
         defaultItem: {
             notificacao_id: null,
@@ -122,7 +122,7 @@ export default {
 
         save() {
             const self = this;
-            self.loading = true;
+            self.carregando = true;
 
             if (self.itemEditado.notificacao_id !== null) {
                 this.atualizarNotificacao(self.itemEditado);
@@ -159,9 +159,9 @@ export default {
 
         enviarMensagem(message) {
             const self = this;
-            self.loading = true;
+            self.carregando = true;
             setTimeout(() => {
-                self.loading = false;
+                self.carregando = false;
             }, 1000);
 
             this.websocket.connection.send(message);

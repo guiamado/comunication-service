@@ -102,7 +102,7 @@ import SistemaFormulario from './SistemaFormulario.vue';
 export default {
     components: { SistemaFormulario },
     data: () => ({
-        loading: false,
+        carregando: false,
         dialog: false,
         modeloBuscar: '',
         headers: [

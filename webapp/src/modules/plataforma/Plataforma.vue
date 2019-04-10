@@ -98,7 +98,7 @@ import PlataformaFormulario from './PlataformaFormulario.vue';
 export default {
     components: { PlataformaFormulario },
     data: () => ({
-        loading: false,
+        carregando: false,
         dialog: false,
         modeloBuscar: '',
         headers: [

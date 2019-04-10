@@ -11,7 +11,7 @@
                 @click.stop="drawer = !drawer"/>
             <v-toolbar-title v-text="this.$route.name"/>
             <notificacao-badge
-                v-show="loading"
+                v-show="carregando"
                 v-if="status.loggedIn"/>
             <v-spacer/>
 
@@ -84,7 +84,7 @@ export default {
     },
     data() {
         return {
-            loading: false,
+            carregando: false,
             clipped: false,
             drawer: false,
             fixed: false,
@@ -103,7 +103,7 @@ export default {
         }),
     },
     mounted() {
-        this.loading = true;
+        this.carregando = true;
     },
 };
 </script>
