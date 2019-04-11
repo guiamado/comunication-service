@@ -10,7 +10,8 @@ export function obterInformacoesJWT() {
         const token = localStorage.getItem('token');
         return token != null ? jsonwebtoken.verify(token, process.env.VUE_APP_JWT_SECRET) : '';
     } catch (Exception) {
-        throw Exception;
+        return '';
+        // throw Exception;
     }
 }
 

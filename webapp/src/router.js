@@ -101,6 +101,17 @@ const router = new Router({
     routes: routesObject,
 });
 
+export const tratarConexaoWebsocket = () => {
+    const token = localStorage.getItem('token');
+    if (store._vm.$socket.disconnected === true && token != null) {
+        const informacoesToken = obterInformacoesJWT();
+        if (informacoesToken !== '') {
+            store._vm.$socket.io.opts.query.token = token;
+            store._vm.$socket.open();
+        }
+    }
+};
+
 router.beforeEach((to, from, next) => {
     const publicPages = [
         '/login',
@@ -121,6 +132,7 @@ router.beforeEach((to, from, next) => {
 
     try {
         obterInformacoesJWT();
+        tratarConexaoWebsocket();
 
         return next();
     } catch (Exception) {
