@@ -13,7 +13,7 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
     );
 }]);
 
-$router->get('/send','EmailController@sendEmail');
+$router->get('/email','EmailController@enviarNotificacao');
 
 define('API_VERSION', '1.0');
 $apiPattern = 'v1';
