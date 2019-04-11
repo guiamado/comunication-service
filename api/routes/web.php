@@ -23,6 +23,8 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
 
     $router->post('/conta', 'ContaController@post');
 
+    $router->get('/enviarNotificacao[/{id}]','EmailController@enviarNotificacao');
+
     $router->post('/send[/{id}]','EmailController@enviaNovaContaEmail');
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {

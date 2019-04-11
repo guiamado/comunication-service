@@ -22,11 +22,11 @@ class EmailController
         return $response->json('Email Enviado!');
     }
 
-    public function enviarNotificacao()
+    public function enviarNotificacao($mensagem_id)
     {
         $notificacao = new \App\Services\Email();
 
         $response = response();
-        return $response->json($notificacao->enviarNotificacaoEmail(21, false));
+        return $response->json($notificacao->enviarNotificacaoEmail($mensagem_id));
     }
 }

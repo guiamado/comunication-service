@@ -64,3 +64,14 @@ export const lerNotificacao = ({ dispatch, commit }, notificacao) => requisicaoA
         });
     });
 
+export const enviarEmail = ({ dispatch, commit }, enviarNotificacao) => {
+    requisicaoAutorizada.get(`http://localhost/v1/enviarNotificacao/${enviarNotificacao}`).then((response) => {
+        const { data } = response;
+        commit(types.ENVIAR_EMAIL_NOTIFICACAO, data.data);
+        dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
+    }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
+};

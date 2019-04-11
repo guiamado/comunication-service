@@ -77,11 +77,11 @@ class Email implements IService
         return $usuarios;
     }
 
-    public function enviarNotificacaoEmail($mensagem_id, $is_notificacao_lida) {
-        $vinculados = $this->obterVinculadosNotificacao($mensagem_id, $is_notificacao_lida);
-        $usuario = $this->obterUsuarioVinculadoNotificacao($vinculados);
+    public function enviarNotificacaoEmail($mensagem_id) {
+        $vinculados = $this->obterVinculadosNotificacao($mensagem_id, false);
+        $usuarios = $this->obterUsuarioVinculadoNotificacao($vinculados);
 
-        foreach ($usuario as $key => $usuario) {
+        foreach ($usuarios as $key => $usuario) {
             Mail::to($usuario['email'])->send(new NotificacaoEmail($usuario, $vinculados[$key]));
         }
 
