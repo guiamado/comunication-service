@@ -3,11 +3,13 @@
 
 namespace App\Services;
 
+use App\Mail\NotificacaoEmail;
 use DB;
+use Illuminate\Support\Facades\Mail;
 
 class Email implements IService
 {
-    public function obterEmailNotificacao($mensagem_id, $is_notificacao_lida)
+    public function obterVinculadosNotificacao($mensagem_id, $is_notificacao_lida)
     {
         if (is_null($mensagem_id)) {
             throw new \Exception('Identificador de mensagem obrigatório.');
@@ -73,5 +75,16 @@ class Email implements IService
         }
 
         return $usuarios;
+    }
+
+    public function enviarNotificacaoEmail($mensagem_id, $is_notificacao_lida) {
+        $vinculados = $this->obterVinculadosNotificacao($mensagem_id, $is_notificacao_lida);
+        $usuario = $this->obterUsuarioVinculadoNotificacao($vinculados);
+
+        foreach ($usuario as $key => $usuario) {
+            Mail::to($usuario['email'])->send(new NotificacaoEmail($usuario, $vinculados[$key]));
+        }
+
+        return 'Email Enviado!!';
     }
 }

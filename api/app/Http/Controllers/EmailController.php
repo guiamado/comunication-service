@@ -25,15 +25,8 @@ class EmailController
     public function enviarNotificacao()
     {
         $notificacao = new \App\Services\Email();
-        $usuariosNotificacoes = $notificacao->obterEmailNotificacao(21, false );
-        $usuariosInfo = $notificacao->obterUsuarioVinculadoNotificacao($usuariosNotificacoes);
-//        dd($usuariosNotificacoes);
-
-        foreach ($usuariosInfo as $key => $usuario) {
-            Mail::to($usuario['email'])->send(new NotificacaoEmail($usuario, $usuariosNotificacoes[$key]));
-        }
 
         $response = response();
-        return $response->json('Email Enviado!');
+        return $response->json($notificacao->enviarNotificacaoEmail(21, false));
     }
 }
