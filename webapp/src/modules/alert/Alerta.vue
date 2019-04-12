@@ -1,42 +1,46 @@
 <template>
-    <div>
+    <div
+        v-if="mensagem != null && tipoMensagem != null">
         <v-snackbar
+            v-model="snackbar"
             :value="true"
-            :top="false"
-            :timeout="timeout"
-            :color="color"
+            :top="top"
+            :timeout="tempoDeDuracao"
             :vertical="false"
+            :color="tipoMensagem"
             transition="scale-transition"
             dismissible>
+            {{ mensagem }}
             <slot/>
             <v-btn
                 dark
                 flat
-                @click="snackbar = false">
-                Close
+                @click="limpar">
+                Fechar
             </v-btn>
         </v-snackbar>
     </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
     name: 'Alerta',
-    props: {
-        color: {
-            type: String,
-            required: true,
-        },
-    },
     data: () => ({
-        timeout: 6000,
-        snackbar: false,
-        top: true,
+        top: false,
     }),
-    watch: {
-        color(value) {
-            console.log(value);
-            this.snackbar = true;
-        },
+    computed: {
+        ...mapGetters({
+            mensagem: 'alert/mensagem',
+            tipoMensagem: 'alert/tipoMensagem',
+            tempoDeDuracao: 'alert/tempoDeDuracao',
+            snackbar: 'alert/snackbar',
+        }),
+    },
+    methods: {
+        ...mapActions({
+            limpar: 'alert/limpar',
+        }),
     },
 };
 </script>

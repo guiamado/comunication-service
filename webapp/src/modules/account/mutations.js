@@ -1,36 +1,34 @@
 import * as types from './types';
 
 export default {
-    [types.LOGINREQUEST](state, token) {
+    [types.LOGIN_REQUISICAO](state, token) {
         state.status = { loggingIn: true };
         state.token = token;
     },
-    [types.LOGINSUCCESS](state, token) {
+    [types.LOGIN_SUCESSO](state, token) {
         localStorage.setItem('token', token);
         state.status = { loggedIn: true };
         state.token = token;
     },
-    [types.SETACCOUNTINFO](state, accountInfo) {
-        state.accountInfo = accountInfo;
+    [types.DEFINIR_INFORMACOES_CONTA](state, informacoesConta) {
+        state.informacoesConta = informacoesConta;
     },
-    [types.LOGINFAILURE](state) {
+    [types.LOGIN_FALHA](state) {
         state.status = {};
         state.token = null;
     },
     [types.LOGOUT](state) {
         state.status = {};
         state.token = null;
-        state.accountInfo = null;
-        state.message = null;
-        state.message_type = null;
+        state.informacoesConta = null;
     },
-    [types.REGISTERREQUEST](state) {
-        state.status = { registering: true };
+    [types.REGISTRAR_REQUISICAO](state) {
+        state.status = { registrando: true };
     },
-    [types.REGISTERSUCCESS](state) {
+    [types.REGISTRAR_SUCESSO](state) {
         state.status = {};
     },
-    [types.REGISTERFAILURE](state) {
+    [types.REGISTRAR_FALHA](state) {
         state.status = {};
     },
 };

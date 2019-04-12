@@ -1,4 +1,6 @@
 export default {
-    message_type: null,
-    message: null,
+    tipoMensagem: null,
+    mensagem: null,
+    tempoDeDuracao: 6000,
+    snackbar: false,
 };
