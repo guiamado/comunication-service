@@ -16,7 +16,7 @@
                         prominent
                         color="primary">
                         <v-toolbar-title>
-                            {{ (websocket.nomeSalaAtual) ? `Sala ${websocket.nomeSalaAtual}` : 'Selecione um sistema' }}
+                            {{ (nomeSalaAtual) ? `Sala ${nomeSalaAtual}` : 'Selecione um sistema' }}
 
                         </v-toolbar-title>
                         <v-spacer/>
@@ -25,12 +25,13 @@
                             <v-tooltip
                                 bottom>
                                 <v-badge
-                                    v-if="numeroJanela === 2 && typeof websocket.salas[websocket.indiceSalaAtual] != 'undefined' && typeof websocket.salas[websocket.indiceSalaAtual].membros != 'undefined'"
+                                    v-if="numeroJanela === 2
+                                        && typeof salas[indiceSalaAtual] != 'undefined'
+                                    && typeof salas[indiceSalaAtual].membros != 'undefined'"
                                     slot="activator"
                                     right
                                     color="red">
-                                    <span slot="badge">{{ websocket.salas[websocket.indiceSalaAtual].membros.length }}</span>
-                                    <!--<span slot="badge">{{ 1 }}</span>-->
+                                    <span slot="badge">{{ salas[indiceSalaAtual].membros.length }}</span>
                                     <v-icon
                                         color="glue lighten-1"
                                         large>
@@ -38,10 +39,12 @@
                                     </v-icon>
                                 </v-badge>
                                 <template
-                                    v-if="numeroJanela === 2 && typeof websocket.salas[websocket.indiceSalaAtual] != 'undefined'">
+                                    v-if="numeroJanela === 2 && typeof salas[indiceSalaAtual] != 'undefined'">
                                     <h3>Membros da Sala:</h3>
-                                    <div v-for="(membro) in websocket.salas[websocket.indiceSalaAtual].membros">
-                                        <div>{{ membro.nome }} <{{ membro.email }}></div>
+                                    <div
+                                        v-for="(membro) in salas[indiceSalaAtual].membros"
+                                        :key="membro.email">
+                                        <div>{{ membro.nome }} [{{ membro.email }}]</div>
                                     </div>
                                 </template>
                             </v-tooltip>
@@ -65,10 +68,10 @@
                             <v-window-item :value="2">
                                 <v-card-text>
                                     <v-list
-                                        v-if="websocket.salas.length > 0 && websocket.indiceSalaAtual != null"
+                                        v-if="salas.length > 0 && indiceSalaAtual != null"
                                         subheader>
                                         <template
-                                            v-for="(chat) in websocket.salas[websocket.indiceSalaAtual].mensagens">
+                                            v-for="(chat) in salas[indiceSalaAtual].mensagens">
 
                                             <v-list-tile
                                                 :key="chat.mensagem"
@@ -180,21 +183,22 @@ export default {
 
     computed: {
         ...mapGetters({
-            websocket: 'websocket/websocket',
+            nomeSalaAtual: 'websocket/nomeSalaAtual',
+            salas: 'websocket/salas',
+            indiceSalaAtual: 'websocket/indiceSalaAtual',
             informacoesConta: 'account/informacoesConta',
         }),
 
         hasMembrosNaSalaAtual() {
-            if (this.websocket.indiceSalaAtual == null) {
-                return false;
-            }
-            const { indiceSalaAtual } = this.websocket;
-
-            if (typeof this.websocket.salas[indiceSalaAtual] === 'undefined') {
+            if (this.indiceSalaAtual == null) {
                 return false;
             }
 
-            const membrosSalaAtual = this.websocket.salas[indiceSalaAtual].membros;
+            if (typeof this.salas[this.indiceSalaAtual] === 'undefined') {
+                return false;
+            }
+
+            const membrosSalaAtual = this.salas[this.indiceSalaAtual].membros;
             if (typeof membrosSalaAtual === 'undefined') {
                 return false;
             }
@@ -212,15 +216,15 @@ export default {
     },
     methods: {
         ...mapActions({
-            websocketEntrarEmSala: 'websocket/Socket_serverEntrarEmSala',
-            websocketMensagemSala: 'websocket/Socket_serverMensagemSala',
+            entrarEmSala: 'websocket/Socket_serverEntrarEmSala',
+            mensagemSala: 'websocket/Socket_serverMensagemSala',
             definirNomeSalaAtual: 'websocket/definirNomeSalaAtual',
         }),
 
         entrarEmSala() {
             const self = this;
 
-            this.websocketEntrarEmSala({
+            this.entrarEmSala({
                 sala: self.sistema.sistema_id,
             });
             this.definirNomeSalaAtual({
@@ -231,7 +235,7 @@ export default {
         enviarMensagem(evento) {
             const self = this;
 
-            this.websocketMensagemSala({
+            this.mensagemSala({
                 sala: self.sistema.sistema_id,
                 mensagem: self.mensagem,
             });
