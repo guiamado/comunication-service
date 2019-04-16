@@ -59,8 +59,6 @@ services:
     build: ./websocket
     image: comunication-websocket-nodejs:1.0.0
     container_name: comunication-websocket
-    volumes:
-      - ./websocket:/src
     ports:
       - "8001:8001"
     depends_on:
