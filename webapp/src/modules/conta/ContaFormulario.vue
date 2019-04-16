@@ -21,6 +21,7 @@
                         required
                         label="E-mail"/>
                     <v-text-field
+                        v-if="informacoesConta.user_id === itemEditado.user_id || indiceEditado === -1"
                         v-validate="{ required: true, min: 6 }"
                         v-model="itemEditado.password"
                         :rules="[rules.required, rules.minLength]"
@@ -101,6 +102,10 @@ export default {
             default: () => {
             },
         },
+        indiceEditado: {
+            type: Number,
+            default: 0,
+        },
     },
     data: () => ({
         carregando: false,
@@ -128,6 +133,7 @@ export default {
     computed: {
         ...mapGetters({
             sistemas: 'sistema/sistema',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
 
@@ -167,6 +173,7 @@ export default {
         close() {
             this.itemEditado = Object.assign({}, this.defaultItem);
             this.$emit('update:dialog', false);
+            this.$emit('update:indiceEditado', -1);
         },
     },
 };
