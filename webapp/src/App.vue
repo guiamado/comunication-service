@@ -21,7 +21,7 @@
                     v-if="status.loggedIn"
                     bottom>
                     <v-btn
-                        v-show="websocket.isConnected === true"
+                        v-show="isConnected === true"
                         slot="activator"
                         small
                         icon
@@ -37,7 +37,7 @@
                     v-if="status.loggedIn"
                     bottom>
                     <v-btn
-                        v-show="websocket.isConnected === false"
+                        v-show="isConnected === false"
                         slot="activator"
                         small
                         icon
@@ -99,7 +99,7 @@ export default {
         ...mapGetters({
             status: 'account/status',
             user: 'account/user',
-            websocket: 'websocket/websocket',
+            isConnected: 'websocket/isConnected',
         }),
     },
     mounted() {
