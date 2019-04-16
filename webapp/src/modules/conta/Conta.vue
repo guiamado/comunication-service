@@ -92,7 +92,8 @@
                     <v-card-text>
                         <conta-formulario
                             :item="itemEditado"
-                            :dialog.sync="dialog"/>
+                            :dialog.sync="dialog"
+                            :indiceEditado.sync="indiceEditado"/>
                     </v-card-text>
                 </v-card>
             </v-dialog>
