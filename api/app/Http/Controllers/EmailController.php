@@ -13,13 +13,13 @@ class EmailController
     public function enviaNovaContaEmail(ServerRequestInterface $request)
     {
         $user = $request->getParsedBody();
-        Mail::to($user['email'])->send(new NovaContaEmail($user));
+        $contaCriada = new \App\Services\Email();
 
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json('Email Enviado!');
+        return $response->json($contaCriada->enviarEmailContaCriada($user));
     }
 
     public function enviarNotificacao($mensagem_id)

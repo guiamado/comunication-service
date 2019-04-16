@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Mail\NotificacaoEmail;
+use App\Mail\NovaContaEmail;
 use DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,6 +15,10 @@ class Email implements IService
         if (is_null($mensagem_id)) {
             throw new \Exception('Identificador de mensagem obrigatório.');
         }
+        $notificacao = DB::table('notificacao.notificacao')->select('*')
+            ->orderBy('notificacao.notificacao.notificacao_id', 'desc')
+            ->take(1)
+            ->get();
 
         if ($is_notificacao_lida == false) {
             $notificacoesUsuario = $this->obterQueryEmailNotificacao()->where(
@@ -24,6 +29,10 @@ class Email implements IService
                 'notificacao.notificacao.is_notificacao_lida',
                 '=',
                 $is_notificacao_lida
+            )->where(
+                'notificacao.notificacao.notificacao_id',
+                '=',
+                $notificacao[0]->notificacao_id
             );
         }
 
@@ -77,13 +86,21 @@ class Email implements IService
         return $usuarios;
     }
 
-    public function enviarNotificacaoEmail($mensagem_id) {
+    public function enviarNotificacaoEmail($mensagem_id)
+    {
         $vinculados = $this->obterVinculadosNotificacao($mensagem_id, false);
         $usuarios = $this->obterUsuarioVinculadoNotificacao($vinculados);
 
         foreach ($usuarios as $key => $usuario) {
             Mail::to($usuario['email'])->send(new NotificacaoEmail($usuario, $vinculados[$key]));
         }
+
+        return 'Email Enviado!!';
+    }
+
+    public function enviarEmailContaCriada($user)
+    {
+        Mail::to($user['email'])->send(new NovaContaEmail($user));
 
         return 'Email Enviado!!';
     }
