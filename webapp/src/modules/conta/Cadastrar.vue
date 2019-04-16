@@ -1,90 +1,78 @@
 <template>
-    <v-container
-        fluid
-        fill-height>
-        <v-layout
-            align-center
-            justify-center>
-            <v-flex
-                xs12
-                sm8
-                md4>
-                <v-layout
-                    column
-                    justify-center>
-                    <v-card class="elevation-12">
-                        <v-toolbar
-                            dark
-                            color="primary">
-                            <v-toolbar-title>Cadastrar</v-toolbar-title>
-                        </v-toolbar>
-                        <v-card-text>
-                            <v-form
-                                ref="form"
-                                lazy-validation
-                                @submit.prevent="tratarSubmissao">
-                                <v-text-field
-                                    v-validate="'required'"
-                                    v-model="user.nome"
-                                    :rules="[rules.required, rules.minLength]"
-                                    prepend-icon="face"
-                                    label="Nome"
-                                    class="form-control"
-                                    required
-                                />
-                                <div
-                                    v-if="submitted && errors.has('nome')"
-                                    class="invalid-feedback">{{
-                                    errors.first('nome') }}
-                                </div>
-                                <v-text-field
-                                    v-validate="'required'"
-                                    v-model="user.email"
-                                    :rules="[rules.required, rules.email, rules.minLength]"
-                                    prepend-icon="person"
-                                    label="E-mail"
-                                    class="form-control"
-                                    required
-                                />
-                                <div
-                                    v-if="submitted && errors.has('email')"
-                                    class="invalid-feedback">{{
-                                    errors.first('email') }}
-                                </div>
-                                <v-text-field
-                                    v-validate="{ required: true, min: 6 }"
-                                    v-model="user.password"
-                                    :rules="[rules.required, rules.minLength]"
-                                    prepend-icon="lock"
-                                    type="password"
-                                    label="Senha"
-                                    class="form-control"
-                                    required
-                                />
-                                <div
-                                    v-if="submitted && errors.has('password')"
-                                    class="invalid-feedback">{{ errors.first('password') }}
-                                </div>
-                                <v-card-actions>
-                                    <v-spacer/>
-                                    <router-link
-                                        to="/login"
-                                        class="btn btn-link">Cancel</router-link>
-                                    <v-spacer/>
-                                    <v-btn
-                                        :disabled="status.registering"
-                                        color="primary"
-                                        type="submit"> Cadastrar
-                                    </v-btn>
-                                    <img v-show="status.registering">
-                                </v-card-actions>
-                            </v-form>
-                        </v-card-text>
-                    </v-card>
-                </v-layout>
-            </v-flex>
-        </v-layout>
-    </v-container>
+    <v-content>
+        <v-container
+            fluid
+            fill-height>
+            <v-layout
+                align-center
+                justify-center>
+                <v-flex
+                    xs12
+                    sm8
+                    md4>
+                    <v-layout
+                        column
+                        justify-center>
+                        <v-card class="elevation-12">
+                            <v-toolbar
+                                dark
+                                color="primary">
+                                <v-toolbar-title>Cadastrar</v-toolbar-title>
+                            </v-toolbar>
+                            <v-card-text>
+                                <v-form
+                                    ref="form"
+                                    lazy-validation
+                                    @submit.prevent="tratarSubmissao">
+                                    <v-text-field
+                                        v-validate="'required'"
+                                        v-model="user.nome"
+                                        :rules="[rules.required, rules.minLength]"
+                                        prepend-icon="face"
+                                        label="Nome"
+                                        class="form-control"
+                                        required
+                                    />
+                                    <v-text-field
+                                        v-validate="'required'"
+                                        v-model="user.email"
+                                        :rules="[rules.required, rules.email, rules.minLength]"
+                                        prepend-icon="person"
+                                        label="E-mail"
+                                        class="form-control"
+                                        required
+                                    />
+                                    <v-text-field
+                                        v-validate="{ required: true, min: 6 }"
+                                        v-model="user.password"
+                                        :rules="[rules.required, rules.minLength]"
+                                        prepend-icon="lock"
+                                        type="password"
+                                        label="Senha"
+                                        class="form-control"
+                                        required
+                                    />
+                                    <v-card-actions>
+                                        <v-spacer/>
+                                        <router-link
+                                            to="/login"
+                                            class="btn btn-link">Cancel</router-link>
+                                        <v-spacer/>
+                                        <v-btn
+                                            :disabled="status.registrando"
+                                            color="primary"
+                                            type="submit"> Cadastrar
+                                        </v-btn>
+                                        <img v-show="status.registrando">
+                                    </v-card-actions>
+                                </v-form>
+                            </v-card-text>
+                        </v-card>
+                    </v-layout>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-content>
 </template>
 
 <script>
@@ -98,14 +86,13 @@ export default {
                 email: '',
                 password: '',
             },
-            submitted: false,
             rules: {
-                required: value => !!value || 'Required.',
+                required: value => !!value || 'Campo obrigatório.',
                 minLength: object => object.length > 3 || 'Campo obrigatório.',
                 email: (value) => {
                     // eslint-disable-next-line
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return pattern.test(value) || 'Invalid e-mail.';
+                    return pattern.test(value) || 'E-mail inválido.';
                 },
             },
         };
@@ -115,13 +102,12 @@ export default {
     },
     methods: {
         ...mapActions({
-            register: 'account/register',
+            registrar: 'account/registrar',
             enviarEmail: 'conta/enviarEmail',
         }),
         tratarSubmissao() {
-            this.submitted = true;
             if (this.$refs.form.validate()) {
-                this.register(this.user);
+                this.registrar(this.user);
                 this.enviarEmail(this.user);
             }
         },

@@ -1,90 +1,94 @@
 <template>
+    <v-form
+        ref="form"
+        v-model="valid">
+        <v-container grid-list-md>
+            <v-layout wrap>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <v-text-field
+                        v-model="itemEditado.nome"
+                        :rules="[rules.required, rules.minLength]"
+                        prepend-icon="face"
+                        required
+                        label="Nome"/>
+                    <v-text-field
+                        v-model="itemEditado.email"
+                        :rules="[rules.required, rules.email, rules.minLength]"
+                        prepend-icon="person"
+                        required
+                        label="E-mail"/>
+                    <v-text-field
+                        v-validate="{ required: true, min: 6 }"
+                        v-model="itemEditado.password"
+                        :rules="[rules.required, rules.minLength]"
+                        prepend-icon="lock"
+                        type="password"
+                        label="Senha"
+                        class="form-control"
+                        required />
+                </v-flex>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <h3>Administração</h3>
+                    <v-switch
+                        :label="`${itemEditado.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
+                        v-model="itemEditado.is_admin"/>
+                </v-flex>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <h3>Situação</h3>
+                    <v-switch
+                        :label="`${itemEditado.is_ativo ? 'Ativo' : 'Inativo'}`"
+                        v-model="itemEditado.is_ativo"/>
+                </v-flex>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <h3> Sistemas </h3>
+                    <v-list style="overflow: auto; max-height: 300px">
+                        <v-list-tile
+                            v-for="sistema in sistemas"
+                            :key="sistema.title"
+                            avatar>
 
-    <v-container grid-list-md>
-        <v-layout wrap>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <v-text-field
-                    v-model="editedItem.nome"
-                    :rules="[rules.required, rules.minLength]"
-                    prepend-icon="face"
-                    required
-                    label="Nome"/>
-                <v-text-field
-                    v-model="editedItem.email"
-                    :rules="[rules.required, rules.email, rules.minLength]"
-                    prepend-icon="person"
-                    required
-                    label="E-mail"/>
-                <v-text-field
-                    v-validate="{ required: true, min: 6 }"
-                    v-model="editedItem.password"
-                    :rules="[rules.required, rules.minLength]"
-                    prepend-icon="lock"
-                    type="password"
-                    label="Senha"
-                    class="form-control"
-                    required />
-            </v-flex>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <h3>Administração</h3>
-                <v-switch
-                    :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
-                    v-model="editedItem.is_admin"/>
-            </v-flex>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <h3>Situação</h3>
-                <v-switch
-                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                    v-model="editedItem.is_ativo"/>
-            </v-flex>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <h3> Sistemas </h3>
-                <v-list style="overflow: auto; max-height: 300px">
-                    <v-list-tile
-                        v-for="sistema in sistemas"
-                        :key="sistema.title"
-                        avatar>
+                            <v-list-tile-content>
 
-                        <v-list-tile-content>
-                            <v-checkbox
-                                v-model="editedItem.sistemas"
-                                :label="sistema.descricao"
-                                :value="sistema"
-                                color="success"
-                                :rules="[rules.required, rules.minLengthCheckBox]"
-                                required/>
-                        </v-list-tile-content>
+                                <v-checkbox
+                                    v-model="itemEditado.sistemas"
+                                    :label="sistema.descricao"
+                                    :value="sistema"
+                                    :rules="[rules.required, rules.minLengthCheckBox]"
+                                    color="success"
+                                    required/>
+                            </v-list-tile-content>
 
-                    </v-list-tile>
-                </v-list>
-            </v-flex>
-            <v-flex class="text-xs-center">
-                <v-btn
-                    color="error"
-                    dark
-                    @click.native="close">Fechar</v-btn>
-                <v-btn
-                    v-if="!loading"
-                    dark
-                    color="blue darken-1"
-                    @click.native="save">Gravar
-                </v-btn>
-            </v-flex>
-        </v-layout>
-    </v-container>
-
+                        </v-list-tile>
+                    </v-list>
+                </v-flex>
+                <v-flex class="text-xs-center">
+                    <v-btn
+                        color="error"
+                        dark
+                        @click.native="close">Fechar</v-btn>
+                    <v-btn
+                        v-if="!carregando"
+                        :disabled="!valid"
+                        dark
+                        color="blue darken-1"
+                        @click.native="save">Gravar
+                    </v-btn>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-form>
 </template>
 <script>
 
@@ -99,9 +103,10 @@ export default {
         },
     },
     data: () => ({
+        carregando: false,
+        valid: true,
+        itemEditado: {},
         emailEnviado: '',
-        loading: false,
-        editedItem: {},
         defaultItem: {
             usuario_id: null,
             descricao: '',
@@ -129,11 +134,11 @@ export default {
 
     watch: {
         item(value) {
-            this.editedItem = Object.assign({}, value);
+            this.itemEditado = Object.assign({}, value);
         },
     },
     mounted() {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
         if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
@@ -150,20 +155,20 @@ export default {
 
         save() {
             const self = this;
-            self.loading = true;
+            self.carregando = true;
 
-            if (self.editedItem.usuario_id !== null) {
-                this.atualizarConta(self.editedItem);
+            if (self.itemEditado.usuario_id !== null) {
+                this.atualizarConta(self.itemEditado);
             } else {
-                this.cadastrarConta(self.editedItem);
-                this.enviarEmail(self.editedItem);
+                this.cadastrarConta(self.itemEditado);
+                this.enviarEmail(self.itemEditado);
             }
-            self.loading = false;
+            self.carregando = false;
             self.close();
         },
 
         close() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.$emit('update:dialog', false);
         },
     },

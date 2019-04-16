@@ -1,4 +1,4 @@
-import { obterInformacoesJWT } from '../account/_helpers/jwt';
+import { obterInformacoesJWT } from '../account/_auxiliares/jwt';
 
 let informacoesJWT = '';
 try {
@@ -12,6 +12,6 @@ const loggedIn = informacoesJWT !== '';
 export const state = {
     status: { loggedIn },
     token: informacoesJWT,
-    accountInfo: informacoesJWT ? informacoesJWT.user : '',
+    informacoesConta: informacoesJWT ? informacoesJWT.user : '',
 };
 

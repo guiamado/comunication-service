@@ -10,7 +10,7 @@
         app>
         <v-card
             dark
-            color="primary">
+            color="cyan darken-4">
             <v-list class="pa-1">
                 <v-list-tile
                     avatar
@@ -22,7 +22,7 @@
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>{{ accountInfo.name }}</v-list-tile-title>
+                        <v-list-tile-title>{{ informacoesConta.name }}</v-list-tile-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>
@@ -80,7 +80,7 @@ export default {
         ...mapGetters({
             status: 'account/status',
             token: 'account/token',
-            accountInfo: 'account/accountInfo',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
     watch: {
@@ -111,11 +111,11 @@ export default {
                 },
                 {
                     icon: 'chat',
-                    title: '(Teste) Chat/WebSocket',
-                    to: '/websocket',
+                    title: 'Chat',
+                    to: '/chat',
                 },
             ];
-            if (this.accountInfo.is_admin === true) {
+            if (this.informacoesConta.is_admin === true) {
                 menusLaterais.push({
                     icon: 'edit',
                     title: 'Administração',

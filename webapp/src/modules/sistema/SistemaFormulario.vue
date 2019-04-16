@@ -6,7 +6,7 @@
                 sm6
                 md12>
                 <v-text-field
-                    v-model="editedItem.descricao"
+                    v-model="itemEditado.descricao"
                     required
                     label="Descrição"/>
             </v-flex>
@@ -15,7 +15,7 @@
                 sm6
                 md12>
                 <v-text-field
-                    v-model="editedItem.url"
+                    v-model="itemEditado.url"
                     required
                     label="URL"/>
             </v-flex>
@@ -25,8 +25,8 @@
                 md12>
                 <h3>Situação</h3>
                 <v-switch
-                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                    v-model="editedItem.is_ativo"/>
+                    :label="`${itemEditado.is_ativo ? 'Ativo' : 'Inativo'}`"
+                    v-model="itemEditado.is_ativo"/>
             </v-flex>
             <v-flex class="text-xs-center">
                 <v-btn
@@ -34,7 +34,7 @@
                     dark
                     @click.native="close">Fechar</v-btn>
                 <v-btn
-                    v-if="!loading"
+                    v-if="!carregando"
                     dark
                     color="blue darken-1"
                     @click.native="save">Gravar
@@ -62,8 +62,8 @@ export default {
         },
     },
     data: () => ({
-        loading: false,
-        editedItem: {},
+        carregando: false,
+        itemEditado: {},
         defaultItem: {
             sistema_id: null,
             descricao: '',
@@ -74,12 +74,12 @@ export default {
 
     watch: {
         item(value) {
-            this.editedItem = Object.assign({}, value);
+            this.itemEditado = Object.assign({}, value);
         },
     },
 
     mounted() {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.itemEditado = Object.assign({}, this.defaultItem);
     },
 
     methods: {
@@ -91,19 +91,19 @@ export default {
 
         save() {
             const self = this;
-            if (self.editedItem.is_ativo === null || self.editedItem.is_ativo === '') {
-                self.editedItem.is_ativo = false;
+            if (self.itemEditado.is_ativo === null || self.itemEditado.is_ativo === '') {
+                self.itemEditado.is_ativo = false;
             }
-            if (self.editedItem.sistema_id !== null) {
-                self.atualizarSistema(self.editedItem);
+            if (self.itemEditado.sistema_id !== null) {
+                self.atualizarSistema(self.itemEditado);
             } else {
-                self.cadastrarSistema(self.editedItem);
+                self.cadastrarSistema(self.itemEditado);
             }
             this.$emit('update:dialog', false);
         },
 
         close() {
-            this.editedItem = Object.assign({}, this.defaultItem);
+            this.itemEditado = Object.assign({}, this.defaultItem);
             this.$emit('update:dialog', false);
         },
     },

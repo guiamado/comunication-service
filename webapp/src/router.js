@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './modules/conta/Login.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
-import WebSocket from './modules/websocket/WebSocket.vue';
+import Chat from './modules/websocket/Chat.vue';
 import Administracao from './modules/core/Administracao.vue';
 import Home from './modules/core/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
@@ -13,7 +13,7 @@ import Conta from './modules/conta/Conta.vue';
 import Mensagem from './modules/mensagem/Mensagem.vue';
 import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
-import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
+import { obterInformacoesJWT } from './modules/account/_auxiliares/jwt';
 
 Vue.use(Router);
 
@@ -21,32 +21,38 @@ const routesObject = [
     {
         path: '/login',
         component: Login,
+        name: 'Login',
     },
     {
         path: '/cadastrar',
         component: Cadastrar,
+        name: 'Cadastrar',
     },
     {
         path: '*',
         component: NaoEncontrado,
+        name: 'Não Encontrado',
     // redirect: '/'
     },
     {
         path: '/',
         component: Home,
-        name: 'home',
+        name: 'Home',
     },
     {
-        path: '/websocket',
-        component: WebSocket,
+        path: '/chat',
+        component: Chat,
+        name: 'Chats',
     },
     {
         path: '/notificacao',
         component: Notificacao,
+        name: 'Notificações',
     },
     {
         path: '/sobre',
         component: Sobre,
+        name: 'Sobre',
     },
     {
         path: '/administracao',
@@ -56,7 +62,7 @@ const routesObject = [
             {
                 path: '/administracao/plataforma',
                 component: Plataforma,
-                name: Plataforma,
+                name: 'Administração / Plataformas',
                 meta: {
                     title: 'Plataformas',
                 },
@@ -64,7 +70,7 @@ const routesObject = [
             {
                 path: '/administracao/sistema',
                 component: Sistema,
-                name: Sistema,
+                name: 'Administração / Sistemas',
                 meta: {
                     title: 'Sistema',
                 },
@@ -72,7 +78,7 @@ const routesObject = [
             {
                 path: '/administracao/conta',
                 component: Conta,
-                name: Conta,
+                name: 'Administração / Contas',
                 meta: {
                     title: 'Conta',
                 },
@@ -80,7 +86,7 @@ const routesObject = [
             {
                 path: '/administracao/mensagem',
                 component: Mensagem,
-                name: Mensagem,
+                name: 'Administração / Mensagens',
                 meta: {
                     title: 'Mensagem',
                 },
@@ -94,6 +100,17 @@ const router = new Router({
     base: process.env.BASE_URL,
     routes: routesObject,
 });
+
+export const tratarConexaoWebsocket = () => {
+    const token = localStorage.getItem('token');
+    if (store._vm.$socket.disconnected === true && token != null) {
+        const informacoesToken = obterInformacoesJWT();
+        if (informacoesToken !== '') {
+            store._vm.$socket.io.opts.query.token = token;
+            store._vm.$socket.open();
+        }
+    }
+};
 
 router.beforeEach((to, from, next) => {
     const publicPages = [
@@ -115,6 +132,7 @@ router.beforeEach((to, from, next) => {
 
     try {
         obterInformacoesJWT();
+        tratarConexaoWebsocket();
 
         return next();
     } catch (Exception) {
