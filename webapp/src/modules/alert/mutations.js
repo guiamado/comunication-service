@@ -1,23 +1,22 @@
 import * as types from './types';
 
 export default {
-    [types.GETALLREQUEST](state) {
-        state.all = { loading: true };
+    [types.SUCCESS](state, mensagem) {
+        state.tipoMensagem = 'success';
+        state.mensagem = mensagem;
+        state.snackbar = true;
     },
-    [types.SUCCESS](state, message) {
-        state.message_type = 'success';
-        state.message = message;
+    [types.ERROR](state, mensagem) {
+        state.tipoMensagem = 'error';
+        state.mensagem = mensagem;
+        state.snackbar = true;
     },
-    [types.ERROR](state, message) {
-        state.message_type = 'error';
-        state.message = message;
+    [types.INFO](state, mensagem) {
+        state.tipoMensagem = 'info';
+        state.mensagem = mensagem;
+        state.snackbar = true;
     },
-    [types.INFO](state, message) {
-        state.message_type = 'info';
-        state.message = message;
-    },
-    [types.CLEAR](state) {
-        state.message_type = null;
-        state.message = null;
+    [types.LIMPAR](state) {
+        state.snackbar = false;
     },
 };

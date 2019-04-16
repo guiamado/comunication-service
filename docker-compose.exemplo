@@ -3,7 +3,7 @@ services:
 
   webapp-service:
     image: node:8.11.4-slim
-    container_name: notification-webapp
+    container_name: comunication-webapp
     user: "node"
     working_dir: /home/node/app
     volumes:
@@ -23,9 +23,9 @@ services:
       #- NODE_ENV=production
 
   api-service:
-    container_name: notification-api
+    container_name: comunication-api
     build: .
-    image: culturagovbr/notification-php-fpm:1.0.1
+    image: culturagovbr/comunication-php-fpm:1.0.1
     working_dir: /application
     volumes:
       - ./api:/application
@@ -34,7 +34,7 @@ services:
       #  - UPDATE_COMPOSER_DEPENDENCIES=true
       - USE_PHP_FPM=true
       - DB_CONNECTION=pgsql
-      - DB_HOST=notification-database
+      - DB_HOST=comunication-database
       - DB_PORT=5432
       - DB_DATABASE=notificacao
       - DB_USERNAME=notificacao
@@ -44,7 +44,7 @@ services:
 
   webserver-service:
     image: nginx:alpine
-    container_name: notification-webserver
+    container_name: comunication-webserver
     working_dir: /application
     volumes:
       - ./api:/application
@@ -56,24 +56,17 @@ services:
       - api-service
 
   websocket-service:
-    image: culturagovbr/notification-php-fpm:1.0.1
-    container_name: notification-websocket
-    working_dir: /application
-    command: "supervisord -n"
-    volumes:
-      - ./websocket:/application
-      - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-      - ./docker/php-fpm/supervisor/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
+    build: ./websocket
+    image: comunication-websocket-nodejs:1.0.0
+    container_name: comunication-websocket
     ports:
       - "8001:8001"
     depends_on:
       - api-service
-    #environment:
-    #  - UPDATE_COMPOSER_DEPENDENCIES=true
 
   database-service:
     image: postgres:10
-    container_name: notification-database
+    container_name: comunication-database
     environment:
       - POSTGRES_PASSWORD=senhaNotificacao
       - POSTGRES_USER=notificacao
