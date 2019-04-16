@@ -131,7 +131,10 @@ router.beforeEach((to, from, next) => {
     }
 
     try {
-        obterInformacoesJWT();
+        if (loggedIn && obterInformacoesJWT() === '') {
+            const error = 'Usuario sem autenticação.';
+            throw error;
+        }
         tratarConexaoWebsocket();
 
         return next();
