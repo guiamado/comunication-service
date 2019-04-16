@@ -88,6 +88,7 @@ export default {
     computed: {
         ...mapGetters({
             mensagens: 'mensagem/mensagens',
+            informacoesConta: 'account/informacoesConta',
         }),
     },
     watch: {
