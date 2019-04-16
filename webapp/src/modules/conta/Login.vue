@@ -41,16 +41,21 @@
                                         <!--<v-btn @click="clear">Limpar</v-btn>-->
                                         <!--<v-spacer></v-spacer>-->
 
-                                        <v-btn
-                                            :disabled="!valid"
-                                            color="primary"
-                                            type="submit"> Entrar
-                                        </v-btn>
-                                        <router-link
-                                            to="/cadastrar"
-                                            class="btn btn-link"
-                                            style="margin-left: 20px"
-                                        >Cadastre-se</router-link>
+                                    <v-btn
+                                        :disabled="!valid"
+                                        color="primary"
+                                        type="submit"> Entrar
+                                    </v-btn>
+                                    <router-link
+                                        to="/cadastrar"
+                                        class="btn btn-link"
+                                        style="margin-left: 20px"
+                                    >Cadastre-se</router-link>
+                                    <router-link
+                                        to="/recuperar"
+                                        class="btn btn-link"
+                                        style="margin-left: 20px"
+                                    >Esqueci minha senha</router-link>
 
                                     </v-card-actions>
                                 </v-form>
