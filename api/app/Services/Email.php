@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Mail\NotificacaoEmail;
 use App\Mail\NovaContaEmail;
+use App\Mail\RecuperacaoSenhaEmail;
 use DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -104,4 +105,12 @@ class Email implements IService
 
         return 'Email Enviado!!';
     }
+
+    public function enviarNovaSenha($user)
+    {
+        Mail::to($user['email'])->send(new RecuperacaoSenhaEmail($user));
+
+        return 'Email Enviado!!';
+    }
+
 }

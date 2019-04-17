@@ -29,4 +29,13 @@ class EmailController
         $response = response();
         return $response->json($notificacao->enviarNotificacaoEmail($mensagem_id));
     }
+
+    public function enviarNovaSenhaEmail(ServerRequestInterface $request)
+    {
+        $user = $request->getParsedBody();
+        $recuperarSenha = new \App\Services\Email();
+
+        $response = response();
+        return $response->json($recuperarSenha->enviarNovaSenha($user));
+    }
 }

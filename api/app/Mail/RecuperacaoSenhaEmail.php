@@ -8,27 +8,24 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotificacaoEmail extends Mailable
+class RecuperacaoSenhaEmail extends Mailable
 {
     use Queueable,
         SerializesModels;
 
     protected $user;
-    protected $notificacao;
 
-    public function __construct($user, $notificacao)
+    public function __construct($user)
     {
         $this->user = $user;
-        $this->notificacao = $notificacao;
     }
 
     public function build() {
         return $this->from('amado.silva133@gmail.com')
-            ->subject($this->notificacao->titulo)
-            ->view('notificacao-email')
+            ->subject('Redefinicao de senha')
+            ->view('recuperar-senha-email')
             ->with([
                 'user' => $this->user,
-                'notificacao' => $this->notificacao,
             ]);
     }
 }

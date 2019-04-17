@@ -20,7 +20,6 @@ class NovaContaEmail extends Mailable
         $this->user= $user;
     }
 
-    //build the message.
     public function build() {
         return $this->from('amado.silva133@gmail.com')
             ->subject('Conta Criada Servico Notificacao')

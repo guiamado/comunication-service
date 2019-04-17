@@ -36,11 +36,6 @@ const routesObject = [
         name: 'Recuperar Senha',
     },
     {
-        path: '/redefinir',
-        component: RedefinirSenha,
-        name: 'Redefinir Senha',
-    },
-    {
         path: '*',
         component: NaoEncontrado,
         name: 'Não Encontrado',
@@ -129,7 +124,6 @@ router.beforeEach((to, from, next) => {
         '/login',
         '/cadastrar',
         '/recuperar',
-        '/redefinir',
     ];
 
     const authRequired = !publicPages.includes(to.path);
