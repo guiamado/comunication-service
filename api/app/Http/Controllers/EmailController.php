@@ -12,14 +12,14 @@ class EmailController
 {
     public function enviaNovaContaEmail(ServerRequestInterface $request)
     {
-        $user = $request->getParsedBody();
+        $usuario = $request->getParsedBody();
         $contaCriada = new \App\Services\Email();
 
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($contaCriada->enviarEmailContaCriada($user));
+        return $response->json($contaCriada->enviarEmailContaCriada($usuario));
     }
 
     public function enviarNotificacao($mensagem_id)
@@ -32,10 +32,10 @@ class EmailController
 
     public function enviarNovaSenhaEmail(ServerRequestInterface $request)
     {
-        $user = $request->getParsedBody();
+        $usuario = $request->getParsedBody();
         $recuperarSenha = new \App\Services\Email();
 
         $response = response();
-        return $response->json($recuperarSenha->enviarNovaSenha($user));
+        return $response->json($recuperarSenha->enviarNovaSenha($usuario));
     }
 }

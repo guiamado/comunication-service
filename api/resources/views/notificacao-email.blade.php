@@ -1,8 +1,6 @@
-<p>Ola {{ $user->nome }},</p>
+<p>Ola {{ $usuario->nome }},</p>
 <p>Voce possui uma nova Notificacao.</p>
 <p>Sistema: {{ $notificacao->sistema }}</p>
 <p>{{ $notificacao->descricao }}</p>
-<p>
-    Regards,<br>
-    Sender.
-</p>
+<p>Atenciosamente,</p>
+<p>serviço de notificacao</p>

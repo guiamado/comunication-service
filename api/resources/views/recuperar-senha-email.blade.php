@@ -1,8 +1,6 @@
 <p>Ola,</p>
 <p>Sua senha no sistema de Comunicacao foi alterada!!</p>
-<b>Seu email de Login: {{ $user['email'] }}</b><br>
-<b>Sua nova senha: {{ $user['password'] }}</b>
-<p>
-    Regards,<br>
-    Sender.
-</p>
+<b>Seu email de Login: {{ $usuario['email'] }}</b><br>
+<b>Sua nova senha: {{ $usuario['password'] }}</b>
+<p>Atenciosamente,</p>
+<p>serviço de notificacao</p>

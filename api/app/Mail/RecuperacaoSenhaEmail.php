@@ -13,19 +13,18 @@ class RecuperacaoSenhaEmail extends Mailable
     use Queueable,
         SerializesModels;
 
-    protected $user;
+    protected $usuario;
 
-    public function __construct($user)
+    public function __construct($usuario)
     {
-        $this->user = $user;
+        $this->usuario = $usuario;
     }
 
     public function build() {
-        return $this->from('amado.silva133@gmail.com')
-            ->subject('Redefinicao de senha')
+        return $this->subject('Redefinicao de senha')
             ->view('recuperar-senha-email')
             ->with([
-                'user' => $this->user,
+                'usuario' => $this->usuario,
             ]);
     }
 }

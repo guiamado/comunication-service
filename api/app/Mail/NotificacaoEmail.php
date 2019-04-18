@@ -13,21 +13,20 @@ class NotificacaoEmail extends Mailable
     use Queueable,
         SerializesModels;
 
-    protected $user;
+    protected $usuario;
     protected $notificacao;
 
-    public function __construct($user, $notificacao)
+    public function __construct($usuario, $notificacao)
     {
-        $this->user = $user;
+        $this->usuario = $usuario;
         $this->notificacao = $notificacao;
     }
 
     public function build() {
-        return $this->from('amado.silva133@gmail.com')
-            ->subject($this->notificacao->titulo)
+        return $this->subject($this->notificacao->titulo)
             ->view('notificacao-email')
             ->with([
-                'user' => $this->user,
+                'usuario' => $this->usuario,
                 'notificacao' => $this->notificacao,
             ]);
     }
