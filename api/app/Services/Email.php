@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Models\Notificacao as ModeloNotificacao;
 use App\Mail\NotificacaoEmail;
 use App\Mail\NovaContaEmail;
 use App\Mail\RecuperacaoSenhaEmail;
@@ -16,7 +17,7 @@ class Email implements IService
         if (is_null($mensagem_id)) {
             throw new \Exception('Identificador de mensagem obrigatório.');
         }
-        $notificacao = DB::table('notificacao.notificacao')->select('*')
+        $notificacao = ModeloNotificacao::select('*')
             ->orderBy('notificacao.notificacao.notificacao_id', 'desc')
             ->take(1)
             ->get();
