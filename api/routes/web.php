@@ -18,8 +18,13 @@ $apiPattern = 'v1';
 $router->group(['prefix' => $apiPattern], function () use ($router) {
 
     $router->post('/autenticacao/login', 'AutenticacaoController@post');
-
     $router->post('/conta', 'ContaController@post');
+    $router->get(
+        '/sistema[/{id}]',
+        [
+            'uses' => 'SistemaController@get'
+        ]
+    );
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/conta[/{id}]', 'ContaController@get');
@@ -67,13 +72,6 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
             ]
         );
 
-        $router->get(
-            '/sistema[/{id}]',
-            [
-                'middleware' => 'isAdmin',
-                'uses' => 'SistemaController@get'
-            ]
-        );
         $router->post(
             '/sistema',
             [

@@ -14,15 +14,10 @@
                         column
                         justify-center>
                         <v-card class="elevation-12">
-                            <v-toolbar
-                                dark
-                                color="primary">
-                                <v-toolbar-title>Cadastrar</v-toolbar-title>
-                            </v-toolbar>
                             <v-card-text>
                                 <v-form
                                     ref="form"
-                                    lazy-validation
+                                    v-model="formularioValido"
                                     @submit.prevent="tratarSubmissao">
                                     <v-text-field
                                         v-validate="'required'"
@@ -52,6 +47,31 @@
                                         class="form-control"
                                         required
                                     />
+                                    <v-flex
+                                        xs12
+                                        sm6
+                                        md12>
+                                        <h3> Sistemas </h3>
+                                        <v-list style="overflow: auto; max-height: 300px">
+                                            <v-list-tile
+                                                v-for="sistema in sistemas"
+                                                :key="sistema.title"
+                                                avatar>
+
+                                                <v-list-tile-content>
+
+                                                    <v-checkbox
+                                                        v-model="user.sistemas"
+                                                        :label="sistema.descricao"
+                                                        :value="sistema"
+                                                        :rules="[rules.required, rules.minLengthCheckBox]"
+                                                        color="success"
+                                                        required/>
+                                                </v-list-tile-content>
+
+                                            </v-list-tile>
+                                        </v-list>
+                                    </v-flex>
                                     <v-card-actions>
                                         <v-spacer/>
                                         <router-link
@@ -59,11 +79,11 @@
                                             class="btn btn-link">Cancel</router-link>
                                         <v-spacer/>
                                         <v-btn
-                                            :disabled="status.registrando"
+                                            :disabled="!formularioValido"
                                             color="primary"
-                                            type="submit"> Cadastrar
+                                            type="submit"
+                                            @click.native="tratarSubmissao"> Cadastrar
                                         </v-btn>
-                                        <img v-show="status.registrando">
                                     </v-card-actions>
                                 </v-form>
                             </v-card-text>
@@ -76,7 +96,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -85,6 +105,8 @@ export default {
                 nome: '',
                 email: '',
                 password: '',
+                sistemas: [],
+                formularioValido: true,
             },
             rules: {
                 required: value => !!value || 'Campo obrigatório.',
@@ -99,11 +121,22 @@ export default {
     },
     computed: {
         ...mapState('account', ['status']),
+        ...mapGetters({
+            sistemas: 'sistema/sistema',
+        }),
+    },
+    mounted() {
+        if (this.sistemas.length == null || this.sistemas.length === 0) {
+            this.obterSistemas();
+        }
     },
     methods: {
-        ...mapActions('account', ['registrar']),
+        ...mapActions({
+            registrar: 'account/registrar',
+            obterSistemas: 'sistema/obterSistemas',
+        }),
         tratarSubmissao() {
-            if (this.$refs.form.validate()) {
+            if (this.$refs.form.validate() && this.user.sistemas.length > 0) {
                 this.registrar(this.user);
             }
         },
