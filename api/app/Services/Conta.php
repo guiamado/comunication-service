@@ -107,8 +107,21 @@ class Conta implements IService
         return ModeloUsuario::where('usuario_id', $id)->update($dados);
     }
 
-    public function recuperarSenha()
+    public function recuperarSenha($dados)
     {
+        $validator = Validator::make($dados, [
+            "password" => 'required|string|min:3|max:50',
+            "email" => 'required|string|min:3|max:50'
+        ]);
+
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors()->first());
+        }
+        if (isset($dados['password']) && !empty($dados['password'])) {
+            $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
+        }
+
+        return ModeloUsuario::where('email', $dados['email'])->update($dados);
 
     }
 

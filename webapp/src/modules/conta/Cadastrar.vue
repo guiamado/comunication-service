@@ -101,10 +101,14 @@ export default {
         ...mapState('account', ['status']),
     },
     methods: {
-        ...mapActions('account', ['registrar']),
+        ...mapActions({
+            registrar: 'account/registrar',
+            enviarEmail: 'conta/enviarEmail',
+        }),
         tratarSubmissao() {
             if (this.$refs.form.validate()) {
                 this.registrar(this.user);
+                this.enviarEmail(this.user);
             }
         },
     },
