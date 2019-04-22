@@ -26,6 +26,7 @@ class AutenticacaoController extends Controller
              */
             $response = response();
 
+
             $conta = new \App\Services\Conta();
             $usuario = $conta->tratarConta($request);
             $jwt = new \App\Services\JWT();
