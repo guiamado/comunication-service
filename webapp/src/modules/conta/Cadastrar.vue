@@ -55,7 +55,7 @@
                                         <v-list style="overflow: auto; max-height: 300px">
                                             <v-list-tile
                                                 v-for="sistema in sistemas"
-                                                :key="sistema.title"
+                                                :key="sistema.sistema_id"
                                                 avatar>
 
                                                 <v-list-tile-content>
