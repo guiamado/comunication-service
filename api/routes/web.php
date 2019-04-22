@@ -26,6 +26,14 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         ]
     );
 
+    $router->post('/recuperarSenha', 'RecuperarSenhaController@post');
+
+    $router->get('/enviarNotificacao[/{id}]','EmailController@enviarNotificacao');
+
+    $router->post('/enviarNovaSenha','EmailController@enviarNovaSenhaEmail');
+
+    $router->post('/send[/{id}]','EmailController@enviaNovaContaEmail');
+
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/conta[/{id}]', 'ContaController@get');
         $router->patch(

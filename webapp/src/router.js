@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import Login from './modules/conta/Login.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
 import RecuperarSenha from './modules/conta/RecuperarSenha.vue';
-import RedefinirSenha from './modules/conta/RedefinirSenha.vue';
 import Chat from './modules/websocket/Chat.vue';
 import Administracao from './modules/core/Administracao.vue';
 import Home from './modules/core/Home.vue';
@@ -34,11 +33,6 @@ const routesObject = [
         path: '/recuperar',
         component: RecuperarSenha,
         name: 'Recuperar Senha',
-    },
-    {
-        path: '/redefinir',
-        component: RedefinirSenha,
-        name: 'Redefinir Senha',
     },
     {
         path: '*',
@@ -129,7 +123,6 @@ router.beforeEach((to, from, next) => {
         '/login',
         '/cadastrar',
         '/recuperar',
-        '/redefinir',
     ];
 
     const authRequired = !publicPages.includes(to.path);

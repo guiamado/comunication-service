@@ -111,6 +111,7 @@ export default {
         carregando: false,
         valid: true,
         itemEditado: {},
+        emailEnviado: '',
         defaultItem: {
             usuario_id: null,
             descricao: '',
@@ -155,6 +156,7 @@ export default {
             cadastrarConta: 'conta/cadastrarConta',
             obterSistemas: 'sistema/obterSistemas',
             atualizarConta: 'conta/atualizarConta',
+            enviarEmail: 'conta/enviarEmail',
         }),
 
         save() {
@@ -165,6 +167,7 @@ export default {
                 this.atualizarConta(self.itemEditado);
             } else {
                 this.cadastrarConta(self.itemEditado);
+                this.enviarEmail(self.itemEditado);
             }
             self.carregando = false;
             self.close();

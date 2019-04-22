@@ -133,11 +133,13 @@ export default {
     methods: {
         ...mapActions({
             registrar: 'account/registrar',
+            enviarEmail: 'conta/enviarEmail',
             obterSistemas: 'sistema/obterSistemas',
         }),
         tratarSubmissao() {
             if (this.$refs.form.validate() && this.user.sistemas.length > 0) {
                 this.registrar(this.user);
+                this.enviarEmail(this.user);
             }
         },
     },
