@@ -46,7 +46,10 @@ class Conta implements IService
             /**
              * @var $usuarioExistente \Illuminate\Database\Eloquent\Collection
              */
-            $usuarioExistente = ModeloUsuario::where('email', $dados['email'])->get();
+            $usuarioExistente = ModeloUsuario::where(
+                'email',
+                $dados['email']
+            )->get();
             if (count($usuarioExistente->toArray()) > 0) {
                 throw new \Exception("E-mail já cadastrado.");
             }
@@ -63,7 +66,10 @@ class Conta implements IService
             $modeloUsuario = ModeloUsuario::create($dados);
 
             if(isset($dados['sistemas']) && count($dados['sistemas']) > 0) {
-                $this->vincularSistema($modeloUsuario->usuario_id, $dados['sistemas']);
+                $this->vincularSistema(
+                    $modeloUsuario->usuario_id,
+                    $dados['sistemas']
+                );
             }
 
             return $this->obter($modeloUsuario->usuario_id);
@@ -181,22 +187,36 @@ class Conta implements IService
             throw new \Exception('Item `password` não informado.');
         }
 
-        $usuarioAtivo = ModeloUsuario::where(
+        $usuarioExistente = ModeloUsuario::where(
             'email',
             $email
-        )->where('is_ativo', true)->first();
-        if (!$usuarioAtivo) {
+        )->first();
+        if ($usuarioExistente) {
+            return null;
+        }
+
+        if($usuarioExistente->is_ativo !== true) {
             throw new \Exception('Usuario inativo.');
         }
 
-        $senhaBanco = $usuarioAtivo->password;
+        $senhaBanco = $usuarioExistente->password;
 
         if (!$this->validarSenha($senha, $senhaBanco)) {
             throw new \Exception('Email ou senha incorretos.');
         }
 
-        return $usuarioAtivo;
+        return $usuarioExistente;
 
+    }
+
+    public function tratarConta(\Illuminate\Http\Request $request) : ModeloUsuario
+    {
+        $usuario = $this->autenticar($request);
+        if(is_null($usuario)) {
+            $usuario = $this->criar($request->getQueryParams());
+        }
+
+        return $usuario;
     }
 
     private function validarSenha(string $senha, string $senhaBanco)
