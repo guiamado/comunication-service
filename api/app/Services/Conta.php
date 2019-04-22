@@ -58,14 +58,14 @@ class Conta implements IService
                 'is_ativo' => true
             ]);
 
-            if(!isset($dados['is_admin'])) {
+            if (!isset($dados['is_admin'])) {
                 $dados['is_admin'] = false;
             }
 
             $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
             $modeloUsuario = ModeloUsuario::create($dados);
 
-            if(isset($dados['sistemas']) && count($dados['sistemas']) > 0) {
+            if (isset($dados['sistemas']) && count($dados['sistemas']) > 0) {
                 $this->vincularSistema(
                     $modeloUsuario->usuario_id,
                     $dados['sistemas']
@@ -158,7 +158,7 @@ class Conta implements IService
     public function desvincularSistemaUsuario($usuario_id)
     {
         $usuario = ModeloUsuario::find($usuario_id);
-        if($usuario) {
+        if ($usuario) {
             return $usuario->sistemas()->detach();
         }
     }
@@ -175,15 +175,15 @@ class Conta implements IService
         }
     }
 
-    public function autenticar(\Illuminate\Http\Request $request) : ModeloUsuario
+    public function autenticar(\Illuminate\Http\Request $request): ?ModeloUsuario
     {
         $email = $request->input('email');
-        if(empty($email)) {
+        if (empty($email)) {
             throw new \Exception('Item `email` não informado.');
         }
 
         $senha = $request->input('password');
-        if(empty($senha)) {
+        if (empty($senha)) {
             throw new \Exception('Item `password` não informado.');
         }
 
@@ -191,11 +191,11 @@ class Conta implements IService
             'email',
             $email
         )->first();
-        if ($usuarioExistente) {
+        if (!$usuarioExistente) {
             return null;
         }
 
-        if($usuarioExistente->is_ativo !== true) {
+        if ($usuarioExistente->is_ativo !== true) {
             throw new \Exception('Usuario inativo.');
         }
 
@@ -209,14 +209,20 @@ class Conta implements IService
 
     }
 
-    public function tratarConta(\Illuminate\Http\Request $request) : ModeloUsuario
+    public function tratarConta(\Illuminate\Http\Request $request): ?ModeloUsuario
     {
-        $usuario = $this->autenticar($request);
-        if(is_null($usuario)) {
-            $usuario = $this->criar($request->getQueryParams());
-        }
+        try {
+            $usuario = $this->autenticar($request);
 
-        return $usuario;
+            if (is_null($usuario)) {
+                $usuario = $this->criar($request->post());
+            }
+
+            return $usuario;
+
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
     }
 
     private function validarSenha(string $senha, string $senhaBanco)
