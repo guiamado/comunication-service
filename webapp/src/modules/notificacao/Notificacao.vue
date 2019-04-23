@@ -18,8 +18,7 @@
                             <v-card-text>
                                 <notificacao-formulario
                                     :item="itemEditado"
-                                    :dialog.sync="dialog"
-                                    :statusEmail.sync="statusEmail"/>
+                                    :dialog.sync="dialog"/>
                             </v-card-text>
 
                             </v-card>
@@ -113,7 +112,6 @@ export default {
     data: () => ({
         carregando: false,
         dialog: false,
-        statusEmail: 0,
         notificacaoLida: true,
         exibirBotaoGravar: true,
         modeloBuscar: '',
@@ -205,10 +203,6 @@ export default {
                     isNotificacaoLida: this.notificacaoLida,
                 };
                 this.obterNotificacoes(params);
-                if (this.statusEmail !== 0) {
-                    this.enviarEmail(this.statusEmail, false);
-                    this.statusEmail = 0;
-                }
             }
         },
         itemEditado() {
@@ -243,7 +237,6 @@ export default {
             obterContas: 'conta/obterContas',
             obterPlataformas: 'plataforma/obterPlataformas',
             removerNotificacao: 'notificacao/removerNotificacao',
-            enviarEmail: 'notificacao/enviarEmail',
         }),
         newItem() {
             this.itemEditado = Object.assign({}, this.defaultItem);

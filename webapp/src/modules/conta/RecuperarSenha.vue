@@ -135,7 +135,6 @@ export default {
             registrar: 'account/registrar',
             obterContas: 'conta/obterContas',
             recuperarSenha: 'conta/recuperarSenha',
-            enviarNovaSenhaEmail: 'conta/enviarNovaSenhaEmail',
         }),
         tratarSubmissao() {
             if (this.$refs.form.validate()) {
@@ -149,8 +148,7 @@ export default {
             };
 
             this.recuperarSenha(params);
-            this.enviarNovaSenhaEmail(params);
-        }
+        },
     },
 };
 </script>
