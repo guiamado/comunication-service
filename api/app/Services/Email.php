@@ -96,22 +96,16 @@ class Email implements IService
         foreach ($usuarios as $key => $usuario) {
             Mail::to($usuario['email'])->send(new NotificacaoEmail($usuario, $vinculados[$key]));
         }
-
-        return 'Email Enviado!!';
     }
 
     public function enviarEmailContaCriada($user)
     {
         Mail::to($user['email'])->send(new NovaContaEmail($user));
-
-        return 'Email Enviado!!';
     }
 
     public function enviarNovaSenha($usuario)
     {
         Mail::to($usuario['email'])->send(new RecuperacaoSenhaEmail($usuario));
-
-        return 'Email Enviado!!';
     }
 
 }

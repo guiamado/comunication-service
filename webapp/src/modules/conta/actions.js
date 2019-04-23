@@ -41,35 +41,11 @@ export const atualizarConta = ({ dispatch, commit }, conta) => requisicaoAutoriz
     });
 });
 
-export const enviarEmail = ({ dispatch, commit }, conta) => {
-    requisicaoAutorizada.post('http://localhost/v1/send', conta).then((response) => {
-        const { data } = response;
-        commit(types.ENVIAR_EMAIL, data.data);
-        dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
-    }).catch((error) => {
-        dispatch('alert/error', error.response.data.error, {
-            root: true,
-        });
-    });
-};
-
 export const recuperarSenha = ({ dispatch, commit }, conta) => {
-    requisicaoAutorizada.post('http://localhost/v1/recuperarSenha', conta).then((response) => {
+    requisicaoAutorizada.post(`http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/recuperarSenha`, conta).then((response) => {
         const { data } = response;
         console.log(data.data);
         dispatch('alert/success', 'Senha alterada com sucesso!', { root: true });
-    }).catch((error) => {
-        dispatch('alert/error', error.response.data.error, {
-            root: true,
-        });
-    });
-};
-
-export const enviarNovaSenhaEmail = ({ dispatch, commit }, conta) => {
-    requisicaoAutorizada.post('http://localhost/v1/enviarNovaSenha', conta).then((response) => {
-        const { data } = response;
-        commit(types.ENVIAR_EMAIL, data.data);
-        dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
     }).catch((error) => {
         dispatch('alert/error', error.response.data.error, {
             root: true,

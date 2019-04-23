@@ -61,11 +61,6 @@ export default {
             default: false,
             required: false,
         },
-        statusEmail: {
-            type: Number,
-            default: 0,
-            required: false,
-        },
     },
     data: () => ({
         mensagensRenderizadas: [],
@@ -135,7 +130,6 @@ export default {
             } else {
                 this.cadastrarNotificacao(self.itemEditado);
                 this.enviarNotificacao(self.itemEditado);
-                this.$emit('update:statusEmail', parseInt(self.itemEditado.mensagem_id, 10));
             }
             this.$emit('update:dialog', false);
         },

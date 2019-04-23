@@ -62,6 +62,9 @@ class Conta implements IService
                 $dados['is_admin'] = false;
             }
 
+            $envioEmail = new \App\Services\Email();
+            $envioEmail->enviarEmailContaCriada($dados);
+
             $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
             $modeloUsuario = ModeloUsuario::create($dados);
 
@@ -123,6 +126,10 @@ class Conta implements IService
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
+
+        $envioEmail = new \App\Services\Email();
+        $envioEmail->enviarNovaSenha($dados);
+
         if (isset($dados['password']) && !empty($dados['password'])) {
             $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
         }
