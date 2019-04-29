@@ -204,11 +204,12 @@
 </template>
 
 <script>
-
 import { mapActions, mapGetters } from 'vuex';
+import WebSocketMixins from '../websocket/_auxiliares/mixins';
 
 export default {
     name: 'NotificacaoBadge',
+    mixins: [WebSocketMixins],
     data() {
         return {
             dialog: false,

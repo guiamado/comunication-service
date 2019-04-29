@@ -38,18 +38,16 @@
 <script>
 
 import { mapGetters } from 'vuex';
-import { tratarConexaoWebsocket } from './_auxiliares/tratar-conexao-websocket';
+import WebSocketMixins from './_auxiliares/mixins';
 
 export default {
     name: 'Chat',
+    mixins: [WebSocketMixins],
     computed: {
         ...mapGetters({
             status: 'account/status',
             isConnected: 'websocket/isConnected',
         }),
-    },
-    mounted() {
-        tratarConexaoWebsocket(this.$store);
     },
 };
 </script>

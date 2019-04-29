@@ -167,9 +167,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import WebSocketMixins from '../websocket/_auxiliares/mixins';
 
 export default {
     name: 'Chat',
+    mixins: [WebSocketMixins],
     data() {
         return {
             isEnviando: false,
