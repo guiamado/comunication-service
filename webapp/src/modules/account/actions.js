@@ -1,5 +1,4 @@
 import axios from 'axios';
-import router from '../../router';
 import * as types from './types';
 import { obterInformacoesJWT } from './_auxiliares/jwt';
 import { requisicaoAutorizada } from './_auxiliares/requisicao-autorizada';
