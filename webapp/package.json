@@ -1,14 +1,20 @@
 {
-  "name": "webapp",
-  "version": "1.0.0",
-  "private": true,
+  "name": "@vinnyfs89/comunication-webapp",
+  "version": "0.0.7",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build-bundle": "vue-cli-service build --target lib --name comunicationWebApp ./src/index.js",
     "lint": "vue-cli-service lint --fix",
     "lint-fix": "vue-cli-service lint --fix --ext .js",
     "test:unit": "vue-cli-service test:unit"
   },
+  "main": "./dist/comunicationWebApp.common.js",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
   "dependencies": {
     "axios": "^0.18.0",
     "config": "^2.0.1",
