@@ -24,7 +24,7 @@ services:
 
   api-service:
     container_name: comunication-api
-    build: .
+    #build: .
     image: culturagovbr/comunication-php-fpm:1.0.1
     working_dir: /application
     volumes:

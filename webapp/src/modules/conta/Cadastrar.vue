@@ -138,7 +138,9 @@ export default {
         }),
         tratarSubmissao() {
             if (this.$refs.form.validate() && this.user.sistemas.length > 0) {
-                this.registrar(this.user);
+                this.registrar(this.user).then(() => {
+                    this.$router.push('/login');
+                });
                 this.enviarEmail(this.user);
             }
         },

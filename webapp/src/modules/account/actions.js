@@ -23,8 +23,6 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
                     const objetoJWT = obterInformacoesJWT();
                     commit(types.DEFINIR_INFORMACOES_CONTA, objetoJWT.user);
-
-                    router.push('/');
                 } else {
                     dispatch('alert/error', 'Falha ao realizar login.', {
                         root: true,
@@ -36,6 +34,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
                 root: true,
             });
         }
+        return response;
     }).catch((error) => {
         if (error.response && error.response.data) {
             commit(types.LOGIN_FALHA, error.response.data.error);
@@ -54,10 +53,10 @@ export const logout = ({ commit }) => {
 export const registrar = ({ dispatch, commit }, user) => {
     commit(types.REGISTRAR_REQUISICAO);
     axios.post(`http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/conta`, JSON.parse(JSON.stringify(user))).then(
-        () => {
+        (response) => {
             commit(types.REGISTRAR_SUCESSO);
             dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
-            router.push('/login');
+            return response;
         },
         (error) => {
             if (error.response && error.response.data) {
