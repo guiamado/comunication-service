@@ -4,6 +4,8 @@ import * as types from './types';
 import { obterInformacoesJWT } from './_auxiliares/jwt';
 import { requisicaoAutorizada } from './_auxiliares/requisicao-autorizada';
 
+export const storeInit = () => {};
+
 export const login = ({ dispatch, commit }, { email, password }) => {
     commit(types.LOGIN_REQUISICAO, { email });
     return requisicaoAutorizada.post(
