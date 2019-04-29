@@ -5,15 +5,15 @@ import Plataforma from './modules/plataforma';
 import Sistema from './modules/sistema';
 import Websocket from './modules/websocket';
 
-function install(Vue, options = {}) {
-    if (!options.store) console.log('Informe uma store.');
+function install(Vue, { store }) {
+    if (!store) console.log('Informe uma store.');
 
-    options.store.registerModule('Account', Account);
-    options.store.registerModule('Mensagem', Mensagem);
-    options.store.registerModule('Notificacao', Notificacao);
-    options.store.registerModule('Plataforma', Plataforma);
-    options.store.registerModule('Sistema', Sistema);
-    options.store.registerModule('Websocket', Websocket);
+    store.registerModule('Account', Account);
+    store.registerModule('Mensagem', Mensagem);
+    store.registerModule('Notificacao', Notificacao);
+    store.registerModule('Plataforma', Plataforma);
+    store.registerModule('Sistema', Sistema);
+    store.registerModule('Websocket', Websocket);
 }
 
 export default {
