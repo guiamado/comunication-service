@@ -1,6 +1,8 @@
 import * as types from './types';
 import { requisicaoAutorizada } from '../account/_auxiliares/requisicao-autorizada';
 
+export const storeInit = () => {};
+
 export const obterSistemas = ({ dispatch, commit }) => {
     requisicaoAutorizada.get(`http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/sistema`).then((response) => {
         const { data } = response.data;

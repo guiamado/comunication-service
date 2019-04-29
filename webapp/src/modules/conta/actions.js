@@ -2,6 +2,8 @@ import axios from 'axios';
 import * as types from './types';
 import { requisicaoAutorizada } from '../account/_auxiliares/requisicao-autorizada';
 
+export const storeInit = () => {};
+
 export const obterContas = ({ dispatch, commit }) => {
     requisicaoAutorizada.get(`http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/conta`).then((response) => {
         const { data } = response;
