@@ -1,19 +1,20 @@
-import Account from './modules/account';
-import Mensagem from './modules/mensagem';
-import Notificacao from './modules/notificacao';
-import Plataforma from './modules/plataforma';
-import Sistema from './modules/sistema';
-import Websocket from './modules/websocket';
+import account from './modules/account';
+import mensagem from './modules/mensagem';
+import notificacao from './modules/notificacao';
+import plataforma from './modules/plataforma';
+import sistema from './modules/sistema';
+import websocket from './modules/websocket';
 
 function install(Vue, { store }) {
     if (!store) console.log('Informe uma store.');
 
-    store.registerModule('Account', Account);
-    store.registerModule('Mensagem', Mensagem);
-    store.registerModule('Notificacao', Notificacao);
-    store.registerModule('Plataforma', Plataforma);
-    store.registerModule('Sistema', Sistema);
-    store.registerModule('Websocket', Websocket);
+
+    store.registerModule('account', account);
+    store.registerModule('mensagem', mensagem);
+    store.registerModule('notificacao', notificacao);
+    store.registerModule('plataforma', plataforma);
+    store.registerModule('sistema', sistema);
+    store.registerModule('websocket', websocket);
 }
 
 export default {
