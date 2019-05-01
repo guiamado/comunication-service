@@ -207,12 +207,6 @@ export default {
             return membrosSalaAtual.length > 0;
         },
     },
-    watch: {
-        informacoesConta() {
-            this.sistemas = [];
-            this.sistemas.push(this.informacoesConta.sistemas);
-        },
-    },
     mounted() {
         this.sistemas = this.informacoesConta.sistemas;
     },
