@@ -50,7 +50,7 @@
                                             slot="activator"
                                             flat
                                             icon
-                                            @click="showItem(minhaNotificacao)"
+                                            @click="exibirItem(minhaNotificacao)"
                                         >
                                             <v-icon>visibility</v-icon>
                                         </v-btn>
@@ -117,7 +117,7 @@
                     <v-spacer/>
                     <v-btn
                         color="error"
-                        @click.native="closeBadgeDialog">Fechar</v-btn>
+                        @click.native="fecharDialogoSininho">Fechar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -253,7 +253,7 @@ export default {
     },
     watch: {
         dialog(val) {
-            return val || this.closeBadgeDialog();
+            return val || this.fecharDialogoSininho();
         },
     },
     mounted() {
@@ -271,7 +271,7 @@ export default {
             obterNotificacoes: 'notificacao/obterNotificacoes',
             lerNotificacao: 'notificacao/lerNotificacao',
         }),
-        closeBadgeDialog() {
+        fecharDialogoSininho() {
             const self = this;
             self.dialog = false;
             setTimeout(() => {
@@ -279,7 +279,7 @@ export default {
                 self.indiceEditado = -1;
             }, 300);
         },
-        showItem(item) {
+        exibirItem(item) {
             this.notificacao = item;
             this.dialogNotificacao = true;
             this.lerNotificacao(item);

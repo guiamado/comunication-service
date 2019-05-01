@@ -15,11 +15,11 @@
                                 <v-card-title light>
                                     <span class="headline">{{ formTitle }} Notificação</span>
                                 </v-card-title>
-                            <v-card-text>
-                                <notificacao-formulario
-                                    :item="itemEditado"
-                                    :dialog.sync="dialog"/>
-                            </v-card-text>
+                                <v-card-text>
+                                    <notificacao-formulario
+                                        :item="itemEditado"
+                                        :dialog.sync="dialog"/>
+                                </v-card-text>
 
                             </v-card>
 
