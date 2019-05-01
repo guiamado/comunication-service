@@ -212,15 +212,15 @@ export default {
     },
     methods: {
         ...mapActions({
-            entrarEmSala: 'websocket/Socket_serverEntrarEmSala',
-            mensagemSala: 'websocket/Socket_serverMensagemSala',
+            entrarEmSalaWebsocket: 'websocket/Socket_serverEntrarEmSala',
+            mensagemSalaWebsocket: 'websocket/Socket_serverMensagemSala',
             definirNomeSalaAtual: 'websocket/definirNomeSalaAtual',
         }),
 
         entrarEmSala() {
             const self = this;
 
-            this.entrarEmSala({
+            this.entrarEmSalaWebsocket({
                 sala: self.sistema.sistema_id,
             });
             this.definirNomeSalaAtual({
@@ -231,7 +231,7 @@ export default {
         enviarMensagem(evento) {
             const self = this;
 
-            this.mensagemSala({
+            this.mensagemSalaWebsocket({
                 sala: self.sistema.sistema_id,
                 mensagem: self.mensagem,
             });
