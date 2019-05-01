@@ -6,7 +6,6 @@ export default {
         state.token = token;
     },
     [types.LOGIN_SUCESSO](state, token) {
-        localStorage.setItem('token', token);
         state.status = { loggedIn: true };
         state.token = token;
     },

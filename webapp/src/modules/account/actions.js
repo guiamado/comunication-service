@@ -5,23 +5,26 @@ import { requisicaoAutorizada } from './_auxiliares/requisicao-autorizada';
 
 export const storeInit = () => {};
 
-export const login = ({ dispatch, commit }, { email, password }) => {
+export const login = ({ dispatch, commit }, {
+    email, password, nome, sistema,
+}) => {
     commit(types.LOGIN_REQUISICAO, { email });
     return requisicaoAutorizada.post(
         `http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/autenticacao/login`,
-        { email, password },
+        {
+            email, password, nome, sistema,
+        },
     ).then((response) => {
         try {
             if (response.data && response.data.data) {
                 const { data } = response.data;
                 if (data && data.token) {
                     commit(types.LOGIN_SUCESSO, data.token);
+                    localStorage.setItem('token', data.token);
                     dispatch('alert/info', 'Login realizado com sucesso!', {
                         root: true,
                     });
-
-                    const objetoJWT = obterInformacoesJWT();
-                    commit(types.DEFINIR_INFORMACOES_CONTA, objetoJWT.user);
+                    dispatch('definirInformacoesConta', data.token);
                 } else {
                     dispatch('alert/error', 'Falha ao realizar login.', {
                         root: true,
@@ -42,6 +45,11 @@ export const login = ({ dispatch, commit }, { email, password }) => {
             });
         }
     });
+};
+
+export const definirInformacoesConta = ({ commit }, token) => {
+    const objetoJWT = obterInformacoesJWT(token);
+    commit(types.DEFINIR_INFORMACOES_CONTA, objetoJWT.user);
 };
 
 export const logout = ({ commit }) => {
