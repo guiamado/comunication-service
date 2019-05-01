@@ -102,7 +102,7 @@ export default {
                 const { email, password } = this;
                 if (email && password) {
                     this.login({ email, password }).then((response) => {
-                        if (response.data && response.data.data && response.data.data.token) {
+                        if (response != null && response.data && response.data.data && response.data.data.token) {
                             this.$router.push('/');
                         }
                     });
