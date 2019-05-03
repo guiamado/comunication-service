@@ -19,12 +19,12 @@ function install(Vue, { store }) {
     Vue.component('comunication-service-status', ComunicationServiceStatus);
     Vue.component('comunication-service-notificacao-badge', ComunicationServiceNotificacaoBadge);
 
-    store.registerModule(comunicationAccount);
-    store.registerModule(comunicationMensagem);
-    store.registerModule(comunicationNotificacao);
-    store.registerModule(comunicationPlataforma);
-    store.registerModule(comunicationSistema);
-    store.registerModule(comunicationWebsocket);
+    store.registerModule('comunicationAccount', comunicationAccount);
+    store.registerModule('comunicationMensagem', comunicationMensagem);
+    store.registerModule('comunicationNotificacao', comunicationNotificacao);
+    store.registerModule('comunicationPlataforma', comunicationPlataforma);
+    store.registerModule('comunicationSistema', comunicationSistema);
+    store.registerModule('comunicationWebsocket', comunicationWebsocket);
 }
 
 // Cria a definição do módulo para Vue.use()
