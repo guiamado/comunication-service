@@ -58,7 +58,7 @@ export default {
 
     computed: {
         ...mapGetters({
-            informacoesConta: 'account/informacoesConta',
+            informacoesConta: 'comunicationAccount/informacoesConta',
         }),
     },
 

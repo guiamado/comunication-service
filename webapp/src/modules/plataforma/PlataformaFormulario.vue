@@ -79,8 +79,8 @@ export default {
     methods: {
 
         ...mapActions({
-            cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
-            atualizarPlataforma: 'plataforma/atualizarPlataforma',
+            cadastrarPlataforma: 'comunicationPlataforma/cadastrarPlataforma',
+            atualizarPlataforma: 'comunicationPlataforma/atualizarPlataforma',
         }),
 
         save() {

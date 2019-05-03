@@ -175,10 +175,10 @@ export default {
             return this.itemEditado.notificacao_id === null ? 'Criar' : 'Editar';
         },
         ...mapGetters({
-            notificacoes: 'notificacao/notificacoes',
-            contas: 'conta/conta',
-            plataformas: 'plataforma/plataforma',
-            informacoesConta: 'account/informacoesConta',
+            notificacoes: 'comunicationNotificacao/notificacoes',
+            contas: 'comunicationConta/conta',
+            plataformas: 'comunicationPlataforma/plataforma',
+            informacoesConta: 'comunicationAccount/informacoesConta',
         }),
     },
     watch: {
@@ -233,10 +233,10 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterNotificacoes: 'notificacao/obterNotificacoes',
-            obterContas: 'conta/obterContas',
-            obterPlataformas: 'plataforma/obterPlataformas',
-            removerNotificacao: 'notificacao/removerNotificacao',
+            obterNotificacoes: 'comunicationNotificacao/obterNotificacoes',
+            obterContas: 'comunicationConta/obterContas',
+            obterPlataformas: 'comunicationPlataforma/obterPlataformas',
+            removerNotificacao: 'comunicationNotificacao/removerNotificacao',
         }),
         newItem() {
             this.itemEditado = Object.assign({}, this.defaultItem);

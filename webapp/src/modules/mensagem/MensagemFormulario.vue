@@ -122,10 +122,10 @@ export default {
     }),
     computed: {
         ...mapGetters({
-            sistemas: 'sistema/sistema',
-            contas: 'conta/conta',
-            plataformas: 'plataforma/plataforma',
-            informacoesConta: 'account/informacoesConta',
+            sistemas: 'comunicationSistema/sistema',
+            contas: 'comunicationConta/conta',
+            plataformas: 'comunicationPlataforma/plataforma',
+            informacoesConta: 'comunicationAccount/informacoesConta',
         }),
     },
     watch: {
@@ -162,12 +162,12 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterSistemas: 'sistema/obterSistemas',
-            obterContas: 'conta/obterContas',
-            obterPlataformas: 'plataforma/obterPlataformas',
-            removerMensagem: 'mensagem/removerMensagem',
-            cadastrarMensagem: 'mensagem/cadastrarMensagem',
-            atualizarMensagem: 'mensagem/atualizarMensagem',
+            obterSistemas: 'comunicationSistema/obterSistemas',
+            obterContas: 'comunicationConta/obterContas',
+            obterPlataformas: 'comunicationPlataforma/obterPlataformas',
+            removerMensagem: 'comunicationMensagem/removerMensagem',
+            cadastrarMensagem: 'comunicationMensagem/cadastrarMensagem',
+            atualizarMensagem: 'comunicationMensagem/atualizarMensagem',
         }),
         save() {
             const self = this;

@@ -252,8 +252,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            notificacoesBadge: 'notificacao/notificacoesBadge',
-            informacoesConta: 'account/informacoesConta',
+            notificacoesBadge: 'comunicationNotificacao/notificacoesBadge',
+            informacoesConta: 'comunicationAccount/informacoesConta',
         }),
     },
     mounted() {
@@ -268,8 +268,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterNotificacoes: 'notificacao/obterNotificacoes',
-            lerNotificacao: 'notificacao/lerNotificacao',
+            obterNotificacoes: 'comunicationNotificacao/obterNotificacoes',
+            lerNotificacao: 'comunicationNotificacao/lerNotificacao',
         }),
         fecharDialogoSininho() {
             const self = this;
