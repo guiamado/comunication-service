@@ -23,7 +23,7 @@ export function obterCabecalhoComToken(token) {
     if (finalToken == null) {
         finalToken = localStorage.getItem('token');
     }
-    if (token) {
+    if (finalToken) {
         return {
             headers: {
                 Authorization: `Bearer ${finalToken}`,
