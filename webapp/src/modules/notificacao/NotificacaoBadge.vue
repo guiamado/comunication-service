@@ -210,20 +210,6 @@ import WebSocketMixins from '../websocket/_auxiliares/mixins';
 export default {
     name: 'NotificacaoBadge',
     mixins: [WebSocketMixins],
-    props: {
-        nome: {
-            type: String,
-            default: '',
-        },
-        email: {
-            type: String,
-            default: '',
-        },
-        sistema: {
-            type: String,
-            default: '',
-        },
-    },
     data() {
         return {
             dialog: false,
@@ -269,20 +255,6 @@ export default {
             notificacoesBadge: 'notificacao/notificacoesBadge',
             informacoesConta: 'account/informacoesConta',
         }),
-    },
-    watch: {
-        dialog(valor) {
-            return valor || this.fecharDialogoSininho();
-        },
-        nome(valor) {
-            this.usuario.nome = valor;
-        },
-        email(valor) {
-            this.usuario.email = valor;
-        },
-        sistema(valor) {
-            this.usuario.sistema = valor;
-        },
     },
     mounted() {
         if (this.notificacoesBadge == null || this.notificacoesBadge.length === 0) {
