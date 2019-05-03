@@ -210,6 +210,12 @@ import WebSocketMixins from '../websocket/_auxiliares/mixins';
 export default {
     name: 'NotificacaoBadge',
     mixins: [WebSocketMixins],
+    props: {
+        token: {
+            type: String,
+            default: localStorage.getItem('token'),
+        },
+    },
     data() {
         return {
             dialog: false,
@@ -256,7 +262,16 @@ export default {
             informacoesConta: 'comunicationAccount/informacoesConta',
         }),
     },
+    watch: {
+        token(valor) {
+            localStorage.setItem('token', valor);
+        },
+    },
     mounted() {
+        if (this.informacoesConta == null || this.informacoesConta.email == null) {
+            this.definirInformacoesConta(this.token);
+        }
+
         if (this.notificacoesBadge == null || this.notificacoesBadge.length === 0) {
             const params = {
                 usuarioId: this.informacoesConta.user_id,
@@ -270,6 +285,7 @@ export default {
         ...mapActions({
             obterNotificacoes: 'comunicationNotificacao/obterNotificacoes',
             lerNotificacao: 'comunicationNotificacao/lerNotificacao',
+            definirInformacoesConta: 'comunicationAccount/definirInformacoesConta',
         }),
         fecharDialogoSininho() {
             const self = this;
