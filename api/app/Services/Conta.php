@@ -220,9 +220,12 @@ class Conta implements IService
     {
         try {
             $usuario = $this->autenticar($request);
-
+            $post = $request->post();
             if (is_null($usuario)) {
-                $usuario = $this->criar($request->post());
+                if (!isset($post['nome'])) {
+                    throw new \Exception('Usuario inexistente.');
+                }
+                $usuario = $this->criar($post);
             }
 
             return $usuario;
