@@ -1,9 +1,9 @@
-import account from './modules/account';
-import mensagem from './modules/mensagem';
-import notificacao from './modules/notificacao';
-import plataforma from './modules/plataforma';
-import sistema from './modules/sistema';
-import websocket from './modules/websocket';
+import comunicationAccount from './modules/account';
+import comunicationMensagem from './modules/mensagem';
+import comunicationNotificacao from './modules/notificacao';
+import comunicationPlataforma from './modules/plataforma';
+import comunicationSistema from './modules/sistema';
+import comunicationWebsocket from './modules/websocket';
 
 import ComunicationServiceChat from './modules/websocket/Chat.vue';
 import ComunicationServiceStatus from './modules/websocket/Status.vue';
@@ -19,12 +19,12 @@ function install(Vue, { store }) {
     Vue.component('comunication-service-status', ComunicationServiceStatus);
     Vue.component('comunication-service-notificacao-badge', ComunicationServiceNotificacaoBadge);
 
-    store.registerModule('comunication-service-account', account);
-    store.registerModule('comunication-service-mensagem', mensagem);
-    store.registerModule('comunication-service-notificacao', notificacao);
-    store.registerModule('comunication-service-plataforma', plataforma);
-    store.registerModule('comunication-service-sistema', sistema);
-    store.registerModule('comunication-service-websocket', websocket);
+    store.registerModule(comunicationAccount);
+    store.registerModule(comunicationMensagem);
+    store.registerModule(comunicationNotificacao);
+    store.registerModule(comunicationPlataforma);
+    store.registerModule(comunicationSistema);
+    store.registerModule(comunicationWebsocket);
 }
 
 // Cria a definição do módulo para Vue.use()

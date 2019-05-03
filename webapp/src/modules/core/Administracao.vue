@@ -64,7 +64,7 @@ export default {
 
     mounted() {
         if (this.informacoesConta.is_admin !== true) {
-            this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+            this.$store.dispatch('comunicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
             this.$router.push('/');
         }
     },

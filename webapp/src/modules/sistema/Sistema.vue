@@ -156,7 +156,7 @@ export default {
             return this.indiceEditado === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
-            sistemas: 'sistema/sistema',
+            sistemas: 'comunicationSistema/sistema',
         }),
     },
 
@@ -178,10 +178,10 @@ export default {
     methods: {
 
         ...mapActions({
-            obterSistemas: 'sistema/obterSistemas',
-            removerSistema: 'sistema/removerSistema',
-            cadastrarSistema: 'sistema/cadastrarSistema',
-            atualizarSistema: 'sistema/atualizarSistema',
+            obterSistemas: 'comunicationSistema/obterSistemas',
+            removerSistema: 'comunicationSistema/removerSistema',
+            cadastrarSistema: 'comunicationSistema/cadastrarSistema',
+            atualizarSistema: 'comunicationSistema/atualizarSistema',
         }),
 
         editItem(item) {

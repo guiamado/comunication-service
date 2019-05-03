@@ -66,9 +66,9 @@ export default {
     computed: {
 
         ...mapGetters({
-            status: 'account/status',
-            user: 'account/user',
-            isConnected: 'websocket/isConnected',
+            status: 'comunicationAccount/status',
+            user: 'comunicationAccount/user',
+            isConnected: 'comunicationWebsocket/isConnected',
         }),
     },
     mounted() {

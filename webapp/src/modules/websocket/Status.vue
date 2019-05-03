@@ -45,8 +45,8 @@ export default {
     mixins: [WebSocketMixins],
     computed: {
         ...mapGetters({
-            status: 'account/status',
-            isConnected: 'websocket/isConnected',
+            status: 'comunicationAccount/status',
+            isConnected: 'comunicationWebsocket/isConnected',
         }),
     },
 };

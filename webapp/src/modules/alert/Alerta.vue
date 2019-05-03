@@ -33,10 +33,10 @@ export default {
     }),
     computed: {
         ...mapGetters({
-            mensagem: 'alert/mensagem',
-            tipoMensagem: 'alert/tipoMensagem',
-            tempoDeDuracao: 'alert/tempoDeDuracao',
-            snackbar: 'alert/snackbar',
+            mensagem: 'comunicationAlert/mensagem',
+            tipoMensagem: 'comunicationAlert/tipoMensagem',
+            tempoDeDuracao: 'comunicationAlert/tempoDeDuracao',
+            snackbar: 'comunicationAlert/snackbar',
         }),
     },
     watch: {
@@ -51,7 +51,7 @@ export default {
     },
     methods: {
         ...mapActions({
-            limpar: 'alert/limpar',
+            limpar: 'comunicationAlert/limpar',
         }),
     },
 };

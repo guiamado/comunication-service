@@ -252,7 +252,7 @@ export default {
                 return false;
             }
             if (this.informacoesConta.is_admin !== true) {
-                this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                this.$store.dispatch('comunicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
                 return false;
             }
             return this.removerNotificacao(item.notificacao_id);

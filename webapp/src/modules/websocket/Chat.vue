@@ -167,7 +167,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import WebSocketMixins from '../websocket/_auxiliares/mixins';
+import WebSocketMixins from './_auxiliares/mixins';
 
 export default {
     name: 'Chat',
@@ -185,10 +185,10 @@ export default {
 
     computed: {
         ...mapGetters({
-            nomeSalaAtual: 'websocket/nomeSalaAtual',
-            salas: 'websocket/salas',
-            indiceSalaAtual: 'websocket/indiceSalaAtual',
-            informacoesConta: 'account/informacoesConta',
+            nomeSalaAtual: 'comunicationWebsocket/nomeSalaAtual',
+            salas: 'comunicationWebsocket/salas',
+            indiceSalaAtual: 'comunicationWebsocket/indiceSalaAtual',
+            informacoesConta: 'comunicationAccount/informacoesConta',
         }),
 
         hasMembrosNaSalaAtual() {
@@ -212,9 +212,9 @@ export default {
     },
     methods: {
         ...mapActions({
-            entrarEmSalaWebsocket: 'websocket/Socket_serverEntrarEmSala',
-            mensagemSalaWebsocket: 'websocket/Socket_serverMensagemSala',
-            definirNomeSalaAtual: 'websocket/definirNomeSalaAtual',
+            entrarEmSalaWebsocket: 'comunicationWebsocket/Socket_serverEntrarEmSala',
+            mensagemSalaWebsocket: 'comunicationWebsocket/Socket_serverMensagemSala',
+            definirNomeSalaAtual: 'comunicationWebsocket/definirNomeSalaAtual',
         }),
 
         entrarEmSala() {
