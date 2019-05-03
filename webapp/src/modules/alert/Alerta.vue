@@ -2,7 +2,7 @@
     <div
         v-if="mensagem != null && tipoMensagem != null">
         <v-snackbar
-            v-model="snackbar"
+            v-model="situacaoSnackbar"
             :value="true"
             :top="top"
             :timeout="tempoDeDuracao"
@@ -20,6 +20,7 @@
             </v-btn>
         </v-snackbar>
     </div>
+
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
@@ -28,6 +29,7 @@ export default {
     name: 'Alerta',
     data: () => ({
         top: false,
+        situacaoSnackbar: false,
     }),
     computed: {
         ...mapGetters({
@@ -36,6 +38,16 @@ export default {
             tempoDeDuracao: 'alert/tempoDeDuracao',
             snackbar: 'alert/snackbar',
         }),
+    },
+    watch: {
+        snackbar(valor) {
+            this.situacaoSnackbar = valor;
+        },
+        situacaoSnackbar(valor) {
+            if (valor === false) {
+                this.limpar();
+            }
+        },
     },
     methods: {
         ...mapActions({
