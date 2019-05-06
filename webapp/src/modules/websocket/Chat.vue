@@ -173,7 +173,7 @@ export default {
     name: 'Chat',
     mixins: [WebSocketMixins],
     props: {
-        token: {
+        communicationToken: {
             type: String,
             default: localStorage.getItem('communication_token'),
         },
@@ -214,13 +214,13 @@ export default {
         },
     },
     watch: {
-        token(valor) {
+        communicationToken(valor) {
             localStorage.setItem('communication_token', valor);
         },
     },
     mounted() {
         if (this.informacoesConta == null || this.informacoesConta.email == null) {
-            this.definirInformacoesConta(this.token);
+            this.definirInformacoesConta(this.communicationToken);
         }
 
         this.sistemas = this.informacoesConta.sistemas;
