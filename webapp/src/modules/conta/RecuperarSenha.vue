@@ -82,13 +82,17 @@
                                         to="/login"
                                         class="btn btn-link">Cancelar</router-link>
                                     <v-spacer/>
-                                    <v-btn
-                                        v-if="user.novaSenha === user.confirmarSenha && valid === true"
-                                        :disabled="!valid"
-                                        color="primary"
-                                        type="submit"
-                                        @click.native="alterarSenha">Enviar
-                                    </v-btn>
+                                    <router-link
+                                            to="/login"
+                                            class="btn btn-link">
+                                        <v-btn
+                                            v-if="user.novaSenha === user.confirmarSenha && valid === true"
+                                            :disabled="!valid"
+                                            color="primary"
+                                            type="submit"
+                                            @click.native="alterarSenha">Enviar
+                                        </v-btn>
+                                    </router-link>
                                     <img v-show="status.registrando">
                                 </v-card-actions>
                             </v-form>

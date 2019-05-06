@@ -12,6 +12,7 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
         ]
     );
 }]);
+$router->get('/enviarEmail', 'EmailController@enviarEmail');
 
 define('API_VERSION', '1.0');
 $apiPattern = 'v1';
