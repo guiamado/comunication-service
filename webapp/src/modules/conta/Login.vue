@@ -38,24 +38,36 @@
                                         required />
 
                                     <v-card-actions>
-                                        <!--<v-btn @click="clear">Limpar</v-btn>-->
-                                        <!--<v-spacer></v-spacer>-->
+                                        <v-layout
+                                            justify-center
+                                            column
+                                            fill-height>
 
-                                        <v-btn
-                                            :disabled="!valid"
-                                            color="primary"
-                                            type="submit"> Entrar
-                                        </v-btn>
-                                        <router-link
-                                            to="/cadastrar"
-                                            class="btn btn-link"
-                                            style="margin-left: 20px"
-                                        >Cadastre-se</router-link>
-                                        <router-link
-                                            to="/recuperar"
-                                            class="btn btn-link"
-                                            style="margin-left: 20px"
-                                        >Esqueci minha senha</router-link>
+                                            <div class="text-xs-right btn-link mta-2">
+                                                <v-btn
+                                                    to="/recuperar"
+                                                    flat
+                                                    class="caption"
+                                                    small
+                                                    color="primary">Recuperar senha</v-btn>
+                                            </div>
+
+                                            <v-btn
+                                                :disabled="!valid"
+                                                color="primary"
+                                                block
+                                                type="submit"> Entrar
+                                            </v-btn>
+                                            <v-divider class="mt-3 mb-3" />
+                                            <v-btn
+                                                flat
+                                                large
+                                                color="primary"
+                                                to="/cadastrar"
+                                                class="text-xs-center btn btn-link caption">Cadastre-se</v-btn>
+
+
+                                        </v-layout>
 
                                     </v-card-actions>
                                 </v-form>
