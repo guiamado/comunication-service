@@ -43,7 +43,7 @@
                                             column
                                             fill-height>
 
-                                            <div class="text-xs-right btn-link mta-2">
+                                            <div class="text-xs-right btn-link mta-3">
                                                 <v-btn
                                                     to="/recuperar"
                                                     flat
@@ -58,13 +58,19 @@
                                                 block
                                                 type="submit"> Entrar
                                             </v-btn>
-                                            <v-divider class="mt-3 mb-3" />
-                                            <v-btn
-                                                flat
-                                                large
-                                                color="primary"
-                                                to="/cadastrar"
-                                                class="text-xs-center btn btn-link caption">Cadastre-se</v-btn>
+                                            <v-divider class="mt-2 mb-2" />
+                                            <v-tooltip
+                                                bottom
+                                                class="text-xs-center btn btn-link">
+                                                <v-btn
+                                                    slot="activator"
+                                                    flat
+                                                    large
+                                                    color="warning"
+                                                    to="/cadastrar"
+                                                >Cadastre-se</v-btn>
+                                                <span>Ir para a tela de cadastro</span>
+                                            </v-tooltip>
 
 
                                         </v-layout>
