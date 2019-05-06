@@ -162,8 +162,8 @@ export default {
             return this.indiceEditado === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
-            contas: 'conta/conta',
-            informacoesConta: 'account/informacoesConta',
+            contas: 'communicationConta/conta',
+            informacoesConta: 'communicationAccount/informacoesConta',
         }),
     },
 
@@ -183,8 +183,8 @@ export default {
     methods: {
 
         ...mapActions({
-            obterContas: 'conta/obterContas',
-            removerConta: 'conta/removerConta',
+            obterContas: 'communicationConta/obterContas',
+            removerConta: 'communicationConta/removerConta',
         }),
 
         editItem(item) {

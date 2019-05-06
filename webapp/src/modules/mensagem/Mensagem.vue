@@ -175,11 +175,11 @@ export default {
             return this.indiceEditado === -1 ? 'Criar' : '';
         },
         ...mapGetters({
-            mensagens: 'mensagem/mensagens',
-            sistemas: 'sistema/sistema',
-            contas: 'conta/conta',
-            plataformas: 'plataforma/plataforma',
-            informacoesConta: 'account/informacoesConta',
+            mensagens: 'communicationMensagem/mensagens',
+            sistemas: 'communicationSistema/sistema',
+            contas: 'communicationConta/conta',
+            plataformas: 'communicationPlataforma/plataforma',
+            informacoesConta: 'communicationAccount/informacoesConta',
         }),
     },
     watch: {
