@@ -1,3 +1,4 @@
+import VueSocketIO from 'vue-socket.io';
 import comunicationAccount from './modules/account';
 import comunicationMensagem from './modules/mensagem';
 import comunicationNotificacao from './modules/notificacao';
@@ -9,6 +10,7 @@ import ComunicationServiceChat from './modules/websocket/Chat.vue';
 import ComunicationServiceStatus from './modules/websocket/Status.vue';
 import ComunicationServiceNotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
 import filters from './filters';
+import $socket from './modules/websocket/_auxiliares/socket-client-instance';
 
 function install(Vue, { store }) {
     if (install.installed) return;
@@ -28,6 +30,16 @@ function install(Vue, { store }) {
     store.registerModule('comunicationWebsocket', comunicationWebsocket);
 
     filters.create(Vue);
+
+    Vue.use(new VueSocketIO({
+        debug: false,
+        connection: $socket,
+        vuex: {
+            store,
+            actionPrefix: 'Socket_',
+            mutationPrefix: 'Socket_',
+        },
+    }));
 }
 
 // Cria a definição do módulo para Vue.use()
