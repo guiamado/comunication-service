@@ -8,6 +8,7 @@ import comunicationWebsocket from './modules/websocket';
 import ComunicationServiceChat from './modules/websocket/Chat.vue';
 import ComunicationServiceStatus from './modules/websocket/Status.vue';
 import ComunicationServiceNotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
+import filters from './filters';
 
 function install(Vue, { store }) {
     if (install.installed) return;
@@ -25,6 +26,8 @@ function install(Vue, { store }) {
     store.registerModule('comunicationPlataforma', comunicationPlataforma);
     store.registerModule('comunicationSistema', comunicationSistema);
     store.registerModule('comunicationWebsocket', comunicationWebsocket);
+
+    filters.create(Vue);
 }
 
 // Cria a definição do módulo para Vue.use()
