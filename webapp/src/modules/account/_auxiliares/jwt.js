@@ -9,7 +9,7 @@ export function obterInformacoesJWT(token) {
 
         let finalToken = token;
         if (finalToken == null) {
-            finalToken = localStorage.getItem('token');
+            finalToken = localStorage.getItem('communication_token');
         }
         return finalToken != null ? jsonwebtoken.verify(finalToken, process.env.VUE_APP_JWT_SECRET) : '';
     } catch (Exception) {
@@ -21,7 +21,7 @@ export function obterInformacoesJWT(token) {
 export function obterCabecalhoComToken(token) {
     let finalToken = token;
     if (finalToken == null) {
-        finalToken = localStorage.getItem('token');
+        finalToken = localStorage.getItem('communication_token');
     }
     if (finalToken) {
         return {

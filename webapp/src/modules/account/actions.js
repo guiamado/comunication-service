@@ -20,7 +20,7 @@ export const login = ({ dispatch, commit }, {
                 const { data } = response.data;
                 if (data && data.token) {
                     commit(types.LOGIN_SUCESSO, data.token);
-                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('communication_token', data.token);
                     dispatch('comunicationAlert/info', 'Login realizado com sucesso!', {
                         root: true,
                     });

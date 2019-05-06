@@ -175,7 +175,7 @@ export default {
     props: {
         token: {
             type: String,
-            default: localStorage.getItem('token'),
+            default: localStorage.getItem('communication_token'),
         },
     },
     data() {
@@ -215,7 +215,7 @@ export default {
     },
     watch: {
         token(valor) {
-            localStorage.setItem('token', valor);
+            localStorage.setItem('communication_token', valor);
         },
     },
     mounted() {

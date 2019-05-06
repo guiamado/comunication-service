@@ -115,7 +115,7 @@ router.beforeEach((to, from, next) => {
     ];
 
     const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('token');
+    const loggedIn = localStorage.getItem('communication_token');
 
     if (to.path === '/logout') {
         store.dispatch('comunicationAlert/info', 'Logout realizado com sucesso.', { root: true });
