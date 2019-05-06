@@ -85,8 +85,8 @@ export default {
     methods: {
 
         ...mapActions({
-            cadastrarSistema: 'comunicationSistema/cadastrarSistema',
-            atualizarSistema: 'comunicationSistema/atualizarSistema',
+            cadastrarSistema: 'communicationSistema/cadastrarSistema',
+            atualizarSistema: 'communicationSistema/atualizarSistema',
         }),
 
         save() {

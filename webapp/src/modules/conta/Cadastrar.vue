@@ -120,9 +120,9 @@ export default {
         };
     },
     computed: {
-        ...mapState('comunicationAccount', ['status']),
+        ...mapState('communicationAccount', ['status']),
         ...mapGetters({
-            sistemas: 'comunicationSistema/sistema',
+            sistemas: 'communicationSistema/sistema',
         }),
     },
     mounted() {
@@ -132,9 +132,9 @@ export default {
     },
     methods: {
         ...mapActions({
-            registrar: 'comunicationAccount/registrar',
-            enviarEmail: 'comunicationConta/enviarEmail',
-            obterSistemas: 'comunicationSistema/obterSistemas',
+            registrar: 'communicationAccount/registrar',
+            enviarEmail: 'communicationConta/enviarEmail',
+            obterSistemas: 'communicationSistema/obterSistemas',
         }),
         tratarSubmissao() {
             if (this.$refs.form.validate() && this.user.sistemas.length > 0) {

@@ -122,10 +122,10 @@ export default {
     }),
     computed: {
         ...mapGetters({
-            sistemas: 'comunicationSistema/sistema',
-            contas: 'comunicationConta/conta',
-            plataformas: 'comunicationPlataforma/plataforma',
-            informacoesConta: 'comunicationAccount/informacoesConta',
+            sistemas: 'communicationSistema/sistema',
+            contas: 'communicationConta/conta',
+            plataformas: 'communicationPlataforma/plataforma',
+            informacoesConta: 'communicationAccount/informacoesConta',
         }),
     },
     watch: {
@@ -162,12 +162,12 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterSistemas: 'comunicationSistema/obterSistemas',
-            obterContas: 'comunicationConta/obterContas',
-            obterPlataformas: 'comunicationPlataforma/obterPlataformas',
-            removerMensagem: 'comunicationMensagem/removerMensagem',
-            cadastrarMensagem: 'comunicationMensagem/cadastrarMensagem',
-            atualizarMensagem: 'comunicationMensagem/atualizarMensagem',
+            obterSistemas: 'communicationSistema/obterSistemas',
+            obterContas: 'communicationConta/obterContas',
+            obterPlataformas: 'communicationPlataforma/obterPlataformas',
+            removerMensagem: 'communicationMensagem/removerMensagem',
+            cadastrarMensagem: 'communicationMensagem/cadastrarMensagem',
+            atualizarMensagem: 'communicationMensagem/atualizarMensagem',
         }),
         save() {
             const self = this;

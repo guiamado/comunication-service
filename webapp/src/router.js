@@ -118,7 +118,7 @@ router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem('communication_token');
 
     if (to.path === '/logout') {
-        store.dispatch('comunicationAlert/info', 'Logout realizado com sucesso.', { root: true });
+        store.dispatch('communicationAlert/info', 'Logout realizado com sucesso.', { root: true });
         return next('/login');
     }
 
@@ -135,7 +135,7 @@ router.beforeEach((to, from, next) => {
         return next();
     } catch (Exception) {
         localStorage.removeItem('token');
-        store.dispatch('comunicationAlert/error', `Erro: ${Exception}`, { root: true });
+        store.dispatch('communicationAlert/error', `Erro: ${Exception}`, { root: true });
         return next('/login');
     }
 });

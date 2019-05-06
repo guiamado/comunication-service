@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import comunicationAccount from './modules/account';
-import comunicationMensagem from './modules/mensagem';
-import comunicationNotificacao from './modules/notificacao';
-import comunicationPlataforma from './modules/plataforma';
-import comunicationSistema from './modules/sistema';
-import comunicationWebsocket from './modules/websocket';
-import comunicationAlert from './modules/alert';
-import comunicationConta from './modules/conta';
+import communicationAccount from './modules/account';
+import communicationMensagem from './modules/mensagem';
+import communicationNotificacao from './modules/notificacao';
+import communicationPlataforma from './modules/plataforma';
+import communicationSistema from './modules/sistema';
+import communicationWebsocket from './modules/websocket';
+import communicationAlert from './modules/alert';
+import communicationConta from './modules/conta';
 
 
 Vue.use(Vuex);
@@ -16,14 +16,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 
     modules: {
-        comunicationAccount,
-        comunicationAlert,
-        comunicationPlataforma,
-        comunicationSistema,
-        comunicationConta,
-        comunicationMensagem,
-        comunicationNotificacao,
-        comunicationWebsocket,
+        communicationAccount,
+        communicationAlert,
+        communicationPlataforma,
+        communicationSistema,
+        communicationConta,
+        communicationMensagem,
+        communicationNotificacao,
+        communicationWebsocket,
     },
     strict: true,
 });

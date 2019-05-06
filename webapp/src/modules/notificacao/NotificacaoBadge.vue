@@ -258,8 +258,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            notificacoesBadge: 'comunicationNotificacao/notificacoesBadge',
-            informacoesConta: 'comunicationAccount/informacoesConta',
+            notificacoesBadge: 'communicationNotificacao/notificacoesBadge',
+            informacoesConta: 'communicationAccount/informacoesConta',
         }),
     },
     watch: {
@@ -283,9 +283,9 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterNotificacoes: 'comunicationNotificacao/obterNotificacoes',
-            lerNotificacao: 'comunicationNotificacao/lerNotificacao',
-            definirInformacoesConta: 'comunicationAccount/definirInformacoesConta',
+            obterNotificacoes: 'communicationNotificacao/obterNotificacoes',
+            lerNotificacao: 'communicationNotificacao/lerNotificacao',
+            definirInformacoesConta: 'communicationAccount/definirInformacoesConta',
         }),
         fecharDialogoSininho() {
             const self = this;

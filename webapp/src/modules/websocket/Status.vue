@@ -51,9 +51,9 @@ export default {
     },
     computed: {
         ...mapGetters({
-            status: 'comunicationAccount/status',
-            isConnected: 'comunicationWebsocket/isConnected',
-            informacoesConta: 'comunicationAccount/informacoesConta',
+            status: 'communicationAccount/status',
+            isConnected: 'communicationWebsocket/isConnected',
+            informacoesConta: 'communicationAccount/informacoesConta',
         }),
     },
     watch: {
@@ -68,7 +68,7 @@ export default {
     },
     methods: {
         ...mapActions({
-            definirInformacoesConta: 'comunicationAccount/definirInformacoesConta',
+            definirInformacoesConta: 'communicationAccount/definirInformacoesConta',
         }),
     },
 };

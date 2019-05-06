@@ -191,10 +191,10 @@ export default {
 
     computed: {
         ...mapGetters({
-            nomeSalaAtual: 'comunicationWebsocket/nomeSalaAtual',
-            salas: 'comunicationWebsocket/salas',
-            indiceSalaAtual: 'comunicationWebsocket/indiceSalaAtual',
-            informacoesConta: 'comunicationAccount/informacoesConta',
+            nomeSalaAtual: 'communicationWebsocket/nomeSalaAtual',
+            salas: 'communicationWebsocket/salas',
+            indiceSalaAtual: 'communicationWebsocket/indiceSalaAtual',
+            informacoesConta: 'communicationAccount/informacoesConta',
         }),
 
         hasMembrosNaSalaAtual() {
@@ -227,10 +227,10 @@ export default {
     },
     methods: {
         ...mapActions({
-            entrarEmSalaWebsocket: 'comunicationWebsocket/Socket_serverEntrarEmSala',
-            mensagemSalaWebsocket: 'comunicationWebsocket/Socket_serverMensagemSala',
-            definirNomeSalaAtual: 'comunicationWebsocket/definirNomeSalaAtual',
-            definirInformacoesConta: 'comunicationAccount/definirInformacoesConta',
+            entrarEmSalaWebsocket: 'communicationWebsocket/Socket_serverEntrarEmSala',
+            mensagemSalaWebsocket: 'communicationWebsocket/Socket_serverMensagemSala',
+            definirNomeSalaAtual: 'communicationWebsocket/definirNomeSalaAtual',
+            definirInformacoesConta: 'communicationAccount/definirInformacoesConta',
         }),
 
         entrarEmSala() {

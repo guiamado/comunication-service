@@ -9,7 +9,7 @@ export const obterPlataformas = ({ dispatch, commit }) => requisicaoAutorizada.g
         commit(types.SET_PLATAFORMA, data.data);
     })
     .catch((error) => {
-        dispatch('comunicationAlert/error', error.response.data.error, {
+        dispatch('communicationAlert/error', error.response.data.error, {
             root: true,
         });
     });
@@ -18,7 +18,7 @@ export const removerPlataforma = ({ dispatch, commit }, plataformaId) => requisi
     .then(() => {
         commit(types.DELETE_PLATAFORMA, plataformaId);
     }).catch((error) => {
-        dispatch('comunicationAlert/error', error.response.data.error, {
+        dispatch('communicationAlert/error', error.response.data.error, {
             root: true,
         });
     });
@@ -27,9 +27,9 @@ export const cadastrarPlataforma = ({ dispatch, commit }, plataforma) => requisi
     .then((response) => {
         const { data } = response;
         commit(types.ACRESCENTAR_PLATAFORMA, data.data);
-        dispatch('comunicationAlert/success', 'Cadastro realizado com sucesso!', { root: true });
+        dispatch('communicationAlert/success', 'Cadastro realizado com sucesso!', { root: true });
     }).catch((error) => {
-        dispatch('comunicationAlert/error', error.response.data.error, {
+        dispatch('communicationAlert/error', error.response.data.error, {
             root: true,
         });
     });
@@ -39,7 +39,7 @@ export const atualizarPlataforma = ({ dispatch, commit }, plataforma) => requisi
         commit(types.ATUALIZAR_PLATAFORMA, plataforma);
     })
     .catch((error) => {
-        dispatch('comunicationAlert/error', error.response.data.error, {
+        dispatch('communicationAlert/error', error.response.data.error, {
             root: true,
         });
     });

@@ -230,13 +230,13 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterSistemas: 'comunicationSistema/obterSistemas',
-            obterMensagems: 'comunicationMensagem/obterMensagems',
-            obterContas: 'comunicationConta/obterContas',
-            obterPlataformas: 'comunicationPlataforma/obterPlataformas',
-            removerMensagem: 'comunicationMensagem/removerMensagem',
-            cadastrarMensagem: 'comunicationMensagem/cadastrarMensagem',
-            atualizarMensagem: 'comunicationMensagem/atualizarMensagem',
+            obterSistemas: 'communicationSistema/obterSistemas',
+            obterMensagems: 'communicationMensagem/obterMensagems',
+            obterContas: 'communicationConta/obterContas',
+            obterPlataformas: 'communicationPlataforma/obterPlataformas',
+            removerMensagem: 'communicationMensagem/removerMensagem',
+            cadastrarMensagem: 'communicationMensagem/cadastrarMensagem',
+            atualizarMensagem: 'communicationMensagem/atualizarMensagem',
         }),
         editItem(item) {
             this.indiceEditado = this.mensagens.indexOf(item);

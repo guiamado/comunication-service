@@ -10,7 +10,7 @@ export const obterMensagems = ({ dispatch, commit }) => {
             commit(types.DEFINIR_MENSAGENS, data.data);
         })
         .catch((error) => {
-            dispatch('comunicationAlert/error', error.response.data.error, {
+            dispatch('communicationAlert/error', error.response.data.error, {
                 root: true,
             });
         });
@@ -21,7 +21,7 @@ export const removerMensagem = ({ dispatch, commit }, mensagemId) => {
         .then(() => {
             commit(types.REMOVER_MENSAGEM, mensagemId);
         }).catch((error) => {
-            dispatch('comunicationAlert/error', error.response.data.error, {
+            dispatch('communicationAlert/error', error.response.data.error, {
                 root: true,
             });
         });
@@ -32,9 +32,9 @@ export const cadastrarMensagem = ({ dispatch, commit }, mensagem) => {
         .then((response) => {
             const { data } = response;
             commit(types.ACRESCENTAR_MENSAGEM, data.data);
-            dispatch('comunicationAlert/success', 'Cadastro realizado com sucesso!', { root: true });
+            dispatch('communicationAlert/success', 'Cadastro realizado com sucesso!', { root: true });
         }).catch((error) => {
-            dispatch('comunicationAlert/error', error.response.data.error, {
+            dispatch('communicationAlert/error', error.response.data.error, {
                 root: true,
             });
         });
@@ -45,7 +45,7 @@ export const atualizarMensagem = ({ dispatch, commit }, mensagem) => requisicaoA
         commit(types.ATUALIZAR_MENSAGEM, mensagem);
     })
     .catch((error) => {
-        dispatch('comunicationAlert/error', error.response.data.error, {
+        dispatch('communicationAlert/error', error.response.data.error, {
             root: true,
         });
     });

@@ -138,7 +138,7 @@ export default {
             return this.itemEditado.plataforma_id === null ? 'Criar' : 'Editar';
         },
         ...mapGetters({
-            plataformas: 'comunicationPlataforma/plataforma',
+            plataformas: 'communicationPlataforma/plataforma',
         }),
     },
 
@@ -160,8 +160,8 @@ export default {
     methods: {
 
         ...mapActions({
-            obterPlataformas: 'comunicationPlataforma/obterPlataformas',
-            removerPlataforma: 'comunicationPlataforma/removerPlataforma',
+            obterPlataformas: 'communicationPlataforma/obterPlataformas',
+            removerPlataforma: 'communicationPlataforma/removerPlataforma',
         }),
 
         newItem() {

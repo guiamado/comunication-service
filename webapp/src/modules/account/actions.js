@@ -21,18 +21,18 @@ export const login = ({ dispatch, commit }, {
                 if (data && data.token) {
                     commit(types.LOGIN_SUCESSO, data.token);
                     localStorage.setItem('communication_token', data.token);
-                    dispatch('comunicationAlert/info', 'Login realizado com sucesso!', {
+                    dispatch('communicationAlert/info', 'Login realizado com sucesso!', {
                         root: true,
                     });
                     dispatch('definirInformacoesConta', data.token);
                 } else {
-                    dispatch('comunicationAlert/error', 'Falha ao realizar login.', {
+                    dispatch('communicationAlert/error', 'Falha ao realizar login.', {
                         root: true,
                     });
                 }
             }
         } catch (Exception) {
-            dispatch('comunicationAlert/error', `Erro: ${Exception}`, {
+            dispatch('communicationAlert/error', `Erro: ${Exception}`, {
                 root: true,
             });
         }
@@ -40,7 +40,7 @@ export const login = ({ dispatch, commit }, {
     }).catch((error) => {
         if (error.response && error.response.data) {
             commit(types.LOGIN_FALHA, error.response.data.error);
-            dispatch('comunicationAlert/error', `Erro: ${error.response.data.error}`, {
+            dispatch('communicationAlert/error', `Erro: ${error.response.data.error}`, {
                 root: true,
             });
         }
@@ -62,13 +62,13 @@ export const registrar = ({ dispatch, commit }, user) => {
     axios.post(`http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/conta`, JSON.parse(JSON.stringify(user))).then(
         (response) => {
             commit(types.REGISTRAR_SUCESSO);
-            dispatch('comunicationAlert/success', 'Cadastro realizado com sucesso!', { root: true });
+            dispatch('communicationAlert/success', 'Cadastro realizado com sucesso!', { root: true });
             return response;
         },
         (error) => {
             if (error.response && error.response.data) {
                 commit(types.REGISTRAR_FALHA);
-                dispatch('comunicationAlert/error', error.response.data.error, {
+                dispatch('communicationAlert/error', error.response.data.error, {
                     root: true,
                 });
             }

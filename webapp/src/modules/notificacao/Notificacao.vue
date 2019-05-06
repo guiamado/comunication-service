@@ -175,10 +175,10 @@ export default {
             return this.itemEditado.notificacao_id === null ? 'Criar' : 'Editar';
         },
         ...mapGetters({
-            notificacoes: 'comunicationNotificacao/notificacoes',
-            contas: 'comunicationConta/conta',
-            plataformas: 'comunicationPlataforma/plataforma',
-            informacoesConta: 'comunicationAccount/informacoesConta',
+            notificacoes: 'communicationNotificacao/notificacoes',
+            contas: 'communicationConta/conta',
+            plataformas: 'communicationPlataforma/plataforma',
+            informacoesConta: 'communicationAccount/informacoesConta',
         }),
     },
     watch: {
@@ -233,10 +233,10 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterNotificacoes: 'comunicationNotificacao/obterNotificacoes',
-            obterContas: 'comunicationConta/obterContas',
-            obterPlataformas: 'comunicationPlataforma/obterPlataformas',
-            removerNotificacao: 'comunicationNotificacao/removerNotificacao',
+            obterNotificacoes: 'communicationNotificacao/obterNotificacoes',
+            obterContas: 'communicationConta/obterContas',
+            obterPlataformas: 'communicationPlataforma/obterPlataformas',
+            removerNotificacao: 'communicationNotificacao/removerNotificacao',
         }),
         newItem() {
             this.itemEditado = Object.assign({}, this.defaultItem);
@@ -252,7 +252,7 @@ export default {
                 return false;
             }
             if (this.informacoesConta.is_admin !== true) {
-                this.$store.dispatch('comunicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                this.$store.dispatch('communicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
                 return false;
             }
             return this.removerNotificacao(item.notificacao_id);

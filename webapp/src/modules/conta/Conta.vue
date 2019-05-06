@@ -190,7 +190,7 @@ export default {
         editItem(item) {
             const self = this;
             if (self.informacoesConta.is_admin !== true) {
-                self.$store.dispatch('comunicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                self.$store.dispatch('communicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
             }
             if (self.informacoesConta.is_admin === true) {
                 self.indiceEditado = self.contas.indexOf(item);
@@ -210,7 +210,7 @@ export default {
             // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
                 if (this.informacoesConta.is_admin !== true) {
-                    this.$store.dispatch('comunicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                    this.$store.dispatch('communicationAlert/error', 'Usuário sem privilégios administrativos.', { root: true });
                 }
                 if (this.informacoesConta.is_admin === true) {
                     this.removerConta(item.usuario_id);

@@ -87,7 +87,7 @@ export default {
         };
     },
     computed: {
-        ...mapState('comunicationAccount', [
+        ...mapState('communicationAccount', [
             'status',
             'loggingIn',
         ]),
@@ -112,7 +112,7 @@ export default {
         clear() {
             this.$refs.form.reset();
         },
-        ...mapActions('comunicationAccount', [
+        ...mapActions('communicationAccount', [
             'login',
             'logout',
         ]),

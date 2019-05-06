@@ -1,14 +1,14 @@
 import VueSocketIO from 'vue-socket.io';
-import comunicationAccount from './modules/account';
-import comunicationMensagem from './modules/mensagem';
-import comunicationNotificacao from './modules/notificacao';
-import comunicationPlataforma from './modules/plataforma';
-import comunicationSistema from './modules/sistema';
-import comunicationWebsocket from './modules/websocket';
+import communicationAccount from './modules/account';
+import communicationMensagem from './modules/mensagem';
+import communicationNotificacao from './modules/notificacao';
+import communicationPlataforma from './modules/plataforma';
+import communicationSistema from './modules/sistema';
+import communicationWebsocket from './modules/websocket';
 
-import ComunicationServiceChat from './modules/websocket/Chat.vue';
-import ComunicationServiceStatus from './modules/websocket/Status.vue';
-import ComunicationServiceNotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
+import CommunicationServiceChat from './modules/websocket/Chat.vue';
+import CommunicationServiceStatus from './modules/websocket/Status.vue';
+import CommunicationServiceNotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
 import filters from './filters';
 import $socket from './modules/websocket/_auxiliares/socket-client-instance';
 
@@ -18,16 +18,16 @@ function install(Vue, { store }) {
 
     if (!store) console.log('Informe uma store.');
 
-    Vue.component('comunication-service-chat', ComunicationServiceChat);
-    Vue.component('comunication-service-status', ComunicationServiceStatus);
-    Vue.component('comunication-service-notificacao-badge', ComunicationServiceNotificacaoBadge);
+    Vue.component('communication-service-chat', CommunicationServiceChat);
+    Vue.component('communication-service-status', CommunicationServiceStatus);
+    Vue.component('communication-service-notificacao-badge', CommunicationServiceNotificacaoBadge);
 
-    store.registerModule('comunicationAccount', comunicationAccount);
-    store.registerModule('comunicationMensagem', comunicationMensagem);
-    store.registerModule('comunicationNotificacao', comunicationNotificacao);
-    store.registerModule('comunicationPlataforma', comunicationPlataforma);
-    store.registerModule('comunicationSistema', comunicationSistema);
-    store.registerModule('comunicationWebsocket', comunicationWebsocket);
+    store.registerModule('communicationAccount', communicationAccount);
+    store.registerModule('communicationMensagem', communicationMensagem);
+    store.registerModule('communicationNotificacao', communicationNotificacao);
+    store.registerModule('communicationPlataforma', communicationPlataforma);
+    store.registerModule('communicationSistema', communicationSistema);
+    store.registerModule('communicationWebsocket', communicationWebsocket);
 
     filters.create(Vue);
 
@@ -61,7 +61,7 @@ if (GlobalVue) {
 // Para permitir o uso como um módulo exportável (npm/webpack/etc.)
 export default {
     install,
-    ComunicationServiceChat,
-    ComunicationServiceStatus,
-    ComunicationServiceNotificacaoBadge,
+    CommunicationServiceChat,
+    CommunicationServiceStatus,
+    CommunicationServiceNotificacaoBadge,
 };
