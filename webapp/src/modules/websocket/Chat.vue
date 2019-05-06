@@ -172,6 +172,12 @@ import WebSocketMixins from './_auxiliares/mixins';
 export default {
     name: 'Chat',
     mixins: [WebSocketMixins],
+    props: {
+        token: {
+            type: String,
+            default: localStorage.getItem('token'),
+        },
+    },
     data() {
         return {
             isEnviando: false,
@@ -207,7 +213,16 @@ export default {
             return membrosSalaAtual.length > 0;
         },
     },
+    watch: {
+        token(valor) {
+            localStorage.setItem('token', valor);
+        },
+    },
     mounted() {
+        if (this.informacoesConta == null || this.informacoesConta.email == null) {
+            this.definirInformacoesConta(this.token);
+        }
+
         this.sistemas = this.informacoesConta.sistemas;
     },
     methods: {
@@ -215,6 +230,7 @@ export default {
             entrarEmSalaWebsocket: 'comunicationWebsocket/Socket_serverEntrarEmSala',
             mensagemSalaWebsocket: 'comunicationWebsocket/Socket_serverMensagemSala',
             definirNomeSalaAtual: 'comunicationWebsocket/definirNomeSalaAtual',
+            definirInformacoesConta: 'comunicationAccount/definirInformacoesConta',
         }),
 
         entrarEmSala() {
