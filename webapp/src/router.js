@@ -127,7 +127,7 @@ router.beforeEach((to, from, next) => {
     }
 
     try {
-        if (loggedIn && obterInformacoesJWT() === '') {
+        if (loggedIn && obterInformacoesJWT() === '' && to.path !== '/login') {
             const error = 'Usuario sem autenticação.';
             throw error;
         }
