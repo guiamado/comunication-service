@@ -37,38 +37,16 @@
 
 <script>
 
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import WebSocketMixins from './_auxiliares/mixins';
 
 export default {
     name: 'Chat',
     mixins: [WebSocketMixins],
-    props: {
-        communicationToken: {
-            type: String,
-            default: localStorage.getItem('communication_token'),
-        },
-    },
     computed: {
         ...mapGetters({
             status: 'communicationAccount/status',
             isConnected: 'communicationWebsocket/isConnected',
-            informacoesConta: 'communicationAccount/informacoesConta',
-        }),
-    },
-    watch: {
-        communicationToken(valor) {
-            localStorage.setItem('communication_token', valor);
-        },
-    },
-    mounted() {
-        if (this.informacoesConta == null || this.informacoesConta.email == null) {
-            this.definirInformacoesConta(this.communicationToken);
-        }
-    },
-    methods: {
-        ...mapActions({
-            definirInformacoesConta: 'communicationAccount/definirInformacoesConta',
         }),
     },
 };

@@ -172,12 +172,7 @@ import WebSocketMixins from './_auxiliares/mixins';
 export default {
     name: 'Chat',
     mixins: [WebSocketMixins],
-    props: {
-        communicationToken: {
-            type: String,
-            default: localStorage.getItem('communication_token'),
-        },
-    },
+
     data() {
         return {
             isEnviando: false,
@@ -194,7 +189,6 @@ export default {
             nomeSalaAtual: 'communicationWebsocket/nomeSalaAtual',
             salas: 'communicationWebsocket/salas',
             indiceSalaAtual: 'communicationWebsocket/indiceSalaAtual',
-            informacoesConta: 'communicationAccount/informacoesConta',
         }),
 
         hasMembrosNaSalaAtual() {
@@ -213,16 +207,7 @@ export default {
             return membrosSalaAtual.length > 0;
         },
     },
-    watch: {
-        communicationToken(valor) {
-            localStorage.setItem('communication_token', valor);
-        },
-    },
     mounted() {
-        if (this.informacoesConta == null || this.informacoesConta.email == null) {
-            this.definirInformacoesConta(this.communicationToken);
-        }
-
         this.sistemas = this.informacoesConta.sistemas;
     },
     methods: {
@@ -230,7 +215,6 @@ export default {
             entrarEmSalaWebsocket: 'communicationWebsocket/Socket_serverEntrarEmSala',
             mensagemSalaWebsocket: 'communicationWebsocket/Socket_serverMensagemSala',
             definirNomeSalaAtual: 'communicationWebsocket/definirNomeSalaAtual',
-            definirInformacoesConta: 'communicationAccount/definirInformacoesConta',
         }),
 
         entrarEmSala() {
