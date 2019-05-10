@@ -107,6 +107,8 @@ const router = new Router({
     routes: routesObject,
 });
 
+export const isEmpty = string => (!string || string.length === 0);
+
 router.beforeEach((to, from, next) => {
     const publicPages = [
         '/login',
@@ -116,24 +118,20 @@ router.beforeEach((to, from, next) => {
 
     const authRequired = !publicPages.includes(to.path);
     const communicationToken = localStorage.getItem('communication_token');
+    const tokenValida = !isEmpty(obterInformacoesJWT(communicationToken));
 
     if (to.path === '/logout') {
         store.dispatch('communicationAlert/info', 'Logout realizado com sucesso.', { root: true });
         return next('/login');
     }
 
-    if (authRequired && !communicationToken) {
-        return next('/login');
+    if (authRequired && isEmpty(communicationToken)) {
+        const error = 'Token Expirada.';
+        localStorage.removeItem('token');
+        throw error;
     }
 
     try {
-        if (communicationToken
-            && obterInformacoesJWT() === ''
-            && obterInformacoesJWT() === null) {
-            const error = 'Token Expirada.';
-            localStorage.removeItem('token');
-            throw error;
-        }
         return next();
     } catch (Exception) {
         store.dispatch('communicationAlert/error', `Erro: ${Exception}`, {
