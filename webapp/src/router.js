@@ -115,27 +115,30 @@ router.beforeEach((to, from, next) => {
     ];
 
     const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('communication_token');
+    const communicationToken = localStorage.getItem('communication_token');
 
     if (to.path === '/logout') {
         store.dispatch('communicationAlert/info', 'Logout realizado com sucesso.', { root: true });
         return next('/login');
     }
 
-    if (authRequired && !loggedIn) {
+    if (authRequired && !communicationToken) {
         return next('/login');
     }
 
     try {
-        if (loggedIn && obterInformacoesJWT() === '' && to.path !== '/login') {
-            const error = 'Usuario sem autenticação.';
+        if (communicationToken
+            && obterInformacoesJWT() === ''
+            && obterInformacoesJWT() === null) {
+            const error = 'Token Expirada.';
+            localStorage.removeItem('token');
             throw error;
         }
-
         return next();
     } catch (Exception) {
-        localStorage.removeItem('token');
-        store.dispatch('communicationAlert/error', `Erro: ${Exception}`, { root: true });
+        store.dispatch('communicationAlert/error', `Erro: ${Exception}`, {
+            root: true,
+        });
         return next('/login');
     }
 });
