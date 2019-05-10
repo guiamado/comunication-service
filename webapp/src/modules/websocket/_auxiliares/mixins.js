@@ -8,6 +8,14 @@ export default {
             type: String,
             default: localStorage.getItem('communication_token'),
         },
+        // nome: {
+        //     type: String,
+        //     default: '',
+        // },
+        // email: {
+        //     type: String,
+        //     default: localStorage.getItem('communication_token'),
+        // },
     },
     computed: {
         ...mapGetters({

@@ -1,9 +1,8 @@
 import * as types from './types';
 
 export default {
-    [types.LOGIN_REQUISICAO](state, token) {
+    [types.LOGIN_REQUISICAO](state) {
         state.status = { loggingIn: true };
-        state.token = token;
     },
     [types.LOGIN_SUCESSO](state, token) {
         state.status = { loggedIn: true };

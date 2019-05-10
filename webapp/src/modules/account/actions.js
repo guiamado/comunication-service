@@ -6,13 +6,13 @@ import { requisicaoAutorizada } from './_auxiliares/requisicao-autorizada';
 export const storeInit = () => {};
 
 export const login = ({ dispatch, commit }, {
-    email, password, nome, sistema,
+    cpf, password, nome, sistema,
 }) => {
-    commit(types.LOGIN_REQUISICAO, { email });
+    commit(types.LOGIN_REQUISICAO, { cpf });
     return requisicaoAutorizada.post(
         `http://${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/v1/autenticacao/login`,
         {
-            email, password, nome, sistema,
+            cpf, password, nome, sistema,
         },
     ).then((response) => {
         try {
