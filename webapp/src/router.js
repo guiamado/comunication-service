@@ -125,7 +125,7 @@ router.beforeEach((to, from, next) => {
         return next('/login');
     }
 
-    if (authRequired && isEmpty(communicationToken)) {
+    if (authRequired && !tokenValida) {
         const error = 'Token Expirada.';
         localStorage.removeItem('token');
         throw error;
