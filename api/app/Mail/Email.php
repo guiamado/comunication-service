@@ -12,11 +12,10 @@ class Email extends Mailable
     use Queueable,
         SerializesModels;
 
-    protected $usuario, $mensagem, $assunto;
+    protected $mensagem, $assunto;
 
-    public function __construct($usuario, $mensagem, $assunto)
+    public function __construct($mensagem, $assunto)
     {
-        $this->usuario = $usuario;
         $this->mensagem = $mensagem;
         $this->assunto = $assunto;
     }

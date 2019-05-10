@@ -108,9 +108,9 @@ class Email implements IService
         Mail::to($usuario['email'])->send(new RecuperacaoSenhaEmail($usuario));
     }
 
-    public function enviarEmail($usuarios, $mensagem, $assunto)
+    public function enviarEmail($usuario, $mensagem, $assunto)
     {
-        Mail::to($usuarios['email'])->send(new \App\Mail\Email($usuarios, $mensagem, $assunto));
+        Mail::to($usuario['email'])->send(new \App\Mail\Email($mensagem, $assunto));
         return 'Email Enviado!!';
     }
 
