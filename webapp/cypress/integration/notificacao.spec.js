@@ -1,7 +1,6 @@
 describe('Testando Tela Inicial', function() {
     it('Cria Notificacao', function() {
-        visitLoginPage()
-        loginWith()
+        cy.login()
         cy.wait(1000)
         menuNotificacao()
         cy.get('.v-btn--bottom').click()
@@ -17,8 +16,7 @@ describe('Testando Tela Inicial', function() {
         cy.wait(2000)
     })
     it('Ler Notificacao', function () {
-        visitLoginPage()
-        loginWith()
+        cy.login()
         cy.wait(1000)
         menuNotificacao()
         cy.wait(1000)
@@ -29,28 +27,13 @@ describe('Testando Tela Inicial', function() {
         cy.get('.v-dialog__content--active > .v-dialog > .v-card > .v-card__actions > .v-btn').click()
     })
     it('Excluir Notificacao', function () {
-        visitLoginPage()
-        loginWith()
+        cy.login()
         cy.wait(1000)
         menuNotificacao()
         cy.wait(1000)
         cy.get(':nth-child(1) > .justify-center > .v-btn > .v-btn__content > .v-icon').click()
     })
 })
-
-const visitLoginPage = () => {
-    cy.visit('http://' + Cypress.env('VUE_APP_HOST') + ':' + Cypress.env('VUE_APP_PORT') + '/login')
-}
-
-const loginWith = () => {
-    cy.get('[name="email"]')
-        .type('abcd@gmail.com')
-    cy.wait(1000)
-    cy.get('[name="password"]')
-        .type('123456')
-    cy.wait(1000)
-    cy.get('.v-btn').click()
-}
 
 const menuNotificacao = () => {
     cy.get('.v-toolbar__side-icon > .v-btn__content > .v-icon').click()
