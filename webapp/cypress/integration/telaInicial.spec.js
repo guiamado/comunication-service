@@ -1,6 +1,8 @@
 describe('Testando Tela Inicial', function () {
-    it('Cadastrar', function () {
+    beforeEach(() => {
         telaInicial()
+    })
+    it('Cadastrar', function () {
         rota('[href="/cadastrar"]')
         cy.get('[aria-label="Nome"]').type('Nome Teste')
         cy.get('[aria-label="E-mail"]').type('email.olocoooo@gmail.com')
@@ -10,7 +12,6 @@ describe('Testando Tela Inicial', function () {
         cy.get('.v-snack__content').contains('Cadastro Realizado com Sucesso!')
     })
     it('Recuperar Senha', function () {
-        telaInicial()
         rota('[href="/recuperar"]')
         cy.get('[aria-label="E-mail"]').type('email.teste@gmail.com')
         cy.get('[aria-label="Nova Senha"]').type('123456')
@@ -22,7 +23,7 @@ describe('Testando Tela Inicial', function () {
 })
 
 const telaInicial = () => {
-    cy.wait(2000)
+    cy.wait(1000)
     cy.visit('http://' + Cypress.env('VUE_APP_HOST') + ':' + Cypress.env('VUE_APP_PORT') + '/login')
 }
 

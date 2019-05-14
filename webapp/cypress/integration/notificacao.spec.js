@@ -1,4 +1,4 @@
-describe('Testando Notificacoes', function() {
+describe('Modulo Notificacao', function() {
     it('Cria Notificacao', function() {
         cy.login('abcd@gmail.com', '123456')
         cy.wait(1000)
