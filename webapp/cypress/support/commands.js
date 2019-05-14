@@ -23,13 +23,13 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-Cypress.Commands.add('login', ({ email, password }) => {
+Cypress.Commands.add('login', (email, password) => {
     cy.visit('http://' + Cypress.env('VUE_APP_HOST') + ':' + Cypress.env('VUE_APP_PORT') + '/login')
     cy.get('[name="email"]')
-        .type('abcd@gmail.com')
+        .type(email)
     cy.wait(1000)
     cy.get('[name="password"]')
-        .type('123456')
+        .type(password)
     cy.wait(1000)
     cy.get('.v-btn').click()
 })

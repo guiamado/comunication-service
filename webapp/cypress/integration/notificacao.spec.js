@@ -1,6 +1,6 @@
-describe('Testando Tela Inicial', function() {
+describe('Testando Notificacoes', function() {
     it('Cria Notificacao', function() {
-        cy.login()
+        cy.login('abcd@gmail.com', '123456')
         cy.wait(1000)
         menuNotificacao()
         cy.get('.v-btn--bottom').click()
@@ -16,7 +16,7 @@ describe('Testando Tela Inicial', function() {
         cy.wait(2000)
     })
     it('Ler Notificacao', function () {
-        cy.login()
+        cy.login('abcd@gmail.com', '123456')
         cy.wait(1000)
         menuNotificacao()
         cy.wait(1000)
