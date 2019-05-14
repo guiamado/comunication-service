@@ -32,4 +32,6 @@ Cypress.Commands.add('login', (email, password) => {
         .type(password)
     cy.wait(1000)
     cy.get('.v-btn').click()
+    cy.get('.v-snack__content').contains('Login realizado com sucesso!')
+    cy.get('.v-snack__content > .v-btn > .v-btn__content').click()
 })
