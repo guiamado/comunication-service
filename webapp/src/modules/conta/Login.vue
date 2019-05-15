@@ -43,7 +43,7 @@
                                             column
                                             fill-height>
 
-                                            <div class="text-xs-right btn-link mta-3">
+                                            <div class="text-xs-right btn-link mt-3">
                                                 <v-btn
                                                     to="/recuperar"
                                                     flat

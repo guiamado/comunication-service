@@ -125,13 +125,13 @@ router.beforeEach((to, from, next) => {
         return next('/login');
     }
 
-    if (authRequired && !tokenValida) {
-        const error = 'Token Expirada.';
-        localStorage.removeItem('token');
-        throw error;
-    }
 
     try {
+        if (authRequired && !tokenValida) {
+            const error = 'Token Expirada.';
+            localStorage.removeItem('token');
+            throw error;
+        }
         return next();
     } catch (Exception) {
         store.dispatch('communicationAlert/error', `Erro: ${Exception}`, {
