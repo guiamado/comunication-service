@@ -4,7 +4,7 @@ branches:
   only:
   - feature/cypress
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=2
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -12,11 +12,13 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
+  - docker-compose up -d
+  - docker ps
 node_js:
   - '8.9.4'
 
-before_script:
-  - docker-compose up -d
-  - docker ps
+    #before_script:
+    #- docker-compose up -d
+    #- docker ps
 script:
   - bash ./deploy.sh
