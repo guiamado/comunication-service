@@ -2,6 +2,7 @@ describe('Modulo Conta', function () {
     beforeEach(() => {
         cy.login('abcd@gmail.com', '123456');
         menuConta();
+        cy.wait(1000);
     });
 
     afterEach(() => {
@@ -9,7 +10,6 @@ describe('Modulo Conta', function () {
     });
 
     it('Criar Conta', function () {
-
         cy.get('.v-btn--bottom').click();
         cy.wait(1000);
 

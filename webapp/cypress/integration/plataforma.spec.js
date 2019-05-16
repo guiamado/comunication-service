@@ -2,6 +2,7 @@ describe('Modulo Plataforma', function () {
     beforeEach(() => {
         cy.login('abcd@gmail.com', '123456');
         menuPlataforma();
+        cy.wait(1000);
     });
 
     afterEach(() => {

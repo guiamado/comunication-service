@@ -2,6 +2,7 @@ describe('Modulo Sistema', function () {
     beforeEach(() => {
         cy.login('abcd@gmail.com', '123456');
         menuSistema();
+        cy.wait(1000);
     });
 
     afterEach(() => {

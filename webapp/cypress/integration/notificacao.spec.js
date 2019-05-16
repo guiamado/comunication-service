@@ -2,6 +2,7 @@ describe('Modulo Notificacao', function() {
     beforeEach(() => {
         cy.login('abcd@gmail.com', '123456');
         menuNotificacao();
+        cy.wait(1000);
     });
 
     afterEach(() => {
