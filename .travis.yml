@@ -12,8 +12,8 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-    #- docker-compose up -d
-    #- docker ps
+  - docker-compose up -d
+  - docker ps
 node_js:
   - '8.9.4'
 
