@@ -15,5 +15,8 @@ before_install:
 node_js:
   - '8.9.4'
 
+before_script:
+  - docker-compose up -d
+  - docker ps
 script:
   - bash ./deploy.sh
