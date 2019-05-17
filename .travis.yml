@@ -17,6 +17,12 @@ addons:
     packages:
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
+      -  xvfb
+      - libgtk2.0-0
+      - libnotify-dev
+      - libnss3
+      - libxss1
+      - libasound2
 node_js:
   - '8.9.4'
 
