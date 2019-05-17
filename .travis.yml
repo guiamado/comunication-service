@@ -12,6 +12,11 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
 node_js:
   - '8.9.4'
 
@@ -21,9 +26,9 @@ node_js:
 before_script:
   - bash ./deploy.sh
   - docker-compose up -d
-
+install:
+  - npm ci
 script:
   - docker ps
   - cd webapp
-  - docker exec -it comunication-webapp bash
-  - npm run cypress:run
+  - $(npm bin)/cypress run
