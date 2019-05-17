@@ -25,4 +25,5 @@ before_script:
 script:
   - docker ps
   - cd webapp
+  - npm install
   - npm run cypress:run
