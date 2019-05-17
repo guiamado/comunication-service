@@ -4,14 +4,14 @@ services:
   webapp-service:
     image: node:8.11.4-slim
     container_name: comunication-webapp
-    user: "node"
+    user: "root"
     working_dir: /home/node/app
     volumes:
       - ./webapp:/home/node/app
     command:
 #      sh -c 'npm run serve'
       #      sh -c 'npm run lint && npm run serve'
-      sh -c 'sudo npm i && npm run serve'
+      sh -c 'npm i && npm run serve'
     ports:
       - "8080:8080"
     environment:
