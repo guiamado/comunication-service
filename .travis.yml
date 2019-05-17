@@ -20,5 +20,5 @@ node_js:
     #- docker ps
 script:
   - bash ./deploy.sh
-  - docker-compose up
+  - docker-compose up -d
   - docker ps
