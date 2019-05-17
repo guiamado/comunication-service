@@ -20,7 +20,7 @@ node_js:
     #- docker ps
 before_script:
   - bash ./deploy.sh
-  - docker-compose up -d
+  - docker-compose up
 
 script:
   - docker ps
