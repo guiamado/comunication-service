@@ -21,6 +21,8 @@ node_js:
 before_script:
   - bash ./deploy.sh
   - docker-compose up -d
+  - cd webapp
+  - npm run cypress:run
 
 script:
   - docker ps
