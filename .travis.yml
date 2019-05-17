@@ -26,8 +26,6 @@ node_js:
 before_script:
   - bash ./deploy.sh
   - docker-compose up -d
-install:
-  - npm ci
 script:
   - docker ps
   - cd webapp
