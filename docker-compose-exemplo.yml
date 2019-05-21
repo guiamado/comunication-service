@@ -21,6 +21,11 @@ services:
       - WEBSOCKET_PORT=8081
       #- NODE_CONFIG_ENV=production
       #- NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "npm", "install"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
 
   api-service:
     container_name: comunication-api
