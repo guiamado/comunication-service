@@ -35,4 +35,5 @@ before_script:
 script:
   - docker ps
   - cd webapp
+  - ls
   - docker exec comunication-webapp $(npm bin)/cypress run
