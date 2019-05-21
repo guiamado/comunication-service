@@ -26,6 +26,13 @@ addons:
       - libnss3
       - libxss1
       - libasound2
+cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
 node_js:
   - '8.9.4'
 before_script:
