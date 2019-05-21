@@ -25,10 +25,6 @@ addons:
       - libasound2
 node_js:
   - '8.9.4'
-
-    #before_script:
-    #- docker-compose up -d
-    #- docker ps
 before_script:
   - bash ./deploy.sh
   - docker-compose up -d

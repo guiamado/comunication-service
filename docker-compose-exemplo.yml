@@ -22,7 +22,7 @@ services:
       #- NODE_CONFIG_ENV=production
       #- NODE_ENV=production
     healthcheck:
-      test: ["CMD", "npm", "install"]
+      test: ["CMD", "npm", "run", "cypress:run"]
       interval: 1m30s
       timeout: 10s
       retries: 3
