@@ -36,4 +36,5 @@ script:
   - docker ps
   - cd webapp
   - ls
+  - cat package.json
   - docker exec comunication-webapp $(npm bin)/cypress run
