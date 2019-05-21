@@ -21,11 +21,6 @@ services:
       - WEBSOCKET_PORT=8081
       #- NODE_CONFIG_ENV=production
       #- NODE_ENV=production
-    healthcheck:
-      test: ["CMD", "npm", "run", "cypress:run"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
 
   api-service:
     container_name: comunication-api
@@ -40,7 +35,7 @@ services:
       - USE_PHP_FPM=true
       - DB_CONNECTION=pgsql
       - DB_HOST=comunication-database
-      - DB_PORT=5433
+      - DB_PORT=5432
       - DB_DATABASE=notificacao
       - DB_USERNAME=notificacao
       - DB_PASSWORD=senhaNotificacao
@@ -78,9 +73,9 @@ services:
       - POSTGRES_DB=notificacao
       - POSTGRES_DB_TEST=notificacao-test
     ports:
-      - "5433:5433"
+      - "5432:5432"
     expose:
-      - "5433"
+      - "5432"
     volumes:
       - ./database/docker-data/postgres:/var/lib/postgresql/data
       - ./database/schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
