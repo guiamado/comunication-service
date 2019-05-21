@@ -1,5 +1,8 @@
-language: node_js
-
+language: php
+php:
+  - '7.2'
+  - hhvm # on Trusty only
+  - nightly
 branches:
   only:
   - feature/cypress
@@ -26,6 +29,9 @@ addons:
 node_js:
   - '8.9.4'
 before_script:
+  - cd api
+  - composer update
+  - cd ..
   - bash ./deploy.sh
   - docker-compose up -d
 script:
@@ -33,4 +39,3 @@ script:
   - cd webapp
   - ls
   - cat package.json
-  - docker exec comunication-webapp $(npm bin)/cypress run

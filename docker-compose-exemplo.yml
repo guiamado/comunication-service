@@ -36,7 +36,7 @@ services:
       - ./api:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     environment:
-      - UPDATE_COMPOSER_DEPENDENCIES=true
+#      - UPDATE_COMPOSER_DEPENDENCIES=true
       - USE_PHP_FPM=true
       - DB_CONNECTION=pgsql
       - DB_HOST=comunication-database
