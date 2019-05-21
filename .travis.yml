@@ -46,4 +46,5 @@ script:
   - cd webapp
   - ls
   - cat package.json
-  - npm run cypress:run
+  - $(npm bin)/cypress run
+#  - npm run cypress:run
