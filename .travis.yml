@@ -36,16 +36,16 @@ cache:
 node_js:
   - '8.9.4'
 before_script:
-  - bash ./deploy.sh
-  - docker-compose up -d
   - cd api
   - composer update
   - cd ..
+  - bash ./deploy.sh
+  - docker-compose up -d
 script:
   - docker ps
   - cd webapp
   - ls
   - cat package.json
   - npm install
-#  - $(npm bin)/cypress run
+  - $(npm bin)/cypress run
 #  - npm run cypress:run
