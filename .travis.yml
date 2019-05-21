@@ -1,8 +1,8 @@
 language: php
 php:
-  - '7.2'
+#  - '7.2'
 #  - hhvm # on Trusty only
-#  - nightly
+  - nightly
 branches:
   only:
   - feature/cypress
@@ -29,13 +29,14 @@ addons:
 node_js:
   - '8.9.4'
 before_script:
+  - bash ./deploy.sh
+  - docker-compose up -d
   - cd api
   - composer update
   - cd ..
-  - bash ./deploy.sh
-  - docker-compose up -d
 script:
   - docker ps
   - cd webapp
   - ls
   - cat package.json
+  - npm run cypress:run
