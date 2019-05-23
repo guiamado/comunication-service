@@ -43,6 +43,7 @@ services:
       - database-service
     links:
       - database-service:comunication-database
+    restart: on-failure
     healthcheck:
       test: ["CMD", "ping -h localhost"]
       interval: 10s
