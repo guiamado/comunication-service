@@ -39,13 +39,14 @@ before_script:
   - cd api
   - composer update
   - cd ..
+  - cd webapp
+  - npm install
+  - cd ..
   - bash ./deploy.sh
-  - docker-compose up -d
+  - docker-compose up
 script:
   - docker ps
   - cd webapp
-  - ls
-  - cat package.json
-  - npm install
+#  - npm install
   - $(npm bin)/cypress run
 #  - npm run cypress:run
