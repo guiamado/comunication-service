@@ -41,6 +41,8 @@ services:
       - DB_PASSWORD=senhaNotificacao
     depends_on:
       - database-service
+    links:
+      - database-service:comunication-database
     healthcheck:
       test: ["CMD", "ping -h localhost"]
       interval: 10s
