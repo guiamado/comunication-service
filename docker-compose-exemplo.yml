@@ -84,8 +84,8 @@ services:
       - ./database/docker-data/postgres:/var/lib/postgresql/data
       - ./database/schema.sql:/docker-entrypoint-initdb.d/0.schema.sql
       #- ./database/initial-data.sql:/docker-entrypoint-initdb.d/1.data.sql
-    healthcheck:
-      test: ["CMD", "ping -h localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+#    healthcheck:
+#      test: ["CMD", "ping -h localhost"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 3
