@@ -41,6 +41,11 @@ services:
       - DB_PASSWORD=senhaNotificacao
     depends_on:
       - database-service
+    healthcheck:
+      test: ["CMD", "ping -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   webserver-service:
     image: nginx:alpine
