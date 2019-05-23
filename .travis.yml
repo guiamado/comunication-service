@@ -43,10 +43,9 @@ before_script:
   - npm install
   - cd ..
   - bash ./deploy.sh
-  - docker-compose up
+  - docker-compose up --build
 script:
   - docker ps
   - cd webapp
-#  - npm install
   - $(npm bin)/cypress run
 #  - npm run cypress:run
