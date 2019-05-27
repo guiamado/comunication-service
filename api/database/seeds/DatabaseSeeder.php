@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // Registra o seeder de usuário
         $this->call(SistemaTableSeeder::class);
         $this->call(UsuarioTableSeeder::class);
+        $this->call(UsuarioSistemaSeeder::class);
         $this->call(PlataformaTableSeeder::class);
         $this->call(MensagemTableSeeder::class);
         $this->call(MensagemPlataformaSeeder::class);

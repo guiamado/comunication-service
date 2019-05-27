@@ -22,21 +22,14 @@ class UsuarioTableSeeder extends Seeder
     }
 
     private function criarUsuarioTeste() {
-        $sistemas = [
-            'descricao' => 'Sistema Teste',
-            'sistema_id' => 6
-        ];
-        $dados = [
+        DB::table('notificacao.usuario')->insert([
             'nome' => 'Usuario Teste',
             'is_ativo' => true,
             'is_admin' => true,
             'email' => 'abcd@gmail.com',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
-            'sistemas' => $sistemas
-        ];
-
-        $criarContaTeste = new \App\Services\Conta();
-        $criarContaTeste->criar($dados);
+            'created_at' => New DateTime()
+        ]);
     }
 
 }
