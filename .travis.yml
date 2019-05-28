@@ -53,4 +53,4 @@ script:
 #  - docker exec comunication-webapp npm install
 #  - docker exec comunication-webapp cypress install
 #  - docker exec comunication-webapp npm run cypress:run
-#  - $(npm bin)/cypress run
+  - $(npm bin)/cypress run
