@@ -21,6 +21,11 @@ services:
       - WEBSOCKET_PORT=8081
       #- NODE_CONFIG_ENV=production
       #- NODE_ENV=production
+    depends_on:
+      api-service:
+        condition: service_healthy
+    links:
+      - api-service:comunication-api
 
   api-service:
     container_name: comunication-api
