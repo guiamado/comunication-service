@@ -48,5 +48,7 @@ before_script:
 script:
   - docker ps
   - cd webapp
+  - docker exec comunication-api composer update
+  - docker exec comunication-webapp npm install
   - docker exec comunication-webapp npm run cypress:run
 #  - $(npm bin)/cypress run
