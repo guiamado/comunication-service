@@ -26,6 +26,7 @@
 Cypress.Commands.add('login', (email, password) => {
     // cy.visit('http://' + Cypress.env('VUE_APP_HOST') + ':' + Cypress.env('VUE_APP_PORT') + '/login');
     cy.visit('http://localhost:8080/login');
+    cy.url().should('eq', 'http://localhost:8080/login');
     cy.get('[name="email"]')
         .type(email);
     cy.wait(1000);
