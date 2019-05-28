@@ -21,8 +21,6 @@ services:
       - WEBSOCKET_PORT=8081
       #- NODE_CONFIG_ENV=production
       #- NODE_ENV=production
-    links:
-      - api-service:comunication-api
 
   api-service:
     container_name: comunication-api
@@ -47,6 +45,11 @@ services:
     links:
       - database-service:comunication-database
     restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl localhost/v1/sistema || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   webserver-service:
     image: nginx:alpine
