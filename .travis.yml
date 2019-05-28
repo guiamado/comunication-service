@@ -49,7 +49,7 @@ script:
   - docker ps
   - cd webapp
 #  - npm run cypress:run
-  - curl --basic http://localhost/sistema
+  - curl --get http://localhost/v1/sistema
 #  - docker exec comunication-webapp npm install
 #  - docker exec comunication-webapp cypress install
 #  - docker exec comunication-webapp npm run cypress:run
