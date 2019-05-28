@@ -44,12 +44,12 @@ before_script:
   - cd ..
   - bash ./deploy.sh
 #  - sudo chmod -R 777 api/storage/
-  - docker-compose up --build
+  - docker-compose up -d --build
 script:
   - docker ps
   - cd webapp
-  - npm run cypress:run
-#  - docker exec comunication-api composer update
+#  - npm run cypress:run
+  - docker exec comunication-api curl http://localhost/sistema
 #  - docker exec comunication-webapp npm install
 #  - docker exec comunication-webapp cypress install
 #  - docker exec comunication-webapp npm run cypress:run
