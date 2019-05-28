@@ -44,7 +44,7 @@ before_script:
   - cd ..
   - bash ./deploy.sh
 #  - sudo chmod -R 777 api/storage/
-  - docker-compose up --build
+  - docker-compose up -d --build
 script:
   - docker ps
   - cd webapp
