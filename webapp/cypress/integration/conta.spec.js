@@ -10,6 +10,7 @@ describe('Modulo Conta', function () {
     });
 
     it('Criar Conta', function () {
+        cy.url().should('eq', 'http://localhost:8080/administracao/conta');
         cy.get('.v-btn--bottom').click();
         cy.wait(1000);
 
