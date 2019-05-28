@@ -1,6 +1,7 @@
 describe('Modulo Conta', function () {
     beforeEach(() => {
         cy.login('abcd@gmail.com', '123456');
+        cy.log('logou!!!!!!!!');
         menuConta();
         cy.wait(1000);
     });
