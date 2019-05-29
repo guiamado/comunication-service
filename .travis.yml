@@ -43,7 +43,7 @@ before_script:
   - npm install
   - cd ..
   - bash ./deploy.sh
-#  - sudo chmod -R 777 api/storage/
+  - sudo chmod -R 777 api/storage/
   - docker-compose up -d --build
 script:
   - docker ps
