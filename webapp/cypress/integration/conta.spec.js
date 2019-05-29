@@ -70,7 +70,7 @@ describe('Modulo Conta', function () {
 });
 
 const menuConta = () => {
-    cy.get('.v-overlay').click();
+    cy.get('.v-badge > .v-icon');
     cy.get('.v-toolbar__side-icon > .v-btn__content > .v-icon').click();
     cy.wait(1000);
     
