@@ -26,8 +26,6 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         ]
     );
 
-    $router->get('/acount[/{id}]', 'ContaController@get');
-
     $router->post('/recuperarSenha', 'RecuperarSenhaController@post');
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
