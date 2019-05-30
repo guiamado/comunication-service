@@ -2,6 +2,7 @@ describe('Modulo Conta', function () {
     beforeEach(() => {
         cy.login('abcd@gmail.com', '123456');
         cy.wait(1000);
+        cy.url().should('eq', 'http://localhost:8080/');
         menuConta();
         cy.wait(1000);
     });
