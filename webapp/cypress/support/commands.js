@@ -42,6 +42,6 @@ Cypress.Commands.add('login', (email, password) => {
 Cypress.Commands.add('logout', () => {
     cy.get('.v-toolbar__side-icon > .v-btn__content > .v-icon').click();
     cy.get('.pt-0 > :nth-child(7) > .v-list__tile').click();
-    cy.get('.v-snack__content').contains('Logout realizado com sucesso.');
-    cy.get('.v-snack__content > .v-btn > .v-btn__content').click();
+    // cy.get('.v-snack__content').contains('Logout realizado com sucesso.');
+    // cy.get('.v-snack__content > .v-btn > .v-btn__content').click();
 });
