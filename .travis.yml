@@ -41,6 +41,7 @@ before_script:
   - cd ..
   - cd webapp
   - npm install
+  - cp .exemplo_env .env
   - cd ..
   - bash ./deploy.sh
   - sudo chmod -R 777 api/storage/
