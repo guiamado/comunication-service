@@ -3,10 +3,6 @@ describe('Testando Tela Inicial', function () {
         telaInicial();
     });
 
-    afterEach(() => {
-        cy.logout();
-    });
-
     // it('Cadastrar', function () {
     //     rota('[href="/cadastrar"]');
     //
@@ -20,7 +16,8 @@ describe('Testando Tela Inicial', function () {
     //
     //     cy.get('.v-btn').click();
     //
-    //     // cy.get('.v-snack__content').contains('Cadastro Realizado com Sucesso!');
+    //     cy.get('.v-snack__content').contains('Cadastro Realizado com Sucesso!');
+    //     cy.logout();
     // });
 
     it('Recuperar Senha', function () {
