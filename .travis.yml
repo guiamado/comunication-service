@@ -1,8 +1,6 @@
 language: php
 php:
   - '7.2'
-#  - hhvm # on Trusty only
-#  - nightly
 branches:
   only:
   - feature/cypress
@@ -18,7 +16,6 @@ before_install:
 addons:
   apt:
     packages:
-      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
       -  xvfb
       - libgtk2.0-0
@@ -27,11 +24,8 @@ addons:
       - libxss1
       - libasound2
 cache:
-  # Caches $HOME/.npm when npm ci is default script command
-  # Caches node_modules in all other cases
   npm: true
   directories:
-    # we also need to cache folder with Cypress binary
     - ~/.cache
 node_js:
   - '8.9.4'
@@ -49,10 +43,6 @@ before_script:
 script:
   - docker ps
   - cd webapp
-#  - npm run cypress:run
   - curl --get http://localhost/v1/sistema
   - curl --get http://localhost/v1/acount
-#  - docker exec comunication-webapp npm install
-#  - docker exec comunication-webapp cypress install
-#  - docker exec comunication-webapp npm run cypress:run
   - $(npm bin)/cypress run
